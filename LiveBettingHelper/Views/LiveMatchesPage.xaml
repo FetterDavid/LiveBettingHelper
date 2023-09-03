@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:LiveBettingHelper.ViewModels"
+             xmlns:models="clr-namespace:LiveBettingHelper.Model"
+             x:DataType="viewModels:LiveMatchesPageModel"
+             x:Class="LiveBettingHelper.Views.LiveMatchesPage"
+             Title="Live Matches">
+
+    <CollectionView ItemsSource="{Binding LiveMatches}" BackgroundColor="LightGray">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:LiveMatch">
+                <Frame Padding="0,5" Margin="5,2">
+                    <Grid RowDefinitions="30,30,5,20" ColumnDefinitions="45,*,40,40" ColumnSpacing="5" Padding="5,0">
+                        <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Text="{Binding ElapsedTime}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="16" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding HomeTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding AwayTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="3" Text="{Binding HomeTeamGoals}" VerticalOptions="Center" FontSize="17" FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Grid.Column="3" Text="{Binding AwayTeamGoals}" VerticalOptions="Center" FontSize="17" FontAttributes="Bold"/>
+                        <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Id}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold"/>
+                        <HorizontalStackLayout  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Spacing="10">
+                            <Label Text="{Binding LeagueCountry}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold, Italic"/>
+                            <Label Text="{Binding LeagueName}" VerticalOptions="Center" FontSize="15" FontAttributes="Italic"/>
+                        </HorizontalStackLayout>
+                        <BoxView Grid.Row="2" Grid.ColumnSpan="4" CornerRadius="5" VerticalOptions="Center" HeightRequest="1"/>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+</ContentPage>
