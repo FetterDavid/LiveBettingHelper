@@ -14,7 +14,7 @@ namespace LiveBettingHelper.Utilities
         /// <summary>
         /// Az adatbázis file neve
         /// </summary>
-        private const string DBFileName = "bet.db3";
+        private const string DB_FILE_NAME = "bet.db3";
         /// <summary>
         /// Az adatbázis Flag-ek
         /// </summary>
@@ -22,7 +22,7 @@ namespace LiveBettingHelper.Utilities
         /// <summary>
         /// Az adatbázis elérési útvonala
         /// </summary>
-        public static string DatabasePath => Path.Combine(FileSystem.AppDataDirectory, DBFileName);
+        public static string DatabasePath => Path.Combine(FileSystem.AppDataDirectory, DB_FILE_NAME);
         /// <summary>
         /// Egy PreBet objektumot BetHistory objektumá konvertál
         /// </summary>

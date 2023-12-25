@@ -25,26 +25,30 @@ namespace LiveBettingHelper.ViewModels
         public async void CheckPreBetsAndLoad()
         {
             List<PreBet> preBets = _preBetRepo.GetItems().Where(x => x.Date.AddMinutes(45) < DateTime.Now).ToList();
+            List<Task> tasks = new List<Task>();
             foreach (PreBet preBet in preBets)
             {
-                MatchResult result = await ApiManager.GetMatchResByIdAsync(preBet.FixtureId,preBet.BetType);
-                if (result == null) continue;
-                bool isWon = false;
-                switch (preBet.BetType)
+                tasks.Add(Task.Run(async () =>
                 {
-                    case BetType.FirstHalfOver:
-                        isWon = result.FirstHalfResult != (0, 0);
-                        break;
-                    case BetType.SecondHalfOver:
-                        isWon = result.FullTimeResult != result.FirstHalfResult;
-                        break;
-                    default:
-                        break;
-                }
-                _betHistoryRepo.AddItem(Static.ConvertPreBetToBetHistory(preBet, isWon));
-                _preBetRepo.DeleteItem(preBet);
+                    MatchResult result = await ApiManager.GetMatchResByIdAsync(preBet.FixtureId, preBet.BetType);
+                    if (result == null) return;
+                    bool isWon = false;
+                    switch (preBet.BetType)
+                    {
+                        case BetType.FirstHalfOver:
+                            isWon = result.FirstHalfResult != (0, 0);
+                            break;
+                        case BetType.SecondHalfOver:
+                            isWon = result.FullTimeResult != result.FirstHalfResult;
+                            break;
+                        default:
+                            break;
+                    }
+                    _betHistoryRepo.AddItem(Static.ConvertPreBetToBetHistory(preBet, isWon));
+                    _preBetRepo.DeleteItem(preBet);
+                }));
             }
-
+            await Task.WhenAll(tasks);
             LoadBetHistories();
         }
 

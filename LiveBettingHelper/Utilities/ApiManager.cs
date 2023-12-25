@@ -1,17 +1,18 @@
 ﻿using LiveBettingHelper.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using System.Security.Cryptography;
+using System.Timers;
 
 namespace LiveBettingHelper.Utilities
 {
     public static class ApiManager
     {
+        private const int MAX_REQUESTS_PER_MINUTE = 450;
+        public static bool CanRequest => _requestsInLastMinute < MAX_REQUESTS_PER_MINUTE;
+        private static int _requestsInLastMinute;
+        private static DateTime _requestCurrentMinute;
+        private static System.Timers.Timer _requestLimitTimer;
+
         /// <summary>
         /// Vissza adja az élő mecseket
         /// </summary>
@@ -357,23 +358,35 @@ namespace LiveBettingHelper.Utilities
                 return false;
             }
         }
-
+        /// <summary>
+        /// Beállítja _requestLimitTimer kezdőértékeit és elinditja azt
+        /// </summary>
+        public static void SetupRequestLimitTimer()
+        {
+            _requestsInLastMinute = 0;
+            _requestCurrentMinute = DateTime.Now;
+            _requestLimitTimer = new System.Timers.Timer(1000);
+            _requestLimitTimer.Elapsed += CheckRequestTimer;
+            _requestLimitTimer.Enabled = true;
+        }
         /// <summary>
         /// Vissza adja egy  HTTP request json-jét (host: api-football-v1.p.rapidapi.com)
         /// </summary>
         private static async Task<string> RequestJsonAsync(string request)
         {
+            while (!CanRequest) await Task.Delay(50);
+            _requestsInLastMinute++;
+            Console.Out.WriteLine($"Requests: {_requestsInLastMinute}, --------- {_requestCurrentMinute.Minute}");
             string json = "";
             using (var client = new HttpClient())
             {
                 var endpoint = new Uri($"https://api-football-v1.p.rapidapi.com/v3/{request}");
-                //client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
                 client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com");
-                //client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "5a714a4005mshc90ae5b388aad58p15b512jsncf4294509ce5");
                 client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "5a714a4005mshc90ae5b388aad58p15b512jsncf4294509ce5");
                 try
                 {
                     var result = await client.GetAsync(endpoint);
+                    if (result.StatusCode == System.Net.HttpStatusCode.TooManyRequests)return await RequestJsonAsync(request); // "Too Many Requests"
                     result.EnsureSuccessStatusCode();
                     json = await result.Content.ReadAsStringAsync();
                 }
@@ -446,6 +459,17 @@ namespace LiveBettingHelper.Utilities
         private static async Task<string> GetMatchOddJsonByIdAsync(int id)
         {
             return await RequestJsonAsync($"odds?fixture={id}");
+        }
+        /// <summary>
+        /// kinullázza a request számlálót 1 percenként 
+        /// </summary>
+        private static void CheckRequestTimer(Object source, ElapsedEventArgs e)
+        {
+            if (_requestCurrentMinute.Minute != DateTime.Now.Minute)
+            {
+                _requestsInLastMinute = 0;
+                _requestCurrentMinute = DateTime.Now;
+            }
         }
     }
 }

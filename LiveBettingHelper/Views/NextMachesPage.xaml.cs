@@ -10,7 +10,7 @@ public partial class NextMachesPage : ContentPage
     public NextMachesPage()
     {
         InitializeComponent();
-        _model = new NextMachesPageModel(App.PreBetRepo);
+        _model = new NextMachesPageModel();
         BindingContext = _model;
     }
 

@@ -1,5 +1,7 @@
-﻿using LiveBettingHelper.Model;
+﻿using LiveBettingHelper.Abstractions;
+using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
+using LiveBettingHelper.Utilities;
 
 namespace LiveBettingHelper;
 
@@ -10,6 +12,7 @@ public partial class App : Application
     public App(BaseRepository<PreBet> preBetRepo, BaseRepository<BetHistory> betHistoryRepo)
     {
         InitializeComponent();
+        ApiManager.SetupRequestLimitTimer();
         PreBetRepo = preBetRepo;
         BetHistoryRepo = betHistoryRepo;
         MainPage = new AppShell();
