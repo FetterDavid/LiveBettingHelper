@@ -14,9 +14,14 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnCreate(savedInstanceState);
         // Check and request notification permission
-        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.PostNotifications) != Permission.Granted)
+#pragma warning disable CA1416 // Disable platform compatibility warning
+        if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu) // Tiramisu is Android 33
         {
-            ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.PostNotifications }, 0);
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.PostNotifications) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.PostNotifications }, 0);
+            }
         }
+#pragma warning restore CA1416 // Restore platform compatibility warning
     }
 }

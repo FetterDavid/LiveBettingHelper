@@ -10,20 +10,21 @@ namespace LiveBettingHelper.ViewModels
 {
     public class LiveFixtureDetailsPageModel
     {
-        private LiveMatch _match;
-        private double _over05Odd;
+        //private LiveMatch _match;
+        //private double _over05Odd;
 
         public LiveFixtureDetailsPageModel(LiveMatch liveMatch)
         {
-            this._match = liveMatch;
-            LoadOdd();
+            Console.WriteLine(liveMatch.AwayTeamName);
+            //this._match = liveMatch;
+            //LoadOdd();
         }
 
-        private async void LoadOdd()
-        {
-            //_over05Odd = await ApiManager.GetRankDifferenceAsync(_match);
-            var str = await ApiManager.GetTodayMatchesAsync();
-            Console.WriteLine("-----------");
-        }
+        //private async void LoadOdd()
+        //{
+        //    //_over05Odd = await ApiManager.GetRankDifferenceAsync(_match);
+        //    //var str = await ApiManager.GetTodayMatchesAsync();
+        //    //Console.WriteLine("-----------");
+        //}
     }
 }
