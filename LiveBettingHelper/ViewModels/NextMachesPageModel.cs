@@ -95,7 +95,6 @@ namespace LiveBettingHelper.ViewModels
                 }
                 _checkedMatches++;
                 App.Logger.SetProgress(_checkedMatches, matchesCount);
-                App.Logger.Info($"{App.Logger.Progress}");
             });
         }
     }
