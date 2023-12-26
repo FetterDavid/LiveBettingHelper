@@ -385,7 +385,11 @@ namespace LiveBettingHelper.Utilities
                 try
                 {
                     var result = await client.GetAsync(endpoint);
-                    if (result.StatusCode == System.Net.HttpStatusCode.TooManyRequests)return await RequestJsonAsync(request); // "Too Many Requests"
+                    if (result.StatusCode == System.Net.HttpStatusCode.TooManyRequests) // "Too Many Requests"
+                    {
+                        _requestsInLastMinute = MAX_REQUESTS_PER_MINUTE;
+                        return await RequestJsonAsync(request);
+                    }
                     result.EnsureSuccessStatusCode();
                     json = await result.Content.ReadAsStringAsync();
                 }
