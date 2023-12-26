@@ -21,9 +21,10 @@ public static class MauiProgram
             });
         // PreBet Repository
         builder.Services.AddSingleton<BaseRepository<PreBet>>();
-        // PreBet Repository
+        // BetHistory Repository
         builder.Services.AddSingleton<BaseRepository<BetHistory>>();
-
+        // Logger
+        builder.Services.AddSingleton<Logger>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

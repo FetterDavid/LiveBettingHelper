@@ -376,7 +376,6 @@ namespace LiveBettingHelper.Utilities
         {
             while (!CanRequest) await Task.Delay(50);
             _requestsInLastMinute++;
-            Console.Out.WriteLine($"Requests: {_requestsInLastMinute}, --------- {_requestCurrentMinute.Minute}");
             string json = "";
             using (var client = new HttpClient())
             {
