@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LiveBettingHelper.Views.Popups;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace LiveBettingHelper.Utilities
             SaveLogInFile("Ex", message + " " + e.Message);
             SaveLogInMemory("Ex", message + " " + e.Message);
             ShowLogInDebug("Ex", message + " " + e.Message);
+            App.PopupManager.ShowPopup(new ErrorPopup(message + " " + e.Message));
         }
         /// <summary>
         /// Logol egy hibát
@@ -83,6 +85,7 @@ namespace LiveBettingHelper.Utilities
             SaveLogInFile("E", message);
             SaveLogInMemory("E", message);
             ShowLogInDebug("E", message);
+            App.PopupManager.ShowPopup(new ErrorPopup(message));
         }
         /// <summary>
         /// Logol egy végzetes hibát

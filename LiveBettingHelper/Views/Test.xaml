@@ -2,11 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LiveBettingHelper.Views.Test"
-             Title="Test">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center">
-        <Label Grid.Row="0" Text="Valami nagyon fontos..." FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
-        <Label Grid.Row="3" Text="(45/137)" FontSize="13" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
-        <ActivityIndicator Grid.Row="1" Color="DodgerBlue" IsRunning="True" Margin="0,5,0,0"/>
-        <ProgressBar Grid.Row="2" ScaleX="1" ScaleY="1.4" Progress="0.3" ProgressColor="DodgerBlue"/>
-    </Grid>
+             Title="Test"
+             BackgroundColor="Grey">
+    <Border Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="20" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" Margin="40">
+        <Grid RowDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10">
+            <Border Grid.Row="0" Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="5" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" >
+                <ScrollView MaximumHeightRequest="200" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+                </ScrollView>
+            </Border>
+            <Button Grid.Row="1" Text="Ok" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="30,0"/>
+        </Grid>
+    </Border>
 </ContentPage>

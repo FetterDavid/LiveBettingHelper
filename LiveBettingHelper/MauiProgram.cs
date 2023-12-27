@@ -17,14 +17,11 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         }).UseMauiCommunityToolkit();
-        // PreBet Repository
         builder.Services.AddSingleton<BaseRepository<PreBet>>();
-        // BetHistory Repository
         builder.Services.AddSingleton<BaseRepository<BetHistory>>();
-        // LastCheck Repository
         builder.Services.AddSingleton<LastCheckRepository>();
-        // Logger
         builder.Services.AddSingleton<Logger>();
+        builder.Services.AddSingleton<PopupManager>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

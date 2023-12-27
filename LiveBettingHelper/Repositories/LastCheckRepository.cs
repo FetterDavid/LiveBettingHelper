@@ -23,7 +23,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(LastCheck)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(LastCheck)} - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -40,7 +40,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(LastCheck)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(LastCheck)} - {MethodBase.GetCurrentMethod()}: ");
                 return null;
             }
         }

@@ -9,10 +9,6 @@ namespace LiveBettingHelper.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel, new()
     {
         /// <summary>
-        /// Az aktuális státusz
-        /// </summary>
-        public string StatusMessage { get; set; }
-        /// <summary>
         /// Az SQLite adatbázis kapcsolat
         /// </summary>
         protected SQLiteConnection _conn;
@@ -35,7 +31,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -49,7 +45,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -66,7 +62,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -90,7 +86,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
             return null;
         }
@@ -108,7 +104,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
             return null;
         }
@@ -126,7 +122,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
             return new List<T>();
         }
@@ -144,7 +140,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
             return new List<T>();
         }
@@ -159,7 +155,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
             }
         }
     }

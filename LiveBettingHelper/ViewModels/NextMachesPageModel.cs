@@ -1,6 +1,7 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
 using LiveBettingHelper.Utilities;
+using LiveBettingHelper.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,20 +24,20 @@ namespace LiveBettingHelper.ViewModels
 
         }
 
-        public async Task Reload(Action showLoadingPopup)
+        public async Task Reload()
         {
             LastCheck lastCheck = App.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
             if (lastCheck == null || lastCheck.checkDate.AddHours(1) < DateTime.Now)
             {
-                await SaveAndLoadTodayMatches(showLoadingPopup);
+                await SaveAndLoadTodayMatches();
                 App.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
             else LoadTodayMatches();
         }
 
-        private async Task SaveAndLoadTodayMatches(Action showLoadingPopup)
+        private async Task SaveAndLoadTodayMatches()
         {
-            await SaveDesiredPreMatches(await ApiManager.GetTodayMatchesAsync(), showLoadingPopup);
+            await SaveDesiredPreMatches(await ApiManager.GetTodayMatchesAsync());
             LoadTodayMatches();
         }
 
@@ -44,12 +45,12 @@ namespace LiveBettingHelper.ViewModels
         {
             try
             {
-            PreBets.Clear();
-            List<PreBet> matches = App.PreBetRepo.GetItems(x => x.Date.Date == DateTime.Now.Date).OrderBy(x => x.Date).ToList();
-            foreach (PreBet match in matches)
-            {
-                PreBets.Add(match);
-            }
+                PreBets.Clear();
+                List<PreBet> matches = App.PreBetRepo.GetItems(x => x.Date.Date == DateTime.Now.Date).OrderBy(x => x.Date).ToList();
+                foreach (PreBet match in matches)
+                {
+                    PreBets.Add(match);
+                }
             }
             catch (Exception ex)
             {
@@ -57,7 +58,7 @@ namespace LiveBettingHelper.ViewModels
             }
         }
 
-        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches, Action showLoadingPopup)
+        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches)
         {
             try
             {
@@ -65,20 +66,23 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetProgress(0);
                 App.Logger.SetCaption("Következő meccsek vizsgálata...");
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
-                showLoadingPopup();
+                App.PopupManager.ShowPopup(new LoadingPopup());
                 List<Task> tasks = new List<Task>();
                 foreach (PreMatch match in matches)
                 {
                     tasks.Add(GetMatchCheckingTask(match, matches.Count()));
                 }
                 await Task.WhenAll(tasks);
-                App.Logger.SetProgress(1, 1);
-                App.Logger.SetCaption("");
-                App.Logger.SetSubCaption("");
             }
             catch (Exception ex)
             {
                 App.Logger.Exception(ex, "Exception in SaveDesiredPreMatches");
+            }
+            finally
+            {
+                App.Logger.SetProgress(1, 1);
+                App.Logger.SetCaption("");
+                App.Logger.SetSubCaption("");
             }
         }
 

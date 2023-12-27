@@ -21,7 +21,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetLiveMatchesJsonAsync();
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return new List<LiveMatch>();
             }
             try
@@ -53,12 +53,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return new List<LiveMatch>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return new List<LiveMatch>();
             }
         }
@@ -70,7 +70,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetOverFirstHalfOdsJsonAsync(fixtureId);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return 0;
             }
             try
@@ -94,12 +94,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return 0;
             }
         }
@@ -111,7 +111,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetOverFirstHalfOdsJsonAsync(liveMatch.Id);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return 0;
             }
             try
@@ -135,12 +135,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error:");
                 return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return 0;
             }
         }
@@ -152,7 +152,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetStandingsJsonAsync(match.LeagueId, match.LeagueSeason);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return 0;
             }
             try
@@ -177,12 +177,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+
                 return 0;
             }
         }
@@ -191,7 +191,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetPrevMatchesJsonAsync(league, season, team);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return (0, 0);
             }
             try
@@ -219,12 +219,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return (0, 0);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return (0, 0);
             }
         }
@@ -237,7 +237,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetTodayMatchesJsonAsync();
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return new List<PreMatch>();
             }
             try
@@ -265,12 +265,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return new List<PreMatch>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return new List<PreMatch>();
             }
         }
@@ -282,7 +282,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetMatcheJsonByIdAsync(id);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return null;
             }
             try
@@ -314,12 +314,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return null;
             }
         }
@@ -331,7 +331,7 @@ namespace LiveBettingHelper.Utilities
             string json = await GetMatchOddJsonByIdAsync(id);
             if (string.IsNullOrEmpty(json))
             {
-                Debug.WriteLine("No data received from the API.");
+                App.Logger.Error("No data received from the API.");
                 return false;
             }
             try
@@ -349,12 +349,12 @@ namespace LiveBettingHelper.Utilities
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"JSON deserialization error: {ex.Message}");
+                App.Logger.Exception(ex, "JSON deserialization error: ");
                 return false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                App.Logger.Exception(ex);
                 return false;
             }
         }
@@ -395,11 +395,11 @@ namespace LiveBettingHelper.Utilities
                 }
                 catch (HttpRequestException ex)
                 {
-                    Debug.WriteLine($"Error during HTTP request: {ex.Message}");
+                    App.Logger.Error($"Error during HTTP request: {ex.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Error: {ex.Message}");
+                    App.Logger.Exception(ex);
                 }
             }
             return json;
@@ -434,7 +434,6 @@ namespace LiveBettingHelper.Utilities
         {
             return await RequestJsonAsync($"standings?league={league}&season={season}");
         }
-
         /// <summary>
         /// Vissza adja a csapat előző mecsei json-jét az adott ligában és szezonban
         /// </summary>

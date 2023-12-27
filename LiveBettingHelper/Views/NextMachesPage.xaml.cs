@@ -23,14 +23,9 @@ public partial class NextMachesPage : ContentPage
         Static.CreateNotificationRequest(preBet.FixtureId, "Fogadási lehetõség", $"{preBet.HomeTeamName} - {preBet.AwayTeamName}");
     }
 
-    private void ShowLoadingPopup()
-    {
-        this.ShowPopup(new LoadingPopup());
-    }
-
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _ = _model.Reload(ShowLoadingPopup);// Fire and forget approach 
+        _ = _model.Reload();// Fire and forget approach 
     }
 }

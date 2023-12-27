@@ -11,8 +11,9 @@ public partial class App : Application
     public static BaseRepository<BetHistory> BetHistoryRepo { get; set; }
     public static LastCheckRepository LastCheckRepo { get; set; }
     public static Logger Logger { get; set; }
+    public static PopupManager PopupManager { get; set; }
 
-    public App(BaseRepository<PreBet> preBetRepo, BaseRepository<BetHistory> betHistoryRepo, LastCheckRepository lastCheckRepo, Logger logger)
+    public App(BaseRepository<PreBet> preBetRepo, BaseRepository<BetHistory> betHistoryRepo, LastCheckRepository lastCheckRepo, Logger logger, PopupManager popupManager)
     {
         InitializeComponent();
         ApiManager.SetupRequestLimitTimer();
@@ -20,6 +21,7 @@ public partial class App : Application
         BetHistoryRepo = betHistoryRepo;
         LastCheckRepo = lastCheckRepo;
         Logger = logger;
+        PopupManager = popupManager;
         MainPage = new AppShell();
     }
 }

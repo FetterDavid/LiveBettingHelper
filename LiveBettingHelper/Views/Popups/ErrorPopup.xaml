@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="LiveBettingHelper.Views.Popups.ErrorPopup"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="#000000ff">
+
+    <Border Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="20" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" Margin="40">
+        <Grid RowDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10">
+            <Border Grid.Row="0" Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="5" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White">
+                <ScrollView MaximumHeightRequest="200" MaximumWidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="{Binding Message}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+                </ScrollView>
+            </Border>
+            <Button x:Name="CloseBtn" Grid.Row="1" Text="Ok" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="30,0" Clicked="CloseBtn_Clicked"/>
+        </Grid>
+    </Border>
+
+</toolkit:Popup>
