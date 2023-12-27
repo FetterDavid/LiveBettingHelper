@@ -23,16 +23,20 @@ namespace LiveBettingHelper.ViewModels
 
         }
 
-        public void Reload()
+        public async Task Reload(Action showLoadingPopup)
         {
             // TODO ez a feltétel így nem jó
-            if (!App.PreBetRepo.GetItems().Any(x => x.Date.Date == DateTime.Now.Date)) SaveAndLoadTodayMatches();
+            if (!App.PreBetRepo.GetItems().Any(x => x.Date.Date == DateTime.Now.Date))
+            {
+                await SaveAndLoadTodayMatches(showLoadingPopup);
+                App.Logger.SetProgress(1, 1);
+            }
             else LoadTodayMatches();
         }
 
-        private async void SaveAndLoadTodayMatches()
+        private async Task SaveAndLoadTodayMatches(Action showLoadingPopup)
         {
-            await SaveDesiredPreMatches(await ApiManager.GetTodayMatchesAsync());
+            await SaveDesiredPreMatches(await ApiManager.GetTodayMatchesAsync(), showLoadingPopup);
             LoadTodayMatches();
         }
 
@@ -46,18 +50,21 @@ namespace LiveBettingHelper.ViewModels
             }
         }
 
-        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches)
+        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches, Action showLoadingPopup)
         {
             try
             {
+                _checkedMatches = 0;
+                App.Logger.SetProgress(0);
+                App.Logger.SetCaption("Következő meccsek vizsgálata...");
+                App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
+                showLoadingPopup();
                 List<Task> tasks = new List<Task>();
                 foreach (PreMatch match in matches)
                 {
                     tasks.Add(GetMatchCheckingTask(match, matches.Count()));
                 }
                 await Task.WhenAll(tasks);
-                App.Logger.SetProgress(1, 1);
-                App.Logger.Info($"{App.Logger.Progress}");
             }
             catch (Exception ex)
             {
@@ -95,6 +102,7 @@ namespace LiveBettingHelper.ViewModels
                 }
                 _checkedMatches++;
                 App.Logger.SetProgress(_checkedMatches, matchesCount);
+                App.Logger.SetSubCaption($"({_checkedMatches}/{matchesCount})");
             });
         }
     }

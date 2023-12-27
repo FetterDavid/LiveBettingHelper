@@ -3,22 +3,20 @@ using LiveBettingHelper.Repositories;
 using LiveBettingHelper.Utilities;
 using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
+using CommunityToolkit.Maui;
 
 namespace LiveBettingHelper;
-
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseLocalNotification()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+        builder.UseMauiApp<App>()
+        .UseLocalNotification().ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+        }).UseMauiCommunityToolkit();
         // PreBet Repository
         builder.Services.AddSingleton<BaseRepository<PreBet>>();
         // BetHistory Repository
@@ -28,7 +26,6 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
         return builder.Build();
     }
 }

@@ -1,6 +1,8 @@
+using CommunityToolkit.Maui.Views;
 using LiveBettingHelper.Model;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.ViewModels;
+using LiveBettingHelper.Views.Popups;
 
 namespace LiveBettingHelper.Views;
 
@@ -14,16 +16,21 @@ public partial class NextMachesPage : ContentPage
         BindingContext = _model;
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        _model.Reload();
-    }
-
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         Frame frame = (Frame)sender;
         PreBet preBet = (PreBet)frame.BindingContext;
         Static.CreateNotificationRequest(preBet.FixtureId, "Fogadási lehetõség", $"{preBet.HomeTeamName} - {preBet.AwayTeamName}");
+    }
+
+    private void ShowLoadingPopup()
+    {
+        this.ShowPopup(new LoadingPopup());
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _ = _model.Reload(ShowLoadingPopup);// Fire and forget approach 
     }
 }
