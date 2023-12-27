@@ -11,4 +11,10 @@ namespace LiveBettingHelper.Utilities
         FirstHalfOver = 'F',
         SecondHalfOver = 'S'
     }
+
+    public enum CheckType
+    {
+        NextMatchesCheck = 'N',
+        CompletedBetsCheck = 'C',
+    }
 }

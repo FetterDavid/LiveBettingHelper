@@ -25,11 +25,11 @@ namespace LiveBettingHelper.ViewModels
 
         public async Task Reload(Action showLoadingPopup)
         {
-            // TODO ez a feltétel így nem jó
-            if (!App.PreBetRepo.GetItems().Any(x => x.Date.Date == DateTime.Now.Date))
+            LastCheck lastCheck = App.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
+            if (lastCheck == null || lastCheck.checkDate.AddHours(1) < DateTime.Now)
             {
                 await SaveAndLoadTodayMatches(showLoadingPopup);
-                App.Logger.SetProgress(1, 1);
+                App.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
             else LoadTodayMatches();
         }
@@ -42,11 +42,18 @@ namespace LiveBettingHelper.ViewModels
 
         private void LoadTodayMatches()
         {
+            try
+            {
             PreBets.Clear();
-            List<PreBet> matches = App.PreBetRepo.GetItems().Where(x => x.Date.Date == DateTime.Now.Date).OrderBy(x => x.Date).ToList();
+            List<PreBet> matches = App.PreBetRepo.GetItems(x => x.Date.Date == DateTime.Now.Date).OrderBy(x => x.Date).ToList();
             foreach (PreBet match in matches)
             {
                 PreBets.Add(match);
+            }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, "Exception in LoadTodayMatches");
             }
         }
 
@@ -65,6 +72,9 @@ namespace LiveBettingHelper.ViewModels
                     tasks.Add(GetMatchCheckingTask(match, matches.Count()));
                 }
                 await Task.WhenAll(tasks);
+                App.Logger.SetProgress(1, 1);
+                App.Logger.SetCaption("");
+                App.Logger.SetSubCaption("");
             }
             catch (Exception ex)
             {

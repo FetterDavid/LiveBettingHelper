@@ -9,13 +9,13 @@ namespace LiveBettingHelper.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel, new()
     {
         /// <summary>
-        /// Az SQLite adatbázis kapcsolat
-        /// </summary>
-        private SQLiteConnection _conn;
-        /// <summary>
         /// Az aktuális státusz
         /// </summary>
         public string StatusMessage { get; set; }
+        /// <summary>
+        /// Az SQLite adatbázis kapcsolat
+        /// </summary>
+        protected SQLiteConnection _conn;
         /// <summary>
         /// Konstruktor
         /// </summary>
@@ -46,6 +46,23 @@ namespace LiveBettingHelper.Repositories
             try
             {
                 _conn.Delete(item);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: {ex.Message}";
+            }
+        }
+        /// <summary>
+        /// Törli a megadott objektumokat
+        /// </summary>
+        public void DeleteItems(List<T> items)
+        {
+            try
+            {
+                foreach (var item in items)
+                {
+                    _conn.Delete(item);
+                }
             }
             catch (Exception ex)
             {

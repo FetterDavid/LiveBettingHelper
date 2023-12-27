@@ -24,7 +24,7 @@ namespace LiveBettingHelper.ViewModels
 
         public async void CheckPreBetsAndLoad()
         {
-            List<PreBet> preBets = _preBetRepo.GetItems().Where(x => x.Date.AddMinutes(45) < DateTime.Now).ToList();
+            List<PreBet> preBets = _preBetRepo.GetItems(x => x.Date.AddMinutes(45) < DateTime.Now);
             List<Task> tasks = new List<Task>();
             foreach (PreBet preBet in preBets)
             {
