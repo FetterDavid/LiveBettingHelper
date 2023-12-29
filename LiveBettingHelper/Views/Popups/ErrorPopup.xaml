@@ -6,14 +6,18 @@
              CanBeDismissedByTappingOutsideOfPopup="False"
              Color="#000000ff">
 
-    <Border Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="20" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" Margin="40">
+    <Border Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" Margin="40">
         <Grid RowDefinitions="Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center" RowSpacing="10">
-            <Border Grid.Row="0" Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="5" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White">
+            <Border Grid.Row="0" Stroke="#D9544D" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" Padding="5" Margin="20,20,20,5" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White">
                 <ScrollView MaximumHeightRequest="200" MaximumWidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label Text="{Binding Message}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
                 </ScrollView>
             </Border>
-            <Button x:Name="CloseBtn" Grid.Row="1" Text="Ok" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="30,0" Clicked="CloseBtn_Clicked"/>
+            <Grid Grid.Row="1" ColumnDefinitions="0.25*,0.5*,0.25*" MinimumWidthRequest="200">
+                <Button x:Name="CloseBtn" Grid.Column="1" Text="Ok" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="20,0" Margin="0,10" Clicked="CloseBtn_Clicked"/>
+                <ImageButton x:Name="SendBtn" Grid.Column="2" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,10,0" Source="email.png" HeightRequest="45" WidthRequest="45" Clicked="SendBtn_Clicked"/>
+            </Grid>
+
         </Grid>
     </Border>
 

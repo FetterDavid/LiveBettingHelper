@@ -4,13 +4,16 @@
              xmlns:utils="clr-namespace:LiveBettingHelper.Utilities"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="LiveBettingHelper.Views.Popups.LoadingPopup"
-             CanBeDismissedByTappingOutsideOfPopup="False">
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="#000000ff">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center" x:DataType="utils:Logger" Padding="20">
-        <Label Grid.Row="0" Text="{Binding Caption}" FontSize="18" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
-        <Label Grid.Row="3" Text="{Binding SubCaption}" FontSize="13" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
-        <ActivityIndicator Grid.Row="1" Color="DodgerBlue" IsRunning="True" Margin="0,5,0,0"/>
-        <ProgressBar x:Name="LoadingBar" Grid.Row="2" ScaleX="1" ScaleY="1.4" Progress="{Binding Progress}" ProgressColor="DodgerBlue" PropertyChanged="LoadingBar_PropertyChanged"/>
-    </Grid>
+    <Border Stroke="LightGray" StrokeThickness="2" HorizontalOptions="Center" VerticalOptions="Center" StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="White" Margin="40">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto" VerticalOptions="Center" HorizontalOptions="Center" x:DataType="utils:Logger" Padding="20">
+            <Label Grid.Row="0" Text="{Binding Caption}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+            <Label Grid.Row="3" Text="{Binding SubCaption}" FontSize="13" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+            <ActivityIndicator Grid.Row="1" Color="DodgerBlue" IsRunning="True" Margin="0,5,0,0"/>
+            <ProgressBar x:Name="LoadingBar" Grid.Row="2" ScaleX="1" ScaleY="1.4" Progress="{Binding Progress}" ProgressColor="DodgerBlue" PropertyChanged="LoadingBar_PropertyChanged"/>
+        </Grid>
+    </Border>
 
 </toolkit:Popup>

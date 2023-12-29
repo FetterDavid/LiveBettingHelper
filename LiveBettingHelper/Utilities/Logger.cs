@@ -105,11 +105,8 @@ namespace LiveBettingHelper.Utilities
         /// </summary>
         public virtual void SetProgress(double progress)
         {
-            if (Progress < 0 || progress < 0 || Math.Abs(Progress - progress) > 0.01) // optimalizalunk, negyed szazaleknal kisebb elterest kihagyjuk
-            {
-                Progress = progress;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Progress)));
-            }
+            Progress = progress;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Progress)));
         }
         /// <summary>
         /// Beallitja (ha van) a progress ablak szoveget es torli a kiegeszito szoveget

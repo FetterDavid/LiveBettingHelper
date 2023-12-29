@@ -24,7 +24,8 @@ namespace LiveBettingHelper.ViewModels
 
         public async void CheckPreBetsAndLoad()
         {
-            List<PreBet> preBets = _preBetRepo.GetItems(x => x.Date.AddMinutes(45) < DateTime.Now);
+            DateTime tmp = DateTime.Now.AddMinutes(-45);//TODO ez nem így lesz a fogadás csak megtett fogadás lehet
+            List<PreBet> preBets = _preBetRepo.GetItems(x => x.Date < tmp);
             List<Task> tasks = new List<Task>();
             foreach (PreBet preBet in preBets)
             {

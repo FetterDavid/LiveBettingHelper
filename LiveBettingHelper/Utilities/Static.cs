@@ -16,6 +16,10 @@ namespace LiveBettingHelper.Utilities
         /// </summary>
         private const string DB_FILE_NAME = "bet.db3";
         /// <summary>
+        /// Az adatbázis file neve
+        /// </summary>
+        private const string SUPPORT_EMAIL = "fetter.david00@gmail.com";
+        /// <summary>
         /// Az adatbázis Flag-ek
         /// </summary>
         public const SQLiteOpenFlags DBFlags = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache;
@@ -65,6 +69,27 @@ namespace LiveBettingHelper.Utilities
                 AwayTeamName = preMatch.AwayTeamName
             };
         }
+        /// <summary>
+        /// Megnyit egy levelező programot és előkészíti az emailt elküldésre (alaprtelmezetten a SUPPORT_EMAIL-re címezi a levelet)
+        /// </summary>
+        public static async Task SendEmailManual(string emailSubject, string emailBody, string emailAddress = SUPPORT_EMAIL)
+        {
+            if (Email.Default.IsComposeSupported)
+            {
+                string subject = emailSubject;
+                string body = emailBody;
+                string[] recipients = [emailAddress];
+                var message = new EmailMessage
+                {
+                    Subject = subject,
+                    Body = body,
+                    BodyFormat = EmailBodyFormat.PlainText,
+                    To = new List<string>(recipients)
+                };
+                await Email.Default.ComposeAsync(message);
+            }
+        }
+
         public static void CreateNotificationRequest(int id, string title, string description)
         {
             var request = new NotificationRequest

@@ -46,7 +46,7 @@ namespace LiveBettingHelper.ViewModels
             try
             {
                 PreBets.Clear();
-                List<PreBet> matches = App.PreBetRepo.GetItems(x => x.Date.Date == DateTime.Now.Date).OrderBy(x => x.Date).ToList();
+                List<PreBet> matches = App.PreBetRepo.GetItems().OrderBy(x => x.Date).ToList();
                 foreach (PreBet match in matches)
                 {
                     PreBets.Add(match);
@@ -64,7 +64,7 @@ namespace LiveBettingHelper.ViewModels
             {
                 _checkedMatches = 0;
                 App.Logger.SetProgress(0);
-                App.Logger.SetCaption("Következő meccsek vizsgálata...");
+                App.Logger.SetCaption("Check Next Matches...");
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
                 App.PopupManager.ShowPopup(new LoadingPopup());
                 List<Task> tasks = new List<Task>();

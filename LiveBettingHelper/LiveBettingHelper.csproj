@@ -53,6 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\live_matches.png" />
 	  <None Remove="Resources\Images\lose.png" />
 	  <None Remove="Resources\Images\match_history.png" />

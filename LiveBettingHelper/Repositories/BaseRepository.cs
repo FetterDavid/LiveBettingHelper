@@ -31,7 +31,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -45,7 +45,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -62,7 +62,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
         /// <summary>
@@ -86,7 +86,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
             return null;
         }
@@ -104,7 +104,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
             return null;
         }
@@ -122,7 +122,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
             return new List<T>();
         }
@@ -140,7 +140,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
             return new List<T>();
         }
@@ -155,7 +155,7 @@ namespace LiveBettingHelper.Repositories
             }
             catch (Exception ex)
             {
-                App.Logger.Exception(ex, $"Error in {nameof(T)} - {MethodBase.GetCurrentMethod()}: ");
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
     }

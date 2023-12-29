@@ -182,7 +182,7 @@ namespace LiveBettingHelper.Utilities
             }
             catch (Exception ex)
             {
-
+                App.Logger.Exception(ex);
                 return 0;
             }
         }
