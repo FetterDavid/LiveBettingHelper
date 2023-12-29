@@ -1,5 +1,4 @@
 ﻿using LiveBettingHelper.Abstractions;
-using LiveBettingHelper.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LiveBettingHelper.Model
 {
-    public class LastCheck : LocalBaseModel
+    public class CheckedMatch : LocalBaseModel
     {
-        public CheckType CheckType { get; set; }
+        public int FixtureId { get; set; }
         public DateTime CheckDate { get; set; }
     }
 }

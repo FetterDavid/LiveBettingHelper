@@ -18,8 +18,8 @@ namespace LiveBettingHelper.Repositories
         {
             try
             {
-                DeleteItems(GetItems(x => x.checkType == checkType));
-                _conn.Insert(new LastCheck { checkType = checkType, checkDate = DateTime.Now });
+                DeleteItems(GetItems(x => x.CheckType == checkType));
+                _conn.Insert(new LastCheck { CheckType = checkType, CheckDate = DateTime.Now });
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace LiveBettingHelper.Repositories
         {
             try
             {
-                return GetItem(x => x.checkType == checkType);
+                return GetItem(x => x.CheckType == checkType);
             }
             catch (Exception ex)
             {

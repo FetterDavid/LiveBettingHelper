@@ -19,6 +19,7 @@ public static class MauiProgram
         }).UseMauiCommunityToolkit();
         builder.Services.AddSingleton<BaseRepository<PreBet>>();
         builder.Services.AddSingleton<BaseRepository<BetHistory>>();
+        builder.Services.AddSingleton<BaseRepository<CheckedMatch>>();
         builder.Services.AddSingleton<LastCheckRepository>();
         builder.Services.AddSingleton<Logger>();
         builder.Services.AddSingleton<PopupManager>();

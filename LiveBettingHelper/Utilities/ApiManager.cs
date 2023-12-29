@@ -228,13 +228,12 @@ namespace LiveBettingHelper.Utilities
                 return (0, 0);
             }
         }
-
         /// <summary>
-        /// Vissza adja az mai mecseket
+        /// Vissza adja az adott nap mecseit
         /// </summary>
-        public static async Task<List<PreMatch>> GetTodayMatchesAsync()
+        public static async Task<List<PreMatch>> GetMatchesByDateAsync(DateTime date)
         {
-            string json = await GetTodayMatchesJsonAsync();
+            string json = await GetTodayMatchesJsonBydateAsync(date);
             if (string.IsNullOrEmpty(json))
             {
                 App.Logger.Error("No data received from the API.");
@@ -273,6 +272,18 @@ namespace LiveBettingHelper.Utilities
                 App.Logger.Exception(ex);
                 return new List<PreMatch>();
             }
+        }
+        /// <summary>
+        /// Vissza adja a következő 24 óra összes mecsét
+        /// </summary>
+        public static async Task<List<PreMatch>> GetNext24HourMatchesAsync()
+        {
+            List<PreMatch> nextMatches = new();
+            List<PreMatch> todayMatches = await GetMatchesByDateAsync(DateTime.Now);
+            List<PreMatch> tomorrowMatches = await GetMatchesByDateAsync(DateTime.Now.AddDays(1));
+            nextMatches.AddRange(todayMatches.Where(x => x.Date > DateTime.Now));
+            nextMatches.AddRange(tomorrowMatches.Where(x => x.Date < DateTime.Now.AddDays(1)));
+            return nextMatches;
         }
         /// <summary>
         /// Vissza adja egy mecs eredményét id alapján
@@ -442,11 +453,11 @@ namespace LiveBettingHelper.Utilities
             return await RequestJsonAsync($"fixtures?league={league}&season={season}&team={team}");
         }
         /// <summary>
-        /// Vissza adj az összes mai meccsek json-jét
+        /// Vissza adj az adott nap összes meccsének a json-jét
         /// </summary>
-        private static async Task<string> GetTodayMatchesJsonAsync()
+        private static async Task<string> GetTodayMatchesJsonBydateAsync(DateTime date)
         {
-            return await RequestJsonAsync($"fixtures?date={DateTime.Now.ToString("yyyy-MM-dd")}&timezone=Europe%2FBudapest");
+            return await RequestJsonAsync($"fixtures?date={date.ToString("yyyy-MM-dd")}&timezone=Europe%2FBudapest");
         }
         /// <summary>
         /// Vissza ad egy meccs json-jét id alapján
