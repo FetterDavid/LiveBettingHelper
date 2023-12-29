@@ -26,18 +26,18 @@ namespace LiveBettingHelper.ViewModels
 
         public async Task Reload()
         {
-            LastCheck lastCheck = App.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
+            LastCheck lastCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
             if (lastCheck == null || lastCheck.CheckDate.AddHours(1) < DateTime.Now)
             {
                 await SaveAndLoadTodayMatches();
-                App.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
+                App.MM.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
             else LoadTodayMatches();
         }
 
         private async Task SaveAndLoadTodayMatches()
         {
-            HashSet<int> checkedMatchIds = App.CheckedMatchRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
+            HashSet<int> checkedMatchIds = App.MM.CheckedMatchRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
             IEnumerable<PreMatch> matches = await ApiManager.GetNext24HourMatchesAsync();
             await SaveDesiredPreMatches(matches.Where(x => !checkedMatchIds.Contains(x.Id)));
             LoadTodayMatches();
@@ -48,7 +48,7 @@ namespace LiveBettingHelper.ViewModels
             try
             {
                 PreBets.Clear();
-                List<PreBet> matches = App.PreBetRepo.GetItems().OrderBy(x => x.Date).ToList();
+                List<PreBet> matches = App.MM.PreBetRepo.GetItems().OrderBy(x => x.Date).ToList();
                 foreach (PreBet match in matches)
                 {
                     PreBets.Add(match);
@@ -104,16 +104,16 @@ namespace LiveBettingHelper.ViewModels
                     if (awayHalfOvers.Item1 >= 80 && homeHalfOvers.Item1 >= 80)// első félídő over
                     {
                         double probability = (awayHalfOvers.Item1 + homeHalfOvers.Item1) / 2;
-                        App.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.FirstHalfOver, probability));
+                        App.MM.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.FirstHalfOver, probability));
                     }
                     if (awayHalfOvers.Item2 >= 80 && homeHalfOvers.Item2 >= 80)// második félidő over
                     {
                         double probability = (awayHalfOvers.Item2 + homeHalfOvers.Item2) / 2;
-                        App.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.SecondHalfOver, probability));
+                        App.MM.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.SecondHalfOver, probability));
                     }
                 }
                 //}
-                App.CheckedMatchRepo.AddItem(new CheckedMatch { FixtureId = match.Id, CheckDate = DateTime.Now });
+                App.MM.CheckedMatchRepo.AddItem(new CheckedMatch { FixtureId = match.Id, CheckDate = DateTime.Now });
                 _checkedMatches++;
                 App.Logger.SetProgress(_checkedMatches, matchesCount);
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matchesCount})");

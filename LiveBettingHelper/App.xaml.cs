@@ -7,21 +7,15 @@ namespace LiveBettingHelper;
 
 public partial class App : Application
 {
-    public static BaseRepository<PreBet> PreBetRepo { get; set; }
-    public static BaseRepository<BetHistory> BetHistoryRepo { get; set; }
-    public static BaseRepository<CheckedMatch> CheckedMatchRepo { get; set; }
-    public static LastCheckRepository LastCheckRepo { get; set; }
+    public static ModelManager MM { get; set; } = new();
     public static Logger Logger { get; set; }
     public static PopupManager PopupManager { get; set; }
 
-    public App(BaseRepository<PreBet> preBetRepo, BaseRepository<BetHistory> betHistoryRepo, BaseRepository<CheckedMatch> checkedMatchRepo, LastCheckRepository lastCheckRepo, Logger logger, PopupManager popupManager)
+    public App(ModelManager mm, Logger logger, PopupManager popupManager)
     {
         InitializeComponent();
         ApiManager.SetupRequestLimitTimer();
-        PreBetRepo = preBetRepo;
-        BetHistoryRepo = betHistoryRepo;
-        CheckedMatchRepo = checkedMatchRepo;
-        LastCheckRepo = lastCheckRepo;
+        MM = mm;
         Logger = logger;
         PopupManager = popupManager;
         MainPage = new AppShell();
@@ -31,6 +25,6 @@ public partial class App : Application
     private void StartSetup()
     {
         DateTime limitDate = DateTime.Now.AddDays(-2);
-        CheckedMatchRepo.DeleteItems(CheckedMatchRepo.GetItems(x => x.CheckDate < limitDate));
+        MM.CheckedMatchRepo.DeleteItems(MM.CheckedMatchRepo.GetItems(x => x.CheckDate < limitDate));
     }
 }

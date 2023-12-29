@@ -10,7 +10,7 @@ public partial class LiveMatchesPage : ContentPage
     public LiveMatchesPage()
     {
         InitializeComponent();
-        this._model = new LiveMatchesPageModel(App.PreBetRepo);
+        this._model = new LiveMatchesPageModel(App.MM.PreBetRepo);
         BindingContext = _model;
         StartTimer();
     }

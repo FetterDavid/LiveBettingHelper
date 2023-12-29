@@ -9,7 +9,7 @@ public partial class BetHistoryPage : ContentPage
     public BetHistoryPage()
     {
         InitializeComponent();
-        this._model = new BetHistoryPageModel(App.BetHistoryRepo, App.PreBetRepo);
+        this._model = new BetHistoryPageModel(App.MM.BetHistoryRepo, App.MM.PreBetRepo);
         BindingContext = _model;
     }
 
