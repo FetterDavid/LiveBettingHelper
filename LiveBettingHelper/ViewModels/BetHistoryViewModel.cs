@@ -1,22 +1,17 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
 using LiveBettingHelper.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.ViewModels
 {
-    public class BetHistoryPageModel
+    public class BetHistoryViewModel
     {
         public ObservableCollection<BetHistory> BetHistories { get; set; } = new();
         private BaseRepository<BetHistory> _betHistoryRepo;
         private BaseRepository<PreBet> _preBetRepo;
 
-        public BetHistoryPageModel(BaseRepository<BetHistory> betHistoryRepo, BaseRepository<PreBet> preBetRepo)
+        public BetHistoryViewModel(BaseRepository<BetHistory> betHistoryRepo, BaseRepository<PreBet> preBetRepo)
         {
             this._betHistoryRepo = betHistoryRepo;
             this._preBetRepo = preBetRepo;

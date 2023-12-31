@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LiveBettingHelper.Utilities
+﻿namespace LiveBettingHelper.Utilities
 {
     public enum BetType
     {
@@ -15,6 +9,8 @@ namespace LiveBettingHelper.Utilities
     public enum CheckType
     {
         NextMatchesCheck = 'N',
-        CompletedBetsCheck = 'C',
+        CountryCheck = 'C',
+        LeagueCheck = 'L',
+        CompletedBetsCheck = 'M',
     }
 }

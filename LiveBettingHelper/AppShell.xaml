@@ -6,6 +6,16 @@
     xmlns:local="clr-namespace:LiveBettingHelper.Views"
     Shell.FlyoutBehavior="Disabled">
 
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.25*,0.50*,0.25*" Padding="0,2">
+            <ImageButton Grid.Row="0" Source="menu.png" HorizontalOptions="Start" Margin="0" Clicked="ImageButton_Clicked"/>
+            <Grid Grid.Column="2" RowDefinitions="*,Auto" HorizontalOptions="End">
+                <ImageButton Grid.Row="0" Source="user.png" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" Text="3000FT" HorizontalOptions="Center" FontAttributes="Bold"/>
+            </Grid>
+        </Grid>
+    </Shell.TitleView>
+
     <TabBar>
         <Tab Title="Next Matches" Icon="next_matches.png">
             <ShellContent ContentTemplate="{DataTemplate local:NextMachesPage}"/>
@@ -15,6 +25,9 @@
         </Tab>
         <Tab Title="History" Icon="match_history.png">
             <ShellContent ContentTemplate="{DataTemplate local:BetHistoryPage}"/>
+        </Tab>
+        <Tab Title="Countries" Icon="match_history.png">
+            <ShellContent ContentTemplate="{DataTemplate local:CountrySelectorPage}"/>
         </Tab>
     </TabBar>
 

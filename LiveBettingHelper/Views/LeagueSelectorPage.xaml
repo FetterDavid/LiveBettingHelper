@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:LiveBettingHelper.ViewModels"
+             xmlns:Models="clr-namespace:LiveBettingHelper.Model"
+             x:DataType="ViewModels:LeagueSelectorViewModel"
+             x:Class="LiveBettingHelper.Views.LeagueSelectorPage"
+             Title="LeagueSelectorPage">
+
+    <Grid>
+        <CollectionView ItemsSource="{Binding Leagues}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="Models:League">
+                    <Frame>
+                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:LiveBettingHelper.ViewModels"
              xmlns:models="clr-namespace:LiveBettingHelper.Model"
-             x:DataType="viewModels:NextMachesPageModel"
-             x:Class="LiveBettingHelper.Views.NextMachesPage"
-             Title="Next Maches">
+             x:DataType="viewModels:NextMachesViewModel"
+             x:Class="LiveBettingHelper.Views.NextMachesPage">
 
     <CollectionView ItemsSource="{Binding PreBets}" BackgroundColor="LightGray">
         <CollectionView.ItemTemplate>

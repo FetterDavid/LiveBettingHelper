@@ -35,6 +35,23 @@ namespace LiveBettingHelper.Repositories
             }
         }
         /// <summary>
+        /// Hozzá adja az adatbázishozz a megadott objektumot
+        /// </summary>
+        public void AddItems(List<T> items)
+        {
+            try
+            {
+                foreach (var item in items)
+                {
+                    _conn.Insert(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
+            }
+        }
+        /// <summary>
         /// Törli a megadott objektumot
         /// </summary>
         public void DeleteItem(T item)

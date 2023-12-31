@@ -1,9 +1,9 @@
-﻿using LiveBettingHelper.Model;
-using LiveBettingHelper.Repositories;
-using LiveBettingHelper.Utilities;
+﻿using LiveBettingHelper.Utilities;
 using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
 using CommunityToolkit.Maui;
+using LiveBettingHelper.Views;
+using LiveBettingHelper.ViewModels;
 
 namespace LiveBettingHelper;
 public static class MauiProgram
@@ -20,6 +20,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ModelManager>();
         builder.Services.AddSingleton<Logger>();
         builder.Services.AddSingleton<PopupManager>();
+        builder.Services.AddTransient<LeagueSelectorPage>();
+        builder.Services.AddTransient<LeagueSelectorViewModel>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

@@ -1,4 +1,3 @@
-using LiveBettingHelper.Utilities;
 using LiveBettingHelper.ViewModels;
 
 namespace LiveBettingHelper.Views;

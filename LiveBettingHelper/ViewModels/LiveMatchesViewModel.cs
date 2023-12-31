@@ -1,12 +1,7 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
 using LiveBettingHelper.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.ViewModels
 {

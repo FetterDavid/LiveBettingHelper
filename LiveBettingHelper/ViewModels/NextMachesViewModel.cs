@@ -1,25 +1,16 @@
 ﻿using LiveBettingHelper.Model;
-using LiveBettingHelper.Repositories;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.Views.Popups;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.ViewModels
 {
-    public class NextMachesPageModel
+    public class NextMachesViewModel
     {
         public ObservableCollection<PreBet> PreBets { get; set; } = new();
         private int _checkedMatches;
 
-        public NextMachesPageModel()
+        public NextMachesViewModel()
         {
 
         }

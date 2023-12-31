@@ -57,12 +57,15 @@
 	  <None Remove="Resources\Images\live_matches.png" />
 	  <None Remove="Resources\Images\lose.png" />
 	  <None Remove="Resources\Images\match_history.png" />
+	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\next_matches.png" />
+	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Images\win.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.LocalNotification" Version="10.1.8" />
@@ -74,6 +77,12 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\BetHistoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CountrySelectorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LeagueSelectorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LiveFixtureDetailsPage.xaml">
@@ -94,6 +103,10 @@
 	  <MauiXaml Update="Views\Test.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Components\" />
 	</ItemGroup>
 
 </Project>

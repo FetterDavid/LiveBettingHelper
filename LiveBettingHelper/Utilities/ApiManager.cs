@@ -1,6 +1,5 @@
 ﻿using LiveBettingHelper.Model;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using System.Timers;
 
 namespace LiveBettingHelper.Utilities
@@ -22,7 +21,7 @@ namespace LiveBettingHelper.Utilities
             if (string.IsNullOrEmpty(json))
             {
                 App.Logger.Error("No data received from the API.");
-                return new List<LiveMatch>();
+                return [];
             }
             try
             {
@@ -54,12 +53,12 @@ namespace LiveBettingHelper.Utilities
             catch (JsonException ex)
             {
                 App.Logger.Exception(ex, "JSON deserialization error: ");
-                return new List<LiveMatch>();
+                return [];
             }
             catch (Exception ex)
             {
                 App.Logger.Exception(ex);
-                return new List<LiveMatch>();
+                return [];
             }
         }
         /// <summary>
@@ -237,7 +236,7 @@ namespace LiveBettingHelper.Utilities
             if (string.IsNullOrEmpty(json))
             {
                 App.Logger.Error("No data received from the API.");
-                return new List<PreMatch>();
+                return [];
             }
             try
             {
@@ -265,12 +264,12 @@ namespace LiveBettingHelper.Utilities
             catch (JsonException ex)
             {
                 App.Logger.Exception(ex, "JSON deserialization error: ");
-                return new List<PreMatch>();
+                return [];
             }
             catch (Exception ex)
             {
                 App.Logger.Exception(ex);
-                return new List<PreMatch>();
+                return [];
             }
         }
         /// <summary>
@@ -367,6 +366,119 @@ namespace LiveBettingHelper.Utilities
             {
                 App.Logger.Exception(ex);
                 return false;
+            }
+        }
+        /// <summary>
+        /// Vissza adja az összes országot
+        /// </summary>
+        public static async Task<List<Country>> GetAllCountriesAsync()
+        {
+            string json = await GetAllCountriesJsonAsync();
+            if (string.IsNullOrEmpty(json))
+            {
+                App.Logger.Error("No data received from the API.");
+                return [];
+            }
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(json);
+                List<Country> countries = new List<Country>();
+                foreach (var response in data.response)
+                {
+                    var country = new Country
+                    {
+                        Name = response["name"],
+                        Code = response["code"]
+                    };
+                    countries.Add(country);
+                }
+                return countries;
+            }
+            catch (JsonException ex)
+            {
+                App.Logger.Exception(ex, "JSON deserialization error: ");
+                return [];
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex);
+                return [];
+            }
+        }
+        /// <summary>
+        /// Vissza adja az összes ligát
+        /// </summary>
+        public static async Task<List<League>> GetAllLeaguesAsync()
+        {
+            string json = await GetAllLeaguesJsonAsync();
+            if (string.IsNullOrEmpty(json))
+            {
+                App.Logger.Error("No data received from the API.");
+                return [];
+            }
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(json);
+                List<League> leagues = new List<League>();
+                foreach (var response in data.response)
+                {
+                    var league = new League
+                    {
+                        Name = response["league"]["name"],
+                        CountryCode = response["country"]["code"],
+                        Type = response["league"]["type"]
+                    };
+                    leagues.Add(league);
+                }
+                return leagues;
+            }
+            catch (JsonException ex)
+            {
+                App.Logger.Exception(ex, "JSON deserialization error: ");
+                return [];
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex);
+                return [];
+            }
+        }
+        /// <summary>
+        /// Vissza adja az összes ligát
+        /// </summary>
+        public static async Task<List<League>> GetLeaguesByCountryCodeAsync(string countryCode)
+        {
+            string json = await GetLeaguesJsonByCountryCodeAsync(countryCode);
+            if (string.IsNullOrEmpty(json))
+            {
+                App.Logger.Error("No data received from the API.");
+                return [];
+            }
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(json);
+                List<League> leagues = new List<League>();
+                foreach (var response in data.response)
+                {
+                    var league = new League
+                    {
+                        Name = response["league"]["name"],
+                        CountryCode = response["country"]["code"],
+                        Type = response["league"]["type"]
+                    };
+                    leagues.Add(league);
+                }
+                return leagues;
+            }
+            catch (JsonException ex)
+            {
+                App.Logger.Exception(ex, "JSON deserialization error: ");
+                return [];
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex);
+                return [];
             }
         }
         /// <summary>
@@ -472,6 +584,27 @@ namespace LiveBettingHelper.Utilities
         private static async Task<string> GetMatchOddJsonByIdAsync(int id)
         {
             return await RequestJsonAsync($"odds?fixture={id}");
+        }
+        /// <summary>
+        /// Vissza adja az összes ország json-jét
+        /// </summary>
+        private static async Task<string> GetAllCountriesJsonAsync()
+        {
+            return await RequestJsonAsync("countries");
+        }
+        /// <summary>
+        /// Vissza adja az összes liga json-jét
+        /// </summary>
+        private static async Task<string> GetAllLeaguesJsonAsync()
+        {
+            return await RequestJsonAsync("leagues");
+        }
+        /// <summary>
+        /// Vissza adja országkód alapján a ligál json-jét
+        /// </summary>
+        private static async Task<string> GetLeaguesJsonByCountryCodeAsync(string countryCode)
+        {
+            return await RequestJsonAsync($"leagues?code={countryCode}");
         }
         /// <summary>
         /// kinullázza a request számlálót 1 percenként 

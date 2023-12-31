@@ -1,18 +1,16 @@
-using CommunityToolkit.Maui.Views;
 using LiveBettingHelper.Model;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.ViewModels;
-using LiveBettingHelper.Views.Popups;
 
 namespace LiveBettingHelper.Views;
 
 public partial class NextMachesPage : ContentPage
 {
-    private NextMachesPageModel _model;
+    private NextMachesViewModel _model;
     public NextMachesPage()
     {
         InitializeComponent();
-        _model = new NextMachesPageModel();
+        _model = new NextMachesViewModel();
         BindingContext = _model;
     }
 

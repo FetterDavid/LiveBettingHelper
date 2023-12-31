@@ -1,15 +1,14 @@
-using LiveBettingHelper.Abstractions;
 using LiveBettingHelper.ViewModels;
 
 namespace LiveBettingHelper.Views;
 
 public partial class BetHistoryPage : ContentPage
 {
-    private BetHistoryPageModel _model;
+    private BetHistoryViewModel _model;
     public BetHistoryPage()
     {
         InitializeComponent();
-        this._model = new BetHistoryPageModel(App.MM.BetHistoryRepo, App.MM.PreBetRepo);
+        this._model = new BetHistoryViewModel(App.MM.BetHistoryRepo, App.MM.PreBetRepo);
         BindingContext = _model;
     }
 

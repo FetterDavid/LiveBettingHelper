@@ -4,8 +4,7 @@
              xmlns:viewModels="clr-namespace:LiveBettingHelper.ViewModels"
              xmlns:models="clr-namespace:LiveBettingHelper.Model"
              x:DataType="viewModels:LiveMatchesPageModel"
-             x:Class="LiveBettingHelper.Views.LiveMatchesPage"
-             Title="Live Matches">
+             x:Class="LiveBettingHelper.Views.LiveMatchesPage">
 
     <CollectionView ItemsSource="{Binding LiveMatches}" BackgroundColor="LightGray">
         <CollectionView.ItemTemplate>
