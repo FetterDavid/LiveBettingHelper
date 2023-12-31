@@ -1,4 +1,5 @@
 ﻿using LiveBettingHelper.Model;
+using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 
 namespace LiveBettingHelper;
@@ -20,7 +21,7 @@ public partial class App : Application
         StartSetup();
     }
 
-    private async void StartSetup()
+    private async Task StartSetup()
     {
         // Vizsgált mecsek időszakos törlése
         DateTime limitDate = DateTime.Now.AddDays(-2);
@@ -30,10 +31,10 @@ public partial class App : Application
         if (lastCountryCheck == null || lastCountryCheck.CheckDate < DateTime.Now.AddDays(-7))
         {
             MM.CountryRepo.DeleteItems(MM.CountryRepo.GetItems());
-            MM.CountryRepo.AddItems(await ApiManager.GetAllCountriesAsync());
+            MM.CountryRepo.AddItems(await CountryService.GetAllCountriesAsync());
             MM.LastCheckRepo.SetLastCheck(CheckType.CountryCheck);
             MM.LeagueRepo.DeleteItems(MM.LeagueRepo.GetItems());
-            MM.LeagueRepo.AddItems(await ApiManager.GetAllLeaguesAsync());
+            MM.LeagueRepo.AddItems(await LeaguesService.GetAllLeaguesAsync());
             MM.LastCheckRepo.SetLastCheck(CheckType.LeagueCheck);
         }
     }

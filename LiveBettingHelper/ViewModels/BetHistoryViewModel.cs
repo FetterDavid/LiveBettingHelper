@@ -1,5 +1,6 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
+using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using System.Collections.ObjectModel;
 
@@ -26,7 +27,7 @@ namespace LiveBettingHelper.ViewModels
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    MatchResult result = await ApiManager.GetMatchResByIdAsync(preBet.FixtureId, preBet.BetType);
+                    MatchResult result = await MatchResultService.GetMatchResByIdAsync(preBet.FixtureId, preBet.BetType);
                     if (result == null) return;
                     bool isWon = false;
                     switch (preBet.BetType)

@@ -1,5 +1,6 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
+using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using System.Collections.ObjectModel;
 
@@ -17,7 +18,7 @@ namespace LiveBettingHelper.ViewModels
 
         public async void ReloadDesiredLiveMatches()
         {
-            List<LiveMatch> matches = await ApiManager.GetAllLiveFixturesAsync();
+            List<LiveMatch> matches = await LiveMatchService.GetAllLiveFixturesAsync();
             List<LiveMatch> selectedMatches = new();
             foreach (LiveMatch match in matches)
             {
@@ -28,7 +29,7 @@ namespace LiveBettingHelper.ViewModels
                 if (match.ElapsedTime < 50) continue;
                 //if (match.HomeTeamGoals == 0 && match.AwayTeamGoals == 0)
                 //{
-                    match.Odds = await ApiManager.GetOverSecondHalfOddAsync(match);
+                    match.Odds = await OddsService.GetOverSecondHalfOddAsync(match);
                     if (match.Odds == 0) continue;
                     selectedMatches.Add(match);
                 //}
