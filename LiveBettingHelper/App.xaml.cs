@@ -1,6 +1,8 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
+using LiveBettingHelper.Views;
+using LiveBettingHelper.Views.Popups;
 
 namespace LiveBettingHelper;
 
@@ -17,25 +19,57 @@ public partial class App : Application
         MM = mm;
         Logger = logger;
         PopupManager = popupManager;
-        MainPage = new AppShell();
-        StartSetup();
+        MainPage = new SplashScreenPage();
+        _ = LoadDataAsync();
     }
+    /// <summary>
+    /// Betölti mindent a SplashScreen-en majd tovább lép az AppShell-re
+    /// </summary>
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            StartSetup();
+            await UpdateCountriesAndLeagues();
+        }
+        catch (Exception ex)
+        {
+            App.Logger.Exception(ex);
+        }
+        finally
+        {
+            App.Logger.SetCaption("");
+            MainPage = new AppShell();
+        }
 
-    private async Task StartSetup()
+    }
+    /// <summary>
+    /// Az alkalmazás inditásakor elvégezendő feladatok
+    /// </summary>
+    private void StartSetup()
     {
         // Vizsgált mecsek időszakos törlése
+        App.Logger.SetCaption("Start Setup...");
         DateTime limitDate = DateTime.Now.AddDays(-2);
         MM.CheckedMatchRepo.DeleteItems(MM.CheckedMatchRepo.GetItems(x => x.CheckDate < limitDate));
-        // Ország check
-        LastCheck lastCountryCheck = MM.LastCheckRepo.GetLastCheck(CheckType.CountryCheck);
+    }
+    /// <summary>
+    /// Frissíti az országojat és a ligákat 
+    /// </summary>
+    /// <returns></returns>
+    private async Task UpdateCountriesAndLeagues()
+    {
+        LastCheck lastCountryCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.CountryCheck);
         if (lastCountryCheck == null || lastCountryCheck.CheckDate < DateTime.Now.AddDays(-7))
         {
-            MM.CountryRepo.DeleteItems(MM.CountryRepo.GetItems());
-            MM.CountryRepo.AddItems(await CountryService.GetAllCountriesAsync());
-            MM.LastCheckRepo.SetLastCheck(CheckType.CountryCheck);
-            MM.LeagueRepo.DeleteItems(MM.LeagueRepo.GetItems());
-            MM.LeagueRepo.AddItems(await LeaguesService.GetAllLeaguesAsync());
-            MM.LastCheckRepo.SetLastCheck(CheckType.LeagueCheck);
+            App.Logger.SetCaption("Update Countries...");
+            App.MM.CountryRepo.DeleteItems(App.MM.CountryRepo.GetItems());
+            App.MM.CountryRepo.AddItems(await CountryService.GetAllCountriesAsync());
+            App.MM.LastCheckRepo.SetLastCheck(CheckType.CountryCheck);
+            App.Logger.SetCaption("Update Leagues...");
+            App.MM.LeagueRepo.DeleteItems(App.MM.LeagueRepo.GetItems());
+            App.MM.LeagueRepo.AddItems(await LeaguesService.GetAllLeaguesAsync());
+            App.MM.LastCheckRepo.SetLastCheck(CheckType.LeagueCheck);
         }
     }
 }

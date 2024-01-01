@@ -100,6 +100,9 @@
 	  <MauiXaml Update="Views\Popups\LoadingPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\SplashScreenPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Test.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

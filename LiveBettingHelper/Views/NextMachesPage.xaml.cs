@@ -6,12 +6,18 @@ namespace LiveBettingHelper.Views;
 
 public partial class NextMachesPage : ContentPage
 {
-    private NextMachesViewModel _model;
-    public NextMachesPage()
+    private NextMachesViewModel _viewModel;
+    public NextMachesPage(NextMachesViewModel nextMachesViewModel)
     {
         InitializeComponent();
-        _model = new NextMachesViewModel();
-        BindingContext = _model;
+        _viewModel = nextMachesViewModel;
+        BindingContext = _viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _ = _viewModel.Reload(); // fire and forget
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
@@ -19,11 +25,5 @@ public partial class NextMachesPage : ContentPage
         Frame frame = (Frame)sender;
         PreBet preBet = (PreBet)frame.BindingContext;
         Static.CreateNotificationRequest(preBet.FixtureId, "Fogadási lehetõség", $"{preBet.HomeTeamName} - {preBet.AwayTeamName}");
-    }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        _ = _model.Reload();// Fire and forget approach 
     }
 }

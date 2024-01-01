@@ -11,62 +11,27 @@ namespace LiveBettingHelper.ViewModels
         public ObservableCollection<PreBet> PreBets { get; set; } = new();
         private int _checkedMatches;
 
-        public NextMachesViewModel()
-        {
-
-        }
-
         public async Task Reload()
         {
             LastCheck lastCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
             if (lastCheck == null || lastCheck.CheckDate.AddHours(1) < DateTime.Now)
             {
-                await SaveAndLoadTodayMatches();
+                await CheckTodayMatches();
                 App.MM.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
-            else LoadTodayMatches();
+            LoadNextMatches();
         }
 
-        private async Task SaveAndLoadTodayMatches()
-        {
-            HashSet<int> checkedMatchIds = App.MM.CheckedMatchRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
-            IEnumerable<PreMatch> matches = await PreMatchService.GetNext24HourMatchesAsync();
-            await SaveDesiredPreMatches(matches.Where(x => !checkedMatchIds.Contains(x.Id)));
-            LoadTodayMatches();
-        }
-
-        private void LoadTodayMatches()
+        private async Task CheckTodayMatches()
         {
             try
             {
-                PreBets.Clear();
-                List<PreBet> matches = App.MM.PreBetRepo.GetItems().OrderBy(x => x.Date).ToList();
-                foreach (PreBet match in matches)
-                {
-                    PreBets.Add(match);
-                }
-            }
-            catch (Exception ex)
-            {
-                App.Logger.Exception(ex, "Exception in LoadTodayMatches");
-            }
-        }
-
-        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches)
-        {
-            try
-            {
-                _checkedMatches = 0;
                 App.Logger.SetProgress(0);
                 App.Logger.SetCaption("Check Next Matches...");
-                App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
                 App.PopupManager.ShowPopup(new LoadingPopup());
-                List<Task> tasks = new List<Task>();
-                foreach (PreMatch match in matches)
-                {
-                    tasks.Add(GetMatchCheckingTask(match, matches.Count()));
-                }
-                await Task.WhenAll(tasks);
+                HashSet<int> checkedMatchIds = App.MM.CheckedMatchRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
+                IEnumerable<PreMatch> matches = await PreMatchService.GetNext24HourMatchesAsync();
+                await SaveDesiredPreMatches(matches.Where(x => !checkedMatchIds.Contains(x.Id)));
             }
             catch (Exception ex)
             {
@@ -78,6 +43,18 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetCaption("");
                 App.Logger.SetSubCaption("");
             }
+        }
+
+        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches)
+        {
+            _checkedMatches = 0;
+            App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
+            List<Task> tasks = new List<Task>();
+            foreach (PreMatch match in matches)
+            {
+                tasks.Add(GetMatchCheckingTask(match, matches.Count()));
+            }
+            await Task.WhenAll(tasks);
         }
 
         private Task GetMatchCheckingTask(PreMatch match, int matchesCount)
@@ -107,6 +84,23 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetProgress(_checkedMatches, matchesCount);
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matchesCount})");
             });
+        }
+
+        private void LoadNextMatches()
+        {
+            try
+            {
+                PreBets.Clear();
+                List<PreBet> matches = App.MM.PreBetRepo.GetItems().OrderBy(x => x.Date).ToList();
+                foreach (PreBet match in matches)
+                {
+                    PreBets.Add(match);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, "Exception in LoadTodayMatches");
+            }
         }
     }
 }
