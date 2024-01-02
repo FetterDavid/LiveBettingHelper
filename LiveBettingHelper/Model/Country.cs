@@ -7,15 +7,11 @@ namespace LiveBettingHelper.Model
     public partial class Country
     {
         [ObservableProperty]
-        private bool _isSelected;
-        [ObservableProperty]
-        private bool _isPartiallySelected;
+        private SelectType _checkType;
+
         public void SetSelections()
         {
-            string name = Name;
-            SelectType leaguesSelectType = GetLeaguesSelectType();
-            IsSelected = leaguesSelectType == SelectType.Selected;
-            IsPartiallySelected = leaguesSelectType == SelectType.PartiallySelected;
+            CheckType = GetLeaguesSelectType();
         }
 
         private SelectType GetLeaguesSelectType()

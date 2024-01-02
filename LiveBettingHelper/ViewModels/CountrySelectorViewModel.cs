@@ -6,13 +6,23 @@ namespace LiveBettingHelper.ViewModels
 {
     public partial class CountrySelectorViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Az országok listája
+        /// </summary>
         public List<Country> Countries { get; set; }
-        public Command OnSelect { get; set; }
-        public Command OnDeselect { get; set; }
+        /// <summary>
+        /// Ez a parancs fut le ha kijelölünk egy országot a listában
+        /// </summary>
+        public Command OnSelectACountry { get; set; }
+        /// <summary>
+        /// Ez a parancs fut le ha megszüntetjük egy ország kijelőlését a listában
+        /// </summary>
+        public Command OnDeselectACountry { get; set; }
+
         public CountrySelectorViewModel()
         {
-            OnSelect = new Command(SelectACountry);
-            OnDeselect = new Command(DeselectACountry);
+            OnSelectACountry = new Command(SelectACountry);
+            OnDeselectACountry = new Command(DeselectACountry);
             LoadCountries();
         }
 
@@ -20,7 +30,9 @@ namespace LiveBettingHelper.ViewModels
         {
             Countries = App.MM.CountryRepo.GetItems().ToList();
         }
-
+        /// <summary>
+        /// Újra tölti a listában lévő országok kijelölésének tipusát
+        /// </summary>
         public void SetCountrySelections()
         {
             foreach (var country in Countries)

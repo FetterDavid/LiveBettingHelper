@@ -1,3 +1,5 @@
+using LiveBettingHelper.Utilities;
+
 namespace LiveBettingHelper.Components;
 
 public partial class MyCheckBox : ContentView
@@ -9,18 +11,11 @@ public partial class MyCheckBox : ContentView
         set => SetValue(BoxColorProperty, value);
     }
 
-    public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(MyCheckBox), default(bool), BindingMode.TwoWay);
-    public bool IsChecked
+    public static readonly BindableProperty CheckTypeProperty = BindableProperty.Create(nameof(CheckType), typeof(SelectType), typeof(MyCheckBox), default(SelectType), BindingMode.TwoWay);
+    public SelectType CheckType
     {
-        get => (bool)GetValue(IsCheckedProperty);
-        set => SetValue(IsCheckedProperty, value);
-    }
-
-    public static readonly BindableProperty IsPartiallyCheckedProperty = BindableProperty.Create(nameof(IsPartiallyChecked), typeof(bool), typeof(MyCheckBox), default(bool), BindingMode.TwoWay);
-    public bool IsPartiallyChecked
-    {
-        get => (bool)GetValue(IsPartiallyCheckedProperty);
-        set => SetValue(IsPartiallyCheckedProperty, value);
+        get => (SelectType)GetValue(CheckTypeProperty);
+        set => SetValue(CheckTypeProperty, value);
     }
 
     public static readonly BindableProperty OnSelectCmdProperty = BindableProperty.Create(nameof(OnSelectCmd), typeof(Command), typeof(MyCheckBox), default(Command));
@@ -58,11 +53,10 @@ public partial class MyCheckBox : ContentView
 
     private void SelectionCheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-        if (SelectionCheckBox.IsChecked != IsChecked)
+        if ((SelectionCheckBox.IsChecked && CheckType != SelectType.Selected) || (!SelectionCheckBox.IsChecked && CheckType == SelectType.Selected))
         {
-            IsChecked = SelectionCheckBox.IsChecked;
-            IsPartiallyChecked = false;
-            if (IsChecked) OnSelectCmd.Execute(OnSelectCmdParam);
+            CheckType = SelectionCheckBox.IsChecked ? SelectType.Selected : SelectType.NotSelected;
+            if (SelectionCheckBox.IsChecked) OnSelectCmd.Execute(OnSelectCmdParam);
             else OnDeselectCmd.Execute(OnDeselectCmdParam);
         }
     }

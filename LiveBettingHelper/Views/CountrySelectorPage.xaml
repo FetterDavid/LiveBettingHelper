@@ -18,9 +18,9 @@
                         </Frame.GestureRecognizers>
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
-                            <Comps:MyCheckBox BoxColor="{StaticResource Primary}" IsPartiallyChecked="{Binding IsPartiallySelected, Mode=TwoWay}" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
-                                              OnSelectCmdParam="{Binding Code}" OnSelectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnSelect}"
-                                              OnDeselectCmdParam="{Binding Code}" OnDeselectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnDeselect}"/>
+                            <Comps:MyCheckBox BoxColor="{StaticResource Primary}" CheckType="{Binding CheckType, Mode=TwoWay}" HorizontalOptions="End"
+                                              OnSelectCmdParam="{Binding Code}" OnSelectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnSelectACountry}"
+                                              OnDeselectCmdParam="{Binding Code}" OnDeselectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnDeselectACountry}"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>

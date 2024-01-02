@@ -8,8 +8,17 @@ namespace LiveBettingHelper;
 
 public partial class App : Application
 {
+    /// <summary>
+    /// A SQLite repository-kat összegyüjtő osztály
+    /// </summary>
     public static ModelManager MM { get; set; } = new();
+    /// <summary>
+    /// A saját Logger-ünk
+    /// </summary>
     public static Logger Logger { get; set; }
+    /// <summary>
+    /// A popup-okat kezelő osztály
+    /// </summary>
     public static PopupManager PopupManager { get; set; }
 
     public App(ModelManager mm, Logger logger, PopupManager popupManager)
@@ -60,7 +69,7 @@ public partial class App : Application
     private async Task UpdateCountriesAndLeagues()
     {
         LastCheck lastCountryCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.CountryCheck);
-        if (lastCountryCheck == null || lastCountryCheck.CheckDate < DateTime.Now.AddDays(-7))
+        if (lastCountryCheck == null || lastCountryCheck.CheckDate < DateTime.Now.AddMonths(-3))
         {
             App.Logger.SetCaption("Update Countries...");
             App.MM.CountryRepo.DeleteItems(App.MM.CountryRepo.GetItems());
