@@ -12,6 +12,7 @@ namespace LiveBettingHelper.Abstractions
         void AddItem(T item);
         void AddItems(List<T> items);
         void UpdateItem(T item);
+        void UpdateItems(List<T> items);
         T GetItem(int id);
         T GetItem(Expression<Func<T, bool>> predicate);
         List<T> GetItems();

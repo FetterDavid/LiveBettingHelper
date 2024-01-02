@@ -29,7 +29,8 @@ namespace LiveBettingHelper.Services
                     {
                         Name = response["league"]["name"],
                         CountryCode = response["country"]["code"],
-                        Type = response["league"]["type"]
+                        Type = response["league"]["type"],
+                        Selected = true
                     };
                     leagues.Add(league);
                 }

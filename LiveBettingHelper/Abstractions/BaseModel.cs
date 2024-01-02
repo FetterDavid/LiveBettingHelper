@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LiveBettingHelper.Abstractions
 {
-    public class BaseModel
+    public class BaseModel : ObservableObject
     {
         public int Id { get; set; }
     }

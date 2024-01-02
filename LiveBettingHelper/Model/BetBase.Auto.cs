@@ -1,14 +1,9 @@
 ﻿using LiveBettingHelper.Abstractions;
 using LiveBettingHelper.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.Model
 {
-    public class BetBase : LocalBaseModel
+    public partial class BetBase : LocalBaseModel
     {
         public BetType BetType { get; set; }
         public double Probability { get; set; }

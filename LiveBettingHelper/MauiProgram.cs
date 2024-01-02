@@ -21,8 +21,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<Logger>();
         builder.Services.AddSingleton<PopupManager>();
         builder.Services.AddTransient<LeagueSelectorPage>();
+        builder.Services.AddSingleton<CountrySelectorPage>();
         builder.Services.AddSingleton<NextMachesPage>();
         builder.Services.AddSingleton<NextMachesViewModel>();
+        builder.Services.AddSingleton<CountrySelectorViewModel>();
         builder.Services.AddTransient<LeagueSelectorViewModel>();
 #if DEBUG
         builder.Logging.AddDebug();

@@ -7,10 +7,10 @@ public partial class CountrySelectorPage : ContentPage
 {
     private CountrySelectorViewModel _model;
 
-    public CountrySelectorPage()
+    public CountrySelectorPage(CountrySelectorViewModel countrySelectorViewModel)
     {
         InitializeComponent();
-        _model = new CountrySelectorViewModel();
+        _model = countrySelectorViewModel;
         BindingContext = _model;
     }
 
@@ -22,5 +22,11 @@ public partial class CountrySelectorPage : ContentPage
         {
             { "Country", country}
         });
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _model.SetCountrySelections();
     }
 }

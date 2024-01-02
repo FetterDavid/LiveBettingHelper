@@ -1,16 +1,9 @@
-﻿using LiveBettingHelper.Abstractions;
-using SQLite;
-using SQLiteNetExtensions.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SQLite;
 
 namespace LiveBettingHelper.Model
 {
     [Table("prematch")]
-    public class PreMatch : MatchBase
+    public partial class PreMatch : MatchBase
     {
         public double HomeTeamFHOverPercent { get; set; }
         public double HomeTeamSHOverPercent { get; set; }

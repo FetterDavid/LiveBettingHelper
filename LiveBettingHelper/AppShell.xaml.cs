@@ -9,9 +9,4 @@ public partial class AppShell : Shell
 		InitializeComponent();
         Routing.RegisterRoute(nameof(LeagueSelectorPage), typeof(LeagueSelectorPage));
     }
-
-    private async void ImageButton_Clicked(object sender, EventArgs e)
-    {
-
-    }
 }

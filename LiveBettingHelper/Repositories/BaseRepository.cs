@@ -175,5 +175,22 @@ namespace LiveBettingHelper.Repositories
                 App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
+        /// <summary>
+        /// Frissíti a megadott objektumokat
+        /// </summary>
+        public void UpdateItems(List<T> items)
+        {
+            try
+            {
+                foreach (var item in items)
+                {
+                    _conn.Update(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
+            }
+        }
     }
 }

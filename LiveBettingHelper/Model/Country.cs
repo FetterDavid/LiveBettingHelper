@@ -1,15 +1,29 @@
-﻿using LiveBettingHelper.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LiveBettingHelper.Utilities;
+using SQLite;
 
 namespace LiveBettingHelper.Model
 {
-    public class Country : LocalBaseModel
+    public partial class Country
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
+        [ObservableProperty]
+        private bool _isSelected;
+        [ObservableProperty]
+        private bool _isPartiallySelected;
+        public void SetSelections()
+        {
+            string name = Name;
+            SelectType leaguesSelectType = GetLeaguesSelectType();
+            IsSelected = leaguesSelectType == SelectType.Selected;
+            IsPartiallySelected = leaguesSelectType == SelectType.PartiallySelected;
+        }
+
+        private SelectType GetLeaguesSelectType()
+        {
+            List<League> leagues = App.MM.LeagueRepo.GetItems(x => x.CountryCode == Code);
+            if (leagues.All(x => x.Selected)) return SelectType.Selected;
+            if (leagues.Any(x => x.Selected)) return SelectType.PartiallySelected;
+            return SelectType.NotSelected;
+        }
     }
 }

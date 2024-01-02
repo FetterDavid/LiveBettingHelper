@@ -3,18 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModels="clr-namespace:LiveBettingHelper.ViewModels"
              xmlns:Models="clr-namespace:LiveBettingHelper.Model"
+             xmlns:Comps="clr-namespace:LiveBettingHelper.Components"
              x:Class="LiveBettingHelper.Views.CountrySelectorPage"
-             Title="CountrySelectorPage">
+             Title="CountrySelectorPage"
+             x:Name="MyPage">
 
     <Grid x:DataType="ViewModels:CountrySelectorViewModel" >
         <CollectionView ItemsSource="{Binding Countries}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:Country">
-                    <Frame>
+                    <Frame Margin="5" Padding="10">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Country_Tapped"/>
                         </Frame.GestureRecognizers>
-                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Comps:MyCheckBox BoxColor="{StaticResource Primary}" IsPartiallyChecked="{Binding IsPartiallySelected, Mode=TwoWay}" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
+                                              OnSelectCmdParam="{Binding Code}" OnSelectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnSelect}"
+                                              OnDeselectCmdParam="{Binding Code}" OnDeselectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnDeselect}"/>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

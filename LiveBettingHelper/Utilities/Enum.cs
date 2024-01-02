@@ -11,6 +11,13 @@
         NextMatchesCheck = 'N',
         CountryCheck = 'C',
         LeagueCheck = 'L',
-        CompletedBetsCheck = 'M',
+        CompletedBetsCheck = 'M'
+    }
+
+    public enum SelectType
+    {
+        Selected = 'S',
+        NotSelected = 'N',
+        PartiallySelected = 'P'
     }
 }
