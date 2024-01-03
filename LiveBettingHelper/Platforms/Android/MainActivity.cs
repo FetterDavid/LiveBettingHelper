@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
 
@@ -23,5 +24,8 @@ public class MainActivity : MauiAppCompatActivity
             }
         }
 #pragma warning restore CA1416 // Restore platform compatibility warning
+        this.Window.DecorView.SystemUiVisibility = (StatusBarVisibility)
+            (SystemUiFlags.ImmersiveSticky | SystemUiFlags.HideNavigation |
+             SystemUiFlags.Fullscreen | SystemUiFlags.Immersive);
     }
 }

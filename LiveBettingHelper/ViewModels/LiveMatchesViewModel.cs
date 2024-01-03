@@ -26,14 +26,16 @@ namespace LiveBettingHelper.ViewModels
                 //if (preBet == null) continue;
                 //if (preBet.BetType == BetType.FirstHalfOver && match.ElapsedTime > 45) continue;
                 //if (preBet.BetType == BetType.SecondHalfOver && match.ElapsedTime <= 45) continue;
-                if (match.ElapsedTime < 50) continue;
+                //if (match.ElapsedTime < 50) continue;
                 //if (match.HomeTeamGoals == 0 && match.AwayTeamGoals == 0)
                 //{
-                    match.Odds = await OddsService.GetOverSecondHalfOddAsync(match);
-                    if (match.Odds == 0) continue;
-                    selectedMatches.Add(match);
+                match.Odds = await OddsService.GetOverSecondHalfOddAsync(match);
+                //if (match.Odds == 0) continue;
+                selectedMatches.Add(match);
                 //}
             }
+
+            selectedMatches = selectedMatches.OrderByDescending(match => match.ElapsedTime).ToList();
 
             MainThread.BeginInvokeOnMainThread(() =>
             {

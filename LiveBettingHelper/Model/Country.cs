@@ -8,8 +8,10 @@ namespace LiveBettingHelper.Model
     {
         [ObservableProperty]
         private SelectType _checkType;
-
-        public void SetSelections()
+        /// <summary>
+        /// Újratölti az országok kijelölésének tipusát (a kiválasztott ligák alapján)
+        /// </summary>
+        public void SetLeageSelection()
         {
             CheckType = GetLeaguesSelectType();
         }

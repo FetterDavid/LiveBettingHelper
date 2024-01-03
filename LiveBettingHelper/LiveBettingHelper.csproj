@@ -39,7 +39,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\soccer_ball.svg" Color="#137B5A" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -59,6 +59,7 @@
 	  <None Remove="Resources\Images\match_history.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\next_matches.png" />
+	  <None Remove="Resources\Images\soccer_ball.svg" />
 	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Images\win.png" />
 	</ItemGroup>
@@ -92,6 +93,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LiveMatchesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NextMachesPage.xaml">

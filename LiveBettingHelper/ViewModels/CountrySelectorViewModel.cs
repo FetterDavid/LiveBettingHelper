@@ -31,12 +31,12 @@ namespace LiveBettingHelper.ViewModels
             Countries = App.MM.CountryRepo.GetItems().ToList();
         }
         /// <summary>
-        /// Újra tölti a listában lévő országok kijelölésének tipusát
+        /// Újra tölti a listában lévő országok kijelölésének tipusát (a kiválasztott ligák alapján)
         /// </summary>
         public void SetCountrySelections()
         {
             foreach (var country in Countries)
-                country.SetSelections();
+                country.SetLeageSelection();
         }
 
         private void SelectACountry(object obj)

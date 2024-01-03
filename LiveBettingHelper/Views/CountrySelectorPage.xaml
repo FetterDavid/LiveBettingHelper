@@ -6,19 +6,20 @@
              xmlns:Comps="clr-namespace:LiveBettingHelper.Components"
              x:Class="LiveBettingHelper.Views.CountrySelectorPage"
              Title="CountrySelectorPage"
-             x:Name="MyPage">
+             x:Name="MyPage"
+             BackgroundColor="{StaticResource Tertiary}">
 
-    <Grid x:DataType="ViewModels:CountrySelectorViewModel" >
+    <Grid x:DataType="ViewModels:CountrySelectorViewModel">
         <CollectionView ItemsSource="{Binding Countries}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:Country">
-                    <Frame Margin="5" Padding="10">
+                    <Frame Margin="5" Padding="10" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Country_Tapped"/>
                         </Frame.GestureRecognizers>
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
-                            <Comps:MyCheckBox BoxColor="{StaticResource Primary}" CheckType="{Binding CheckType, Mode=TwoWay}" HorizontalOptions="End"
+                            <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="{StaticResource GrayText}"/>
+                            <Comps:MyCheckBox Grid.Column="1" BoxColor="{StaticResource Primary}" CheckType="{Binding CheckType, Mode=TwoWay}" HorizontalOptions="End"
                                               OnSelectCmdParam="{Binding Code}" OnSelectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnSelectACountry}"
                                               OnDeselectCmdParam="{Binding Code}" OnDeselectCmd="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnDeselectACountry}"/>
                         </Grid>

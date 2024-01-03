@@ -7,14 +7,14 @@
              x:Class="LiveBettingHelper.Views.LeagueSelectorPage"
              Title="LeagueSelectorPage">
 
-    <Grid RowDefinitions="Auto,*">
-        <Label Grid.Row="0" Text="{Binding Country.Name}" HorizontalOptions="Center" FontAttributes="Bold" FontSize="24" Margin="0,10"/>
+    <Grid RowDefinitions="Auto,*" BackgroundColor="{StaticResource Tertiary}">
+        <Label Grid.Row="0" Text="{Binding Country.Name}" HorizontalOptions="Center" FontAttributes="Bold" FontSize="24" Margin="0,10" TextColor="{StaticResource GrayText}"/>
         <CollectionView Grid.Row="1" ItemsSource="{Binding Leagues}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="Models:League">
-                    <Frame Margin="5" Padding="10">
+                    <Frame Margin="5" Padding="10" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Label Grid.Column="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="{StaticResource GrayText}"/>
                             <CheckBox Grid.Column="1" Scale="1.5" IsChecked="{Binding Selected}" CheckedChanged="CheckBox_CheckedChanged"/>
                         </Grid>
                     </Frame>
