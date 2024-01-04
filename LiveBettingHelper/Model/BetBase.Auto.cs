@@ -5,7 +5,7 @@ namespace LiveBettingHelper.Model
 {
     public partial class BetBase : LocalBaseModel
     {
-        public BetType BetType { get; set; }
+        public BetType BettingType { get; set; }
         public double Probability { get; set; }
         public int FixtureId { get; set; }
         public int LeagueId { get; set; }

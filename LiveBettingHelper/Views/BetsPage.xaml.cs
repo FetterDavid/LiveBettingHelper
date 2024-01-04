@@ -1,3 +1,5 @@
+using LiveBettingHelper.Model;
+using LiveBettingHelper.Services;
 using LiveBettingHelper.ViewModels;
 
 namespace LiveBettingHelper.Views;
@@ -11,11 +13,12 @@ public partial class BetsPage : ContentPage
         InitializeComponent();
         _viewModel = betViewModel;
         BindingContext = _viewModel;
+
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel.ReloadBets();
+        _ = _viewModel.ReloadBets(); // fire and forget
     }
 }

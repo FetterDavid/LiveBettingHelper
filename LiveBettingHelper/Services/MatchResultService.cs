@@ -11,7 +11,7 @@ namespace LiveBettingHelper.Services
         /// <summary>
         /// Vissza adja egy mecs eredményét id alapján
         /// </summary>
-        public static async Task<MatchResult> GetMatchResByIdAsync(int id, BetType betType)
+        public static async Task<MatchResult> GetMatchResultByIdAsync(int id, BetType betType)
         {
             string json = await GetMatcheJsonByIdAsync(id);
             if (string.IsNullOrEmpty(json))
@@ -55,6 +55,54 @@ namespace LiveBettingHelper.Services
             {
                 App.Logger.Exception(ex);
                 return null;
+            }
+        }
+        /// <summary>
+        /// Vissza adja egy mecs státuszát id alapján
+        /// </summary>
+        public static async Task<MatchStatus> GetMatchStatus(int id)
+        {
+            string json = await GetMatcheJsonByIdAsync(id);
+            if (string.IsNullOrEmpty(json))
+            {
+                App.Logger.Error("No data received from the API.");
+                return MatchStatus.Error;
+            }
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(json);
+                if (data["response"] == null) return MatchStatus.Error;
+                MatchResult res = null;
+                string statusCode = data["response"][0]["fixture"]["status"]["short"];
+                if (Enum.TryParse(statusCode, out MatchStatus status)) return status;
+                else return MatchStatus.Error;
+            }
+            catch (JsonException ex)
+            {
+                App.Logger.Exception(ex, "JSON deserialization error: ");
+                return MatchStatus.Error;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex);
+                return MatchStatus.Error;
+            }
+        }
+        /// <summary>
+        /// Vissza adja hogy vége van-e egy mecsnek id alapján
+        /// </summary>
+        public static async Task<bool> IsMatchFinished(int id)
+        {
+            MatchStatus status = await GetMatchStatus(id);
+            switch (status)
+            {
+                case MatchStatus.FT:
+                case MatchStatus.AET:
+                case MatchStatus.FT_PEN:
+                case MatchStatus.WO:
+                    return true;
+                default:
+                    return false;
             }
         }
         /// <summary>

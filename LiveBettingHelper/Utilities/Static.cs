@@ -30,7 +30,7 @@ namespace LiveBettingHelper.Utilities
             return new BetHistory
             {
                 IsWon = isWon,
-                BetType = preBet.BetType,
+                BettingType = preBet.BettingType,
                 Probability = preBet.Probability,
                 FixtureId = preBet.FixtureId,
                 LeagueId = preBet.LeagueId,
@@ -50,7 +50,7 @@ namespace LiveBettingHelper.Utilities
         {
             return new PreBet
             {
-                BetType = betType,
+                BettingType = betType,
                 Probability = probability,
                 Date = preMatch.Date,
                 FixtureId = preMatch.Id,

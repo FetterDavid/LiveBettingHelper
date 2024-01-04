@@ -44,7 +44,7 @@ public partial class LiveMatchesPage : ContentPage
             Date = match.Date,
             Odds = 1.36,
             BetValue = 350,
-            BetType = BetType.FirstHalfOver
+            BettingType = BetType.FirstHalfOver
         };
         App.PopupManager.ShowPopup(new BetPopup(bet));
     }

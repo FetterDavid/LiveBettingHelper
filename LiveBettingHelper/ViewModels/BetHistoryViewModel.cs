@@ -27,10 +27,10 @@ namespace LiveBettingHelper.ViewModels
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    MatchResult result = await MatchResultService.GetMatchResByIdAsync(preBet.FixtureId, preBet.BetType);
+                    MatchResult result = await MatchResultService.GetMatchResultByIdAsync(preBet.FixtureId, preBet.BettingType);
                     if (result == null) return;
                     bool isWon = false;
-                    switch (preBet.BetType)
+                    switch (preBet.BettingType)
                     {
                         case BetType.FirstHalfOver:
                             isWon = result.FirstHalfResult != (0, 0);

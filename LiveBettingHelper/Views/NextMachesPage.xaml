@@ -30,7 +30,7 @@
                         <Label Grid.Row="3" Grid.Column="2" Text="{Binding AwayTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,3,8,0"/>
                         <Label Grid.Row="2" Grid.Column="3" Text="{Binding Probability, StringFormat='{0}%'}" VerticalOptions="Center" HorizontalOptions="End" FontSize="14" 
                                FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="5,0"/>
-                        <Label Grid.Row="3" Grid.Column="3" Text="{Binding BetType}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="5,0"/>
+                        <Label Grid.Row="3" Grid.Column="3" Text="{Binding BettingType}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="5,0"/>
                     </Grid>
                 </Frame>
             </DataTemplate>
