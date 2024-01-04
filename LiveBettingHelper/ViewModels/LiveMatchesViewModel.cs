@@ -16,7 +16,7 @@ namespace LiveBettingHelper.ViewModels
             this._preBetRepo = preBetRepo;
         }
 
-        public async void ReloadDesiredLiveMatches()
+        public async Task ReloadDesiredLiveMatches()
         {
             List<LiveMatch> matches = await LiveMatchService.GetAllLiveFixturesAsync();
             List<LiveMatch> selectedMatches = new();

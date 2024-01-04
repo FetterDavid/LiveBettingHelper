@@ -1,4 +1,5 @@
-﻿using LiveBettingHelper.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LiveBettingHelper.Model;
 using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.Views.Popups;
@@ -6,10 +7,16 @@ using System.Collections.ObjectModel;
 
 namespace LiveBettingHelper.ViewModels
 {
-    public class NextMachesViewModel
+    public partial class NextMachesViewModel : BaseViewModel
     {
-        public ObservableCollection<PreBet> PreBets { get; set; } = new();
+        [ObservableProperty]
+        private List<PreBet> _preBets;
         private int _checkedMatches;
+
+        public NextMachesViewModel()
+        {
+            PreBets = new();
+        }
 
         public async Task Reload()
         {

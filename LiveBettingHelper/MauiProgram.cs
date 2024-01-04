@@ -26,6 +26,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<NextMachesViewModel>();
         builder.Services.AddTransient<CountrySelectorViewModel>();
         builder.Services.AddTransient<LeagueSelectorViewModel>();
+        builder.Services.AddSingleton<BetsPage>();
+        builder.Services.AddSingleton<BetViewModel>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

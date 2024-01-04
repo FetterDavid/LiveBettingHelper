@@ -9,6 +9,5 @@ namespace LiveBettingHelper.Model
         public double HomeTeamSHOverPercent { get; set; }
         public double AwayTeamFHOverPercent { get; set; }
         public double AwayTeamSHOverPercent { get; set; }
-        public DateTime Date { get; set; }
     }
 }

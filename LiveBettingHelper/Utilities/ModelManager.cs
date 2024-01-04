@@ -10,6 +10,7 @@ namespace LiveBettingHelper.Utilities
         public BaseRepository<CheckedMatch> CheckedMatchRepo { get; set; } = new();
         public BaseRepository<Country> CountryRepo { get; set; } = new();
         public BaseRepository<League> LeagueRepo { get; set; } = new();
+        public BaseRepository<Bet> BetRepo { get; set; } = new();
         public LastCheckRepository LastCheckRepo { get; set; } = new();
     }
 }

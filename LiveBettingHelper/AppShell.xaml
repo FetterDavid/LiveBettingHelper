@@ -26,6 +26,9 @@
         <Tab Title="History" Icon="match_history.png">
             <ShellContent ContentTemplate="{DataTemplate local:BetHistoryPage}"/>
         </Tab>
+        <Tab Title="Bets" Icon="tickets.png">
+            <ShellContent ContentTemplate="{DataTemplate local:BetsPage}"/>
+        </Tab>
         <Tab Title="Menu" Icon="menu.png">
             <ShellContent ContentTemplate="{DataTemplate local:MenuPage}"/>
         </Tab>

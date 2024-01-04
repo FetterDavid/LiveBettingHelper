@@ -1,4 +1,7 @@
+using LiveBettingHelper.Model;
+using LiveBettingHelper.Utilities;
 using LiveBettingHelper.ViewModels;
+using LiveBettingHelper.Views.Popups;
 
 namespace LiveBettingHelper.Views;
 
@@ -21,6 +24,28 @@ public partial class LiveMatchesPage : ContentPage
 
     private void ReloadLiveMatches(object state)
     {
-        _model.ReloadDesiredLiveMatches();
+        _ = _model.ReloadDesiredLiveMatches();
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        LiveMatch match = ((VisualElement)sender).BindingContext as LiveMatch;
+        Bet bet = new Bet
+        {
+            FixtureId = match.Id,
+            LeagueId = match.LeagueId,
+            LeagueName = match.LeagueName,
+            LeagueCountry = match.LeagueCountry,
+            LeagueSeason = match.LeagueSeason,
+            HomeTeamId = match.HomeTeamId,
+            HomeTeamName = match.HomeTeamName,
+            AwayTeamId = match.AwayTeamId,
+            AwayTeamName = match.AwayTeamName,
+            Date = match.Date,
+            Odds = 1.36,
+            BetValue = 350,
+            BetType = BetType.FirstHalfOver
+        };
+        App.PopupManager.ShowPopup(new BetPopup(bet));
     }
 }

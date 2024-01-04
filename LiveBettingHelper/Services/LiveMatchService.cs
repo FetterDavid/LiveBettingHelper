@@ -36,6 +36,7 @@ namespace LiveBettingHelper.Services
                         AwayTeamName = response["teams"]["away"]["name"],
                         HomeTeamGoals = response["goals"]["home"],
                         AwayTeamGoals = response["goals"]["away"],
+                        Date = response["fixture"]["date"],
                         ElapsedTime = response["fixture"]["status"]["elapsed"]
                     };
                     if (response["score"]["halftime"]["home"] != null)

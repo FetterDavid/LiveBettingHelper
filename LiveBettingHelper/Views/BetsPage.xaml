@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:LiveBettingHelper.ViewModels"
+             xmlns:models="clr-namespace:LiveBettingHelper.Model"
+             xmlns:converter="clr-namespace:LiveBettingHelper.Converters"
+             x:Class="LiveBettingHelper.Views.BetsPage"
+             Title="BetsPage"
+             x:DataType="viewModels:BetViewModel"
+             BackgroundColor="{StaticResource Tertiary}">
+
+    <CollectionView ItemsSource="{Binding Bets}" BackgroundColor="{StaticResource Tertiary}" Margin="0,5,0,0">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:Bet">
+                <Frame Padding="0,5" Margin="3,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Secondary}">
+                    <Grid RowDefinitions="Auto,1,Auto,Auto,1,Auto" ColumnDefinitions="45,1,*,Auto" ColumnSpacing="5" Padding="0,0">
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="8,0,8,3">
+                            <Label Text="{Binding LeagueCountry}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                            <Label Text="|" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                            <Label Text="{Binding LeagueName}" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource GrayText}"/>
+                        </HorizontalStackLayout>
+                        <Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" HorizontalOptions="End" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,0,8,3"
+                           Text="{Binding Date, Converter={converter:DateTimeFormatConverter}, ConverterParameter='MMM dd'}"/>
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="4" CornerRadius="5" VerticalOptions="Center" HeightRequest="2" Color="{StaticResource Secondary}"/>
+                        <Label Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Text="x" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                        <BoxView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" CornerRadius="5" HorizontalOptions="Center" WidthRequest="2" Color="{StaticResource Secondary}"/>
+                        <Label Grid.Row="2" Grid.Column="2" Text="{Binding HomeTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,8,8,0"/>
+                        <Label Grid.Row="3" Grid.Column="2" Text="{Binding AwayTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,3,8,8"/>
+                        <Label Grid.Row="2" Grid.Column="3" Text="{Binding BetType}" VerticalOptions="Center" HorizontalOptions="End" FontSize="12" 
+                           FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,8,8,0"/>
+                        <Label Grid.Row="3" Grid.Column="3" Text="{Binding Odds}" VerticalOptions="Center" HorizontalOptions="End" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource GrayText}"  Margin="8,0,8,8"/>
+                        <BoxView Grid.Row="4" Grid.ColumnSpan="4" CornerRadius="5" VerticalOptions="Center" HeightRequest="2" Color="{StaticResource Secondary}"/>
+                        <Grid Grid.Row="5" Grid.ColumnSpan="4" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Stake:" FontSize="12" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,5,10,0"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding BetValue,StringFormat='{0} Ft'}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="To Return:" FontSize="12" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,5,10,0"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding PossibleWinning,StringFormat='{0} Ft'}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,0"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+</ContentPage>

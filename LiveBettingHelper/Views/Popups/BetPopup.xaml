@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:LiveBettingHelper.Model"
+             x:Class="LiveBettingHelper.Views.Popups.BetPopup"
+             Color="Transparent"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             VerticalOptions="End"
+             x:DataType="model:Bet">
+
+    <Border VerticalOptions="End" HorizontalOptions="Center" Stroke="{StaticResource Secondary}" StrokeShape="RoundRectangle 5,5,0,0" StrokeThickness="2" BackgroundColor="#383e42" Margin="10,0">
+        <Grid RowDefinitions="Auto,Auto,1,Auto,Auto" ColumnDefinitions="Auto,1,*" VerticalOptions="End" HorizontalOptions="Center" RowSpacing="0" Padding="0,0,0,5">
+            <Button Grid.Row="0" Grid.RowSpan="2" BackgroundColor="Transparent" Text="x" TextColor="DarkGray" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center" Margin="5,0" Padding="0"
+                    Clicked="CloseBtn_Clicked"/>
+            <Label Grid.Row="0" Grid.Column="2" Text="{Binding HomeTeamName}" TextColor="{StaticResource GrayText}" FontSize="16" VerticalOptions="Center" HorizontalOptions="Start" Margin="10,10,10,0"/>
+            <Label Grid.Row="1" Grid.Column="2" Text="{Binding AwayTeamName}" TextColor="{StaticResource GrayText}" FontSize="16" VerticalOptions="Center" HorizontalOptions="Start" Margin="10,0,10,10"/>
+            <BoxView Grid.RowSpan="3" Grid.Column="1" Color="{StaticResource Gray400}"/>
+            <BoxView Grid.Row="2" Grid.ColumnSpan="6" Color="{StaticResource Gray400}"/>
+            <Grid Grid.Row="3" Grid.ColumnSpan="3" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" Margin="0,15">
+                <Label Grid.Row="0" Grid.Column="0" Text="{Binding BetType}" FontSize="12" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,0"/>
+                <Entry Grid.Row="1" Grid.Column="0" Text="{Binding Odds, Mode=TwoWay}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" HorizontalOptions="Start" 
+                       Margin="10,0" Keyboard="Numeric" TextChanged="CorrectPossibleWinning"/>
+                <Entry Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="{Binding BetValue,Mode=TwoWay}" MinimumWidthRequest="80" BackgroundColor="{StaticResource GrayText}" FontSize="17" FontAttributes="Bold" 
+                       HorizontalOptions="End" VerticalOptions="Center" Margin="10,5" Keyboard="Numeric" TextChanged="CorrectPossibleWinning"/>
+            </Grid>
+            <Grid Grid.Row="4" Grid.ColumnSpan="3" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                <Label Grid.Row="0" Grid.Column="0" Text="Expected winnings:" FontSize="12" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,0"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="{Binding PossibleWinning}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center" Margin="10,0"/>
+                <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="Bet" FontSize="17" FontAttributes="Bold" HorizontalOptions="End" VerticalOptions="Center" Padding="40,0" Margin="10,5" Clicked="BetBtn_Clicked"/>
+            </Grid>
+        </Grid>
+    </Border>
+
+</toolkit:Popup>
