@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace LiveBettingHelper.ViewModels
 {
-    public class LiveMatchesPageModel
+    public class LiveMatchesPageModel : BaseViewModel
     {
         public ObservableCollection<LiveMatch> LiveMatches { get; set; } = new();
         private BaseRepository<PreBet> _preBetRepo;
@@ -34,9 +34,7 @@ namespace LiveBettingHelper.ViewModels
                 selectedMatches.Add(match);
                 //}
             }
-
             selectedMatches = selectedMatches.OrderByDescending(match => match.ElapsedTime).ToList();
-
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 LiveMatches.Clear();
@@ -45,6 +43,7 @@ namespace LiveBettingHelper.ViewModels
                     LiveMatches.Add(match);
                 }
             });
+            IsBusy = false;
         }
     }
 }

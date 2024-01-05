@@ -17,14 +17,11 @@
     </Shell.TitleView>
 
     <TabBar>
-        <Tab Title="Next Matches" Icon="next_matches.png">
+        <Tab Title="Upcoming" Icon="next_matches.png">
             <ShellContent ContentTemplate="{DataTemplate local:NextMachesPage}"/>
         </Tab>
-        <Tab Title="Live Matches" Icon="live_matches.png">
+        <Tab Title="Live" Icon="live_matches.png">
             <ShellContent ContentTemplate="{DataTemplate local:LiveMatchesPage}"/>
-        </Tab>
-        <Tab Title="History" Icon="match_history.png">
-            <ShellContent ContentTemplate="{DataTemplate local:BetHistoryPage}"/>
         </Tab>
         <Tab Title="Bets" Icon="tickets.png">
             <ShellContent ContentTemplate="{DataTemplate local:BetsPage}"/>

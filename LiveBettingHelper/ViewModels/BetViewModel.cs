@@ -48,8 +48,10 @@ namespace LiveBettingHelper.ViewModels
         /// </summary>
         public async Task ReloadBets()
         {
+            IsBusy = true;
             await CheckBetsStatus();
             LoadBets();
+            IsBusy = false;
         }
 
         public async Task CheckBetsStatus()

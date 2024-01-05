@@ -20,6 +20,7 @@ namespace LiveBettingHelper.ViewModels
 
         public async Task Reload()
         {
+            IsBusy = true;
             LastCheck lastCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
             if (lastCheck == null || lastCheck.CheckDate.AddHours(1) < DateTime.Now)
             {
@@ -27,6 +28,7 @@ namespace LiveBettingHelper.ViewModels
                 App.MM.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
             LoadNextMatches();
+            IsBusy = false;
         }
 
         private async Task CheckTodayMatches()

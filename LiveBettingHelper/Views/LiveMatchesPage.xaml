@@ -8,30 +8,36 @@
              x:Class="LiveBettingHelper.Views.LiveMatchesPage"
              BackgroundColor="{StaticResource Tertiary}">
 
-    <CollectionView ItemsSource="{Binding LiveMatches}" Margin="0,5,0,0">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="models:LiveMatch">
-                <Frame Padding="0,5" Margin="5,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                    </Frame.GestureRecognizers>
-                    <Grid RowDefinitions="Auto,1,Auto,Auto" ColumnDefinitions="45,1,*,Auto" ColumnSpacing="5" Padding="0,0">
-                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="8,0,8,3">
-                            <Label Text="{Binding LeagueCountry}" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
-                            <Label Text="|" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
-                            <Label Text="{Binding LeagueName}" VerticalOptions="Center" FontSize="16" TextColor="{StaticResource GrayText}"/>
-                        </HorizontalStackLayout>
-                        <BoxView Grid.Row="1" Grid.ColumnSpan="4" CornerRadius="5" VerticalOptions="Center" HeightRequest="2" Color="{StaticResource Secondary}"/>
-                        <Label Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Text="{Binding ElapsedTime,StringFormat='  {0} ’'}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
-                        <BoxView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" CornerRadius="5" HorizontalOptions="Center" WidthRequest="2" Color="{StaticResource Secondary}"/>
-                        <Label Grid.Row="2" Grid.Column="2" Text="{Binding HomeTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,8,8,0"/>
-                        <Label Grid.Row="3" Grid.Column="2" Text="{Binding AwayTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,3,8,0"/>
-                        <Label Grid.Row="2" Grid.Column="3" Text="{Binding HomeTeamGoals}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"  FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="10,0"/>
-                        <Label Grid.Row="3" Grid.Column="3" Text="{Binding AwayTeamGoals}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="10,0"/>
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid>
+        
+        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" Color="White"/>
+
+        <CollectionView ItemsSource="{Binding LiveMatches}" Margin="0,5,0,0" IsVisible="{Binding IsBusy, Converter={converter:InverseBoolConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:LiveMatch">
+                    <Frame Padding="0,5" Margin="5,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <Grid RowDefinitions="Auto,1,Auto,Auto" ColumnDefinitions="45,1,*,Auto" ColumnSpacing="5" Padding="0,0">
+                            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="8,0,8,3">
+                                <Label Text="{Binding LeagueCountry}" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                                <Label Text="|" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                                <Label Text="{Binding LeagueName}" VerticalOptions="Center" FontSize="16" TextColor="{StaticResource GrayText}"/>
+                            </HorizontalStackLayout>
+                            <BoxView Grid.Row="1" Grid.ColumnSpan="4" CornerRadius="5" VerticalOptions="Center" HeightRequest="2" Color="{StaticResource Secondary}"/>
+                            <Label Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Text="{Binding ElapsedTime,StringFormat='  {0} ’'}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
+                            <BoxView Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" CornerRadius="5" HorizontalOptions="Center" WidthRequest="2" Color="{StaticResource Secondary}"/>
+                            <Label Grid.Row="2" Grid.Column="2" Text="{Binding HomeTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,8,8,0"/>
+                            <Label Grid.Row="3" Grid.Column="2" Text="{Binding AwayTeamName}" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="8,3,8,0"/>
+                            <Label Grid.Row="2" Grid.Column="3" Text="{Binding HomeTeamGoals}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17"  FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="10,0"/>
+                            <Label Grid.Row="3" Grid.Column="3" Text="{Binding AwayTeamGoals}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource GrayText}" Margin="10,0"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    
+    </Grid>
 
 </ContentPage>
