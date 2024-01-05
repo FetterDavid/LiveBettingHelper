@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:LiveBettingHelper.ViewModels"
+             x:Class="LiveBettingHelper.Views.SettingsPage"
+             x:DataType="viewmodel:SettingsViewModel"
+             Title="SettingsPage"
+             BackgroundColor="{StaticResource Tertiary}">
+    <VerticalStackLayout Padding="15">
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Default bet stake" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
+            <Entry Text="{Binding BankManager.MyBank.DefaultBetStake, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+                   VerticalOptions="Center" TextChanged="DefaultBetStakeEntry_TextChanged"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

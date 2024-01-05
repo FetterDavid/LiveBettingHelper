@@ -17,17 +17,26 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         }).UseMauiCommunityToolkit();
+        // Manager injections
         builder.Services.AddSingleton<ModelManager>();
         builder.Services.AddSingleton<Logger>();
         builder.Services.AddSingleton<PopupManager>();
-        builder.Services.AddTransient<LeagueSelectorPage>();
-        builder.Services.AddTransient<CountrySelectorPage>();
+        builder.Services.AddSingleton<BankManager>();
+        // Page injections
         builder.Services.AddSingleton<NextMachesPage>();
+        builder.Services.AddSingleton<BetsPage>();
+        builder.Services.AddSingleton<MenuPage>();
+        builder.Services.AddTransient<CountrySelectorPage>();
+        builder.Services.AddTransient<LeagueSelectorPage>();
+        builder.Services.AddTransient<SettingsPage>();
+        // ViewModel injections
         builder.Services.AddSingleton<NextMachesViewModel>();
+        builder.Services.AddSingleton<BetViewModel>();
+        builder.Services.AddSingleton<MenuViewModel>();
         builder.Services.AddTransient<CountrySelectorViewModel>();
         builder.Services.AddTransient<LeagueSelectorViewModel>();
-        builder.Services.AddSingleton<BetsPage>();
-        builder.Services.AddSingleton<BetViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

@@ -19,7 +19,7 @@
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                         </Frame.GestureRecognizers>
-                        <Grid RowDefinitions="Auto,1,Auto,Auto" ColumnDefinitions="45,1,*,Auto" ColumnSpacing="5" Padding="0,0">
+                        <Grid RowDefinitions="Auto,1,Auto,Auto" ColumnDefinitions="50,1,*,Auto" ColumnSpacing="5" Padding="0,0">
                             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="8,0,8,3">
                                 <Label Text="{Binding LeagueCountry}" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>
                                 <Label Text="|" VerticalOptions="Center" FontSize="15" FontAttributes="Bold" TextColor="{StaticResource GrayText}"/>

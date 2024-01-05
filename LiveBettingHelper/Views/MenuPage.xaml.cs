@@ -1,14 +1,22 @@
+using LiveBettingHelper.ViewModels;
+
 namespace LiveBettingHelper.Views;
 
 public partial class MenuPage : ContentPage
 {
-    public MenuPage()
+    public MenuPage(MenuViewModel menuViewModel)
     {
         InitializeComponent();
+        BindingContext = menuViewModel;
     }
 
-    private async void Button_Clicked(object sender, EventArgs e)
+    private async void LeagueSelectingBtn_Clicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(CountrySelectorPage));
+    }
+
+    private async void SettingsBtn_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SettingsPage));
     }
 }

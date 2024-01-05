@@ -20,16 +20,21 @@ public partial class App : Application
     /// A popup-okat kezelő osztály
     /// </summary>
     public static PopupManager PopupManager { get; set; }
+    /// <summary>
+    /// A bank-ot kezelő osztály
+    /// </summary>
+    public static BankManager BankManager { get; set; }
 
-    public App(ModelManager mm, Logger logger, PopupManager popupManager)
+    public App(ModelManager mm, Logger logger, PopupManager popupManager, BankManager bankManager)
     {
         InitializeComponent();
         ApiManager.SetupRequestLimitTimer();
         MM = mm;
         Logger = logger;
         PopupManager = popupManager;
+        BankManager = bankManager;
         MainPage = new SplashScreenPage();
-        _ = LoadDataAsync();
+        _ = LoadDataAsync(); // fire and forget
     }
     /// <summary>
     /// Betölti mindent a SplashScreen-en majd tovább lép az AppShell-re
@@ -48,7 +53,7 @@ public partial class App : Application
         finally
         {
             App.Logger.SetCaption("");
-            MainPage = new AppShell();
+            MainPage = new AppShell(new ViewModels.AppShellViewModel(BankManager));
         }
 
     }

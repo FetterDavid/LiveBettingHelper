@@ -37,7 +37,7 @@ namespace LiveBettingHelper.Services
                         HomeTeamGoals = response["goals"]["home"],
                         AwayTeamGoals = response["goals"]["away"],
                         Date = response["fixture"]["date"],
-                        ElapsedTime = response["fixture"]["status"]["elapsed"]
+                        ElapsedTime = response["fixture"]["status"]["elapsed"],
                     };
                     if (response["score"]["halftime"]["home"] != null)
                         match.FirstHalfResult = (response["score"]["halftime"]["home"], response["score"]["halftime"]["away"]);

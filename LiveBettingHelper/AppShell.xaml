@@ -3,7 +3,9 @@
     x:Class="LiveBettingHelper.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:LiveBettingHelper.ViewModels"
     xmlns:local="clr-namespace:LiveBettingHelper.Views"
+    x:DataType="viewmodel:AppShellViewModel"
     Shell.FlyoutBehavior="Disabled">
 
     <Shell.TitleView>
@@ -11,7 +13,7 @@
             <Label Grid.Row="1" Text="Live Betting Helper" TextColor="{StaticResource GrayText}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
             <Grid Grid.Column="2" RowDefinitions="*,Auto" HorizontalOptions="End">
                 <ImageButton Grid.Row="0" Source="user.png" HorizontalOptions="Center"/>
-                <Label Grid.Row="1" Text="3000FT" TextColor="{StaticResource GrayText}" HorizontalOptions="Center" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Text="{Binding BankManager.MyBank.Balance}" TextColor="{StaticResource GrayText}" HorizontalOptions="Center" FontAttributes="Bold"/>
             </Grid>
         </Grid>
     </Shell.TitleView>

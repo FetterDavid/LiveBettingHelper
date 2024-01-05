@@ -26,7 +26,8 @@ public partial class BetPopup : Popup
 
     private void BetBtn_Clicked(object sender, EventArgs e)
     {
-        App.MM.BetRepo.AddItem(Bet);
+        if (App.BankManager.Withdraw(Bet.BetValue))
+            App.MM.BetRepo.AddItem(Bet);
         Close();
     }
 }

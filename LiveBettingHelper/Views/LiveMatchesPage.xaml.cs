@@ -30,22 +30,27 @@ public partial class LiveMatchesPage : ContentPage
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         LiveMatch match = ((VisualElement)sender).BindingContext as LiveMatch;
-        Bet bet = new Bet
+        List<BetType> betTypes = match.GetPossibleBetTypes();
+        if (betTypes.Count == 0) App.PopupManager.ShowPopup(new InfoPopup("Nincs megfelelõ fogadási lehetõség"));
+        else
         {
-            FixtureId = match.Id,
-            LeagueId = match.LeagueId,
-            LeagueName = match.LeagueName,
-            LeagueCountry = match.LeagueCountry,
-            LeagueSeason = match.LeagueSeason,
-            HomeTeamId = match.HomeTeamId,
-            HomeTeamName = match.HomeTeamName,
-            AwayTeamId = match.AwayTeamId,
-            AwayTeamName = match.AwayTeamName,
-            Date = match.Date,
-            Odds = 1.36,
-            BetValue = 350,
-            BettingType = BetType.FirstHalfOver
-        };
-        App.PopupManager.ShowPopup(new BetPopup(bet));
+            Bet bet = new Bet
+            {
+                FixtureId = match.Id,
+                LeagueId = match.LeagueId,
+                LeagueName = match.LeagueName,
+                LeagueCountry = match.LeagueCountry,
+                LeagueSeason = match.LeagueSeason,
+                HomeTeamId = match.HomeTeamId,
+                HomeTeamName = match.HomeTeamName,
+                AwayTeamId = match.AwayTeamId,
+                AwayTeamName = match.AwayTeamName,
+                Date = match.Date,
+                Odds = 1.36,
+                BetValue = App.BankManager.MyBank.DefaultBetStake,
+                BettingType = betTypes[0]
+            };
+            App.PopupManager.ShowPopup(new BetPopup(bet));
+        }
     }
 }
