@@ -1,15 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using LiveBettingHelper.Services;
+﻿using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using SQLite;
-using System.Runtime.Serialization;
 
 namespace LiveBettingHelper.Model
 {
     public partial class Bet
     {
-        [ObservableProperty]
-        private double _possibleWinning;
         [Ignore]
         public ImageSource StatusImg
         {
@@ -20,7 +16,9 @@ namespace LiveBettingHelper.Model
                 return ImageSource.FromFile("lose.png");
             }
         }
-
+        /// <summary>
+        /// újra számolja a lehetséges nyereményt
+        /// </summary>
         public void SetPossibleWinning()
         {
             PossibleWinning = Math.Round(BetValue * Odds, 0);
@@ -35,6 +33,7 @@ namespace LiveBettingHelper.Model
             {
                 Finished = true;
                 Winned = await GetOutcome();
+                if (Winned) App.BankManager.Deposit(PossibleWinning);
                 App.MM.BetRepo.UpdateItem(this);
                 return true;
             }

@@ -1,4 +1,5 @@
 using LiveBettingHelper.Model;
+using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.ViewModels;
 using LiveBettingHelper.Views.Popups;
@@ -12,7 +13,7 @@ public partial class LiveMatchesPage : ContentPage
     public LiveMatchesPage()
     {
         InitializeComponent();
-        this._model = new LiveMatchesPageModel(App.MM.PreBetRepo);
+        this._model = new LiveMatchesPageModel();
         BindingContext = _model;
         StartTimer();
     }
@@ -27,30 +28,47 @@ public partial class LiveMatchesPage : ContentPage
         _ = _model.ReloadDesiredLiveMatches();
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void LiveMatch_Tapped(object sender, TappedEventArgs e)
     {
         LiveMatch match = ((VisualElement)sender).BindingContext as LiveMatch;
+        if (match == null) return;
+        // fogadási tipus ellemörzése
         List<BetType> betTypes = match.GetPossibleBetTypes();
-        if (betTypes.Count == 0) App.PopupManager.ShowPopup(new InfoPopup("Nincs megfelelõ fogadási lehetõség"));
-        else
+        if (betTypes.Count == 0)
         {
-            Bet bet = new Bet
-            {
-                FixtureId = match.Id,
-                LeagueId = match.LeagueId,
-                LeagueName = match.LeagueName,
-                LeagueCountry = match.LeagueCountry,
-                LeagueSeason = match.LeagueSeason,
-                HomeTeamId = match.HomeTeamId,
-                HomeTeamName = match.HomeTeamName,
-                AwayTeamId = match.AwayTeamId,
-                AwayTeamName = match.AwayTeamName,
-                Date = match.Date,
-                Odds = 1.36,
-                BetValue = App.BankManager.MyBank.DefaultBetStake,
-                BettingType = betTypes[0]
-            };
-            App.PopupManager.ShowPopup(new BetPopup(bet));
+            App.PopupManager.ShowPopup(new InfoPopup("There are no suitable betting options."));
+            return;
         }
+        // odds ellenörzése
+        double odds = 0;
+        foreach (BetType betType in betTypes)
+        {
+            odds = await OddsService.GetOdsByBetType(match, betTypes[0]);
+            if (odds > 0) break;
+        }
+        if (odds == 0)
+        {
+            App.PopupManager.ShowPopup(new InfoPopup("There is no available odds for tha match."));
+            return;
+        }
+        // fogadás létrehozzása
+        Bet bet = new Bet
+        {
+            FixtureId = match.Id,
+            LeagueId = match.LeagueId,
+            LeagueName = match.LeagueName,
+            LeagueCountry = match.LeagueCountry,
+            LeagueSeason = match.LeagueSeason,
+            HomeTeamId = match.HomeTeamId,
+            HomeTeamName = match.HomeTeamName,
+            AwayTeamId = match.AwayTeamId,
+            AwayTeamName = match.AwayTeamName,
+            Date = match.Date,
+            Odds = odds,
+            BetValue = App.BankManager.MyBank.DefaultBetStake,
+            BettingType = betTypes[0]
+        };
+        App.PopupManager.ShowPopup(new BetPopup(bet));
+
     }
 }

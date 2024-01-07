@@ -19,13 +19,19 @@ namespace LiveBettingHelper.Services
             }
             try
             {
+                HashSet<int> betIds = App.MM.PreBetRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
                 dynamic data = JsonConvert.DeserializeObject(json);
                 List<LiveMatch> liveMatches = new List<LiveMatch>();
                 foreach (var response in data.response)
                 {
+                    int id = response["fixture"]["id"];
+                    if (!betIds.Contains(id)) continue;
+                    string status = response["fixture"]["status"]["short"];
+                    BetType[] betTypes = App.MM.PreBetRepo.GetItems(x => x.FixtureId == id).Select(x => x.BettingType).ToArray();
+                    if ((status == "H1" && !betTypes.Contains(BetType.FirstHalfOver)) || (status == "H2" && !betTypes.Contains(BetType.SecondHalfOver))) continue;
                     var match = new LiveMatch
                     {
-                        Id = response["fixture"]["id"],
+                        Id = id,
                         LeagueId = response["league"]["id"],
                         LeagueName = response["league"]["name"],
                         LeagueCountry = response["league"]["country"],

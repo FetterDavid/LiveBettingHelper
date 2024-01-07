@@ -26,7 +26,7 @@ namespace LiveBettingHelper.Services
                     {
                         foreach (var value in odd.values)
                         {
-                            if (value.value == "Over" && value.handicap == 1)
+                            if (value.value == "Over" && value.handicap == 0.5)
                             {
                                 return value.odd;
                             }
@@ -67,7 +67,7 @@ namespace LiveBettingHelper.Services
                     {
                         foreach (var value in odd.values)
                         {
-                            if (value.value == "Over" && value.handicap == (liveMatch.FirstHalfResult.Item1 + liveMatch.FirstHalfResult.Item2 + 1))
+                            if (value.value == "Over" && value.handicap == (liveMatch.FirstHalfResult.Item1 + liveMatch.FirstHalfResult.Item2 + 0.5))
                             {
                                 return value.odd;
                             }
@@ -89,38 +89,18 @@ namespace LiveBettingHelper.Services
             }
         }
         /// <summary>
-        /// Vissza adja hogy lehet-e az adott mecsre fogadni
+        /// Vissza adja az adott mecshez tartozó odds-ot a megadott fogadási tipus alapján 
         /// </summary>
-        public static async Task<bool> CanBetOnMatchAsync(int id)
+        public static async Task<double> GetOdsByBetType(LiveMatch liveMatch, BetType betType)
         {
-            string json = await GetMatchOddJsonByIdAsync(id);
-            if (string.IsNullOrEmpty(json))
+            switch (betType)
             {
-                App.Logger.Error("No data received from the API.");
-                return false;
-            }
-            try
-            {
-                dynamic data = JsonConvert.DeserializeObject(json);
-                if (data != null && data.response != null && data.response.Count > 0)
-                {
-                    var firstMatchResult = data.response[0];
-                    if (firstMatchResult != null && firstMatchResult.bookmakers != null && firstMatchResult.bookmakers.Count > 0)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch (JsonException ex)
-            {
-                App.Logger.Exception(ex, "JSON deserialization error: ");
-                return false;
-            }
-            catch (Exception ex)
-            {
-                App.Logger.Exception(ex);
-                return false;
+                case BetType.FirstHalfOver:
+                    return await GetOverFirstHalfOddAsync(liveMatch.Id);
+                case BetType.SecondHalfOver:
+                    return await GetOverSecondHalfOddAsync(liveMatch);
+                default:
+                    throw new Exception("Unknown bet type");
             }
         }
         /// <summary>

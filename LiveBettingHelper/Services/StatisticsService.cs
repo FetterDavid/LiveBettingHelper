@@ -1,11 +1,6 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Utilities;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.Services
 {
@@ -56,9 +51,9 @@ namespace LiveBettingHelper.Services
         /// <summary>
         /// Vissza adja egy csapat 1. és 2. félidő over százalékát "(double, double)" formában
         /// </summary>
-        public static async Task<(double, double)> GetFirstAndSecondHalfPercentAsync(int league, int season, int team, string side)
+        public static async Task<(double, double)> GetFirstAndSecondHalfPercentAsync(int leagueId, int season, int teamId, string side)
         {
-            string json = await GetPrevMatchesJsonAsync(league, season, team);
+            string json = await GetPrevMatchesJsonAsync(leagueId, season, teamId);
             if (string.IsNullOrEmpty(json))
             {
                 App.Logger.Error("No data received from the API.");
@@ -67,24 +62,29 @@ namespace LiveBettingHelper.Services
             try
             {
                 dynamic data = JsonConvert.DeserializeObject(json);
-                int firstHalfOverMatchCount = 0;
-                int secondHalfOverMatchCount = 0;
+                int firstHalfGoalCount = 0;
+                int secondHalfGoalCount = 0;
                 int matchCount = 0;
                 foreach (var response in data.response)
                 {
-                    if (response["fixture"]["status"]["elapsed"] == null || response["fixture"]["status"]["elapsed"] < 90) continue;
-                    if (response["teams"][side]["id"] == team)
+                    MatchStatus status = Enum.TryParse((string)response["fixture"]["status"]["short"], out MatchStatus stat) ? stat : MatchStatus.Error;
+                    if (Static.IsFinishingStatus(status) == false) continue;
+                    if (response["teams"][side]["id"] == teamId)
                     {
-                        if (response["score"]["halftime"]["home"] > 0 || response["score"]["halftime"]["away"] > 0)
-                            firstHalfOverMatchCount++;
-                        if (response["score"]["halftime"]["home"] < response["score"]["fulltime"]["home"] || response["score"]["halftime"]["away"] < response["score"]["fulltime"]["away"])
-                            secondHalfOverMatchCount++;
+                        int homeFHG = response["score"]["halftime"]["home"] == null ? 0 : response["score"]["halftime"]["home"];
+                        int awayFHG = response["score"]["halftime"]["away"] == null ? 0 : response["score"]["halftime"]["away"];
+                        int homeFTG = response["score"]["fulltime"]["home"] == null ? 0 : response["score"]["fulltime"]["home"];
+                        int awayFTG = response["score"]["fulltime"]["away"] == null ? 0 : response["score"]["fulltime"]["away"];
+                        int homeSTG = homeFTG - homeFHG;
+                        int awaySTG = awayFTG - awayFHG;
+                        firstHalfGoalCount += homeFHG + awayFHG;
+                        secondHalfGoalCount += homeSTG + awaySTG;
                         matchCount++;
                     }
                 }
                 if (matchCount < 8) return (0, 0);
-                double firstHalf = Math.Round(((double)firstHalfOverMatchCount / matchCount) * 100, 0);
-                double secondHalf = Math.Round(((double)secondHalfOverMatchCount / matchCount) * 100, 0);
+                double firstHalf = Math.Round((1 - PoissonDistribution.PoissonPMF((double)firstHalfGoalCount / matchCount, 0)) * 100, 0);
+                double secondHalf = Math.Round((1 - PoissonDistribution.PoissonPMF((double)secondHalfGoalCount / matchCount, 0)) * 100, 0);
                 return (firstHalf, secondHalf);
             }
             catch (JsonException ex)

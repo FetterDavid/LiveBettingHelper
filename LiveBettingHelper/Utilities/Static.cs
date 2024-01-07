@@ -96,5 +96,22 @@ namespace LiveBettingHelper.Utilities
 
             LocalNotificationCenter.Current.Show(request);
         }
+
+        /// <summary>
+        /// Vissza adja hogy vége van-e egy mecsnek státusz alapján
+        /// </summary>
+        public static bool IsFinishingStatus(MatchStatus status)
+        {
+            switch (status)
+            {
+                case MatchStatus.FT:
+                case MatchStatus.AET:
+                case MatchStatus.FT_PEN:
+                case MatchStatus.WO:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

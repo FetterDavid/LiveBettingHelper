@@ -9,41 +9,51 @@ namespace LiveBettingHelper.ViewModels
     public class LiveMatchesPageModel : BaseViewModel
     {
         public ObservableCollection<LiveMatch> LiveMatches { get; set; } = new();
-        private BaseRepository<PreBet> _preBetRepo;
-
-        public LiveMatchesPageModel(BaseRepository<PreBet> preBetRepo)
-        {
-            this._preBetRepo = preBetRepo;
-        }
+        private List<LiveMatch> _selectedMatches { get; set; } = new();
 
         public async Task ReloadDesiredLiveMatches()
         {
             List<LiveMatch> matches = await LiveMatchService.GetAllLiveFixturesAsync();
-            List<LiveMatch> selectedMatches = new();
+            _selectedMatches.Clear();
+            List<Task> tasks = new List<Task>();
             foreach (LiveMatch match in matches)
             {
-                //PreBet preBet = _preBetRepo.GetItem(x => x.FixtureId == match.Id);
-                //if (preBet == null) continue;
-                //if (preBet.BetType == BetType.FirstHalfOver && match.ElapsedTime > 45) continue;
-                //if (preBet.BetType == BetType.SecondHalfOver && match.ElapsedTime <= 45) continue;
-                //if (match.ElapsedTime < 50) continue;
-                //if (match.HomeTeamGoals == 0 && match.AwayTeamGoals == 0)
-                //{
-                match.Odds = await OddsService.GetOverSecondHalfOddAsync(match);
-                //if (match.Odds == 0) continue;
-                selectedMatches.Add(match);
-                //}
+                tasks.Add(GetLiveMatchCheckingTask(match));
             }
-            selectedMatches = selectedMatches.OrderByDescending(match => match.ElapsedTime).ToList();
+            await Task.WhenAll(tasks);
+            _selectedMatches = _selectedMatches.OrderBy(match => match.Date).ToList();
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 LiveMatches.Clear();
-                foreach (LiveMatch match in selectedMatches)
+                foreach (LiveMatch match in _selectedMatches)
                 {
                     LiveMatches.Add(match);
                 }
             });
             IsBusy = false;
+        }
+
+        private async Task GetLiveMatchCheckingTask(LiveMatch match)
+        {
+            List<BetType> betTypes = match.GetPossibleBetTypes();
+            match.RecommendedBetType = BetType.NoBet;
+            if (betTypes.Count == 0) return;
+            else
+            {
+                foreach (BetType betType in betTypes)
+                {
+                    double odds = await OddsService.GetOdsByBetType(match, betType);
+                    if (odds > 0)
+                    {
+                        match.RecommendedBetType = betType;
+                        match.RecommendedBetOdds = odds;
+                        break;
+                    }
+                }
+                if (match.RecommendedBetOdds == 0) return;
+                if (match.RecommendedBetType == BetType.NoBet) match.RecommendedBetType = betTypes[0];
+            }
+            _selectedMatches.Add(match);
         }
     }
 }

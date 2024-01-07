@@ -3,7 +3,8 @@
     public enum BetType
     {
         FirstHalfOver = 'F',
-        SecondHalfOver = 'S'
+        SecondHalfOver = 'S',
+        NoBet = 'N',
     }
 
     public enum CheckType

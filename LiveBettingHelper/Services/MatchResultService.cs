@@ -72,7 +72,6 @@ namespace LiveBettingHelper.Services
             {
                 dynamic data = JsonConvert.DeserializeObject(json);
                 if (data["response"] == null) return MatchStatus.Error;
-                MatchResult res = null;
                 string statusCode = data["response"][0]["fixture"]["status"]["short"];
                 if (Enum.TryParse(statusCode, out MatchStatus status)) return status;
                 else return MatchStatus.Error;
@@ -94,16 +93,7 @@ namespace LiveBettingHelper.Services
         public static async Task<bool> IsMatchFinished(int id)
         {
             MatchStatus status = await GetMatchStatus(id);
-            switch (status)
-            {
-                case MatchStatus.FT:
-                case MatchStatus.AET:
-                case MatchStatus.FT_PEN:
-                case MatchStatus.WO:
-                    return true;
-                default:
-                    return false;
-            }
+            return Static.IsFinishingStatus(status);
         }
         /// <summary>
         /// Vissza ad egy meccs json-jét id alapján

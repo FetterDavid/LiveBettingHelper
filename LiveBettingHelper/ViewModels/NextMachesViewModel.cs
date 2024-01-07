@@ -9,6 +9,7 @@ namespace LiveBettingHelper.ViewModels
 {
     public partial class NextMachesViewModel : BaseViewModel
     {
+        private const double MIN_STAT = 65;
         [ObservableProperty]
         private List<PreBet> _preBets;
         private int _checkedMatches;
@@ -71,18 +72,18 @@ namespace LiveBettingHelper.ViewModels
             return Task.Run(async () =>
             {
                 (double, double) homeHalfOvers = await StatisticsService.GetFirstAndSecondHalfPercentAsync(match.LeagueId, match.LeagueSeason, match.HomeTeamId, "home");
-                if (homeHalfOvers.Item1 >= 80 && homeHalfOvers.Item2 >= 80)// ha rossz a hazai csapat akkor nem is nézük tovább
+                if (homeHalfOvers.Item1 >= MIN_STAT || homeHalfOvers.Item2 >= MIN_STAT)// ha legalább az egyik félidpre jó a hazai csapat csak akkor nézük tovább
                 {
                     match.HomeTeamFHOverPercent = homeHalfOvers.Item1;
                     match.HomeTeamSHOverPercent = homeHalfOvers.Item2;
                     (double, double) awayHalfOvers = await StatisticsService.GetFirstAndSecondHalfPercentAsync(match.LeagueId, match.LeagueSeason, match.AwayTeamId, "away");
                     match.AwayTeamSHOverPercent = awayHalfOvers.Item2;
-                    if (awayHalfOvers.Item1 >= 80 && homeHalfOvers.Item1 >= 80)// első félídő over
+                    if (awayHalfOvers.Item1 >= MIN_STAT && homeHalfOvers.Item1 >= MIN_STAT)// első félídő over
                     {
                         double probability = (awayHalfOvers.Item1 + homeHalfOvers.Item1) / 2;
                         App.MM.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.FirstHalfOver, probability));
                     }
-                    if (awayHalfOvers.Item2 >= 80 && homeHalfOvers.Item2 >= 80)// második félidő over
+                    if (awayHalfOvers.Item2 >= MIN_STAT && homeHalfOvers.Item2 >= MIN_STAT)// második félidő over
                     {
                         double probability = (awayHalfOvers.Item2 + homeHalfOvers.Item2) / 2;
                         App.MM.PreBetRepo.AddItem(Static.ConvertPreMatchToPreBet(match, BetType.SecondHalfOver, probability));
