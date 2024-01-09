@@ -17,7 +17,7 @@ public partial class NextMachesPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _ = _viewModel.Reload(); // fire and forget
+        _ = _viewModel.Recheck(); // fire and forget
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)

@@ -23,27 +23,6 @@ namespace LiveBettingHelper.Utilities
         /// </summary>
         public static string DatabasePath => Path.Combine(FileSystem.AppDataDirectory, DB_FILE_NAME);
         /// <summary>
-        /// Egy PreBet objektumot BetHistory objektumá konvertál
-        /// </summary>
-        public static BetHistory ConvertPreBetToBetHistory(PreBet preBet, bool isWon)
-        {
-            return new BetHistory
-            {
-                IsWon = isWon,
-                BettingType = preBet.BettingType,
-                Probability = preBet.Probability,
-                FixtureId = preBet.FixtureId,
-                LeagueId = preBet.LeagueId,
-                LeagueName = preBet.LeagueName,
-                LeagueCountry = preBet.LeagueCountry,
-                LeagueSeason = preBet.LeagueSeason,
-                HomeTeamId = preBet.HomeTeamId,
-                HomeTeamName = preBet.HomeTeamName,
-                AwayTeamId = preBet.AwayTeamId,
-                AwayTeamName = preBet.AwayTeamName
-            };
-        }
-        /// <summary>
         /// Egy PreMatch objektumot PreBet objektumá konvertál
         /// </summary>
         public static PreBet ConvertPreMatchToPreBet(PreMatch preMatch, BetType betType, double probability)

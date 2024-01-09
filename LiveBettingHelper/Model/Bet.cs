@@ -32,33 +32,12 @@ namespace LiveBettingHelper.Model
             else if (await MatchResultService.IsMatchFinished(FixtureId))
             {
                 Finished = true;
-                Winned = await GetOutcome();
+                Winned = await MatchResultService.GetOutcome(FixtureId,BettingType);
                 if (Winned) App.BankManager.Deposit(PossibleWinning);
                 App.MM.BetRepo.UpdateItem(this);
                 return true;
             }
             else return false;
-        }
-        /// <summary>
-        /// Vissza adja a fogadás eredménylt
-        /// </summary>
-        private async Task<bool> GetOutcome()
-        {
-            MatchResult result = await MatchResultService.GetMatchResultByIdAsync(FixtureId, BettingType);
-            if (result == null) return false;
-            bool isWon = false;
-            switch (BettingType)
-            {
-                case BetType.FirstHalfOver:
-                    isWon = result.FirstHalfResult != (0, 0);
-                    break;
-                case BetType.SecondHalfOver:
-                    isWon = result.FullTimeResult != result.FirstHalfResult;
-                    break;
-                default:
-                    break;
-            }
-            return isWon;
         }
     }
 }

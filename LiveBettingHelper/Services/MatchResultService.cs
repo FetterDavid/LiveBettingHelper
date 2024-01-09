@@ -96,6 +96,27 @@ namespace LiveBettingHelper.Services
             return Static.IsFinishingStatus(status);
         }
         /// <summary>
+        /// Vissza adja a fogadás eredménylt
+        /// </summary>
+        public static async Task<bool> GetOutcome(int fixtureId, BetType betType)
+        {
+            MatchResult result = await GetMatchResultByIdAsync(fixtureId, betType);
+            if (result == null) return false;
+            bool isWon = false;
+            switch (betType)
+            {
+                case BetType.FirstHalfOver:
+                    isWon = result.FirstHalfResult != (0, 0);
+                    break;
+                case BetType.SecondHalfOver:
+                    isWon = result.FullTimeResult != result.FirstHalfResult;
+                    break;
+                default:
+                    break;
+            }
+            return isWon;
+        }
+        /// <summary>
         /// Vissza ad egy meccs json-jét id alapján
         /// </summary>
         private static async Task<string> GetMatcheJsonByIdAsync(int id)

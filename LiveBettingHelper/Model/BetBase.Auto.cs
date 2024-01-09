@@ -16,5 +16,6 @@ namespace LiveBettingHelper.Model
         public string HomeTeamName { get; set; }
         public int AwayTeamId { get; set; }
         public string AwayTeamName { get; set; }
+        public DateTime Date { get; set; }
     }
 }

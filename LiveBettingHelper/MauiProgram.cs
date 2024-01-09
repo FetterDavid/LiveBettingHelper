@@ -4,6 +4,7 @@ using Plugin.LocalNotification;
 using CommunityToolkit.Maui;
 using LiveBettingHelper.Views;
 using LiveBettingHelper.ViewModels;
+using Microcharts.Maui;
 
 namespace LiveBettingHelper;
 public static class MauiProgram
@@ -12,6 +13,7 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>()
+        .UseMicrocharts()
         .UseLocalNotification().ConfigureFonts(fonts =>
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

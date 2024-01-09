@@ -59,34 +59,6 @@ namespace LiveBettingHelper.Utilities
             return json;
         }
         /// <summary>
-        /// (CSAK AZ ODDS-OKHOZ HASZNÁLD) Vissza adja egy HTTP request json-jét .(host: football-betting-odds1.p.rapidapi.com)
-        /// </summary>
-        public static async Task<string> RequestJsonFromOddsAsync(string request)
-        {
-            string json = "";
-            using (var client = new HttpClient())
-            {
-                var endpoint = new Uri($"https://football-betting-odds1.p.rapidapi.com/{request}");
-                client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "football-betting-odds1.p.rapidapi.com");
-                client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "5a714a4005mshc90ae5b388aad58p15b512jsncf4294509ce5");
-                try
-                {
-                    var result = await client.GetAsync(endpoint);
-                    result.EnsureSuccessStatusCode();
-                    json = await result.Content.ReadAsStringAsync();
-                }
-                catch (HttpRequestException ex)
-                {
-                    App.Logger.Error($"Error during HTTP request: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    App.Logger.Exception(ex);
-                }
-            }
-            return json;
-        }
-        /// <summary>
         /// kinullázza a request számlálót 1 percenként 
         /// </summary>
         private static void CheckRequestTimer(Object source, ElapsedEventArgs e)

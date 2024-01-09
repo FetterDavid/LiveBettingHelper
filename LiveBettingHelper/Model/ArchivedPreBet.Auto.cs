@@ -2,7 +2,7 @@
 
 namespace LiveBettingHelper.Model
 {
-    public partial class BetHistory : BetBase
+    public partial class ArchivedPreBet : PreBet
     {
         public bool IsWon { get; set; }
 

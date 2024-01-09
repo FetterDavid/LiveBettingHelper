@@ -3,7 +3,6 @@ using LiveBettingHelper.Model;
 using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.Views.Popups;
-using System.Collections.ObjectModel;
 
 namespace LiveBettingHelper.ViewModels
 {
@@ -19,10 +18,11 @@ namespace LiveBettingHelper.ViewModels
             PreBets = new();
         }
 
-        public async Task Reload()
+        public async Task Recheck()
         {
             IsBusy = true;
             LastCheck lastCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
+            await ArchiveFinishedPreBets();
             if (lastCheck == null || lastCheck.CheckDate.AddHours(1) < DateTime.Now)
             {
                 await CheckTodayMatches();
@@ -94,6 +94,28 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetProgress(_checkedMatches, matchesCount);
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matchesCount})");
             });
+        }
+
+        private async Task ArchiveFinishedPreBets()
+        {
+            try
+            {
+                List<PreBet> matches = App.MM.PreBetRepo.GetItems(x => x.Date < DateTime.Now).OrderBy(x => x.Date).ToList();
+                foreach (PreBet match in matches)
+                {
+                    if (await MatchResultService.IsMatchFinished(match.FixtureId))
+                        await match.Archive();
+                    else if (match.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezöfött de már bekellett volna (kezdés után 3 óra) akkor töröljük
+                    {
+                        App.MM.CheckedMatchRepo.DeleteItem(App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == match.FixtureId));//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor úja feltudjuk venni
+                        App.MM.PreBetRepo.DeleteItem(match);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, "Exception in ArchiveFinishedPreBets");
+            }
         }
 
         private void LoadNextMatches()
