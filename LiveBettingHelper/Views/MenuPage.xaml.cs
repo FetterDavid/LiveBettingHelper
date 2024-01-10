@@ -19,4 +19,9 @@ public partial class MenuPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(SettingsPage));
     }
+
+    private async void StaticticsBtn_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(StatisticsPage));
+    }
 }

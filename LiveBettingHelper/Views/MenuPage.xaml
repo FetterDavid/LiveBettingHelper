@@ -12,8 +12,9 @@
             <Label Grid.Row="1" Text="{Binding BankManager.MyBank.Balance}" HorizontalOptions="Center" FontAttributes="Bold" FontSize="20" TextColor="{StaticResource GrayText}"/>
         </Grid>
         <VerticalStackLayout Grid.Row="1" Spacing="10">
-            <Button Text="Followed leagues" Clicked="LeagueSelectingBtn_Clicked" HorizontalOptions="Center"/>
-            <Button Text="Settings" Clicked="SettingsBtn_Clicked" HorizontalOptions="Center"/>
+            <Button Text="Statictics" Clicked="StaticticsBtn_Clicked" HorizontalOptions="Center" FontSize="18"/>
+            <Button Text="Followed leagues" Clicked="LeagueSelectingBtn_Clicked" HorizontalOptions="Center" FontSize="18"/>
+            <Button Text="Settings" Clicked="SettingsBtn_Clicked" HorizontalOptions="Center" FontSize="18"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

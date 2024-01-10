@@ -31,6 +31,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CountrySelectorPage>();
         builder.Services.AddTransient<LeagueSelectorPage>();
         builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<StatisticsPage>();
         // ViewModel injections
         builder.Services.AddSingleton<NextMachesViewModel>();
         builder.Services.AddSingleton<BetViewModel>();
@@ -38,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CountrySelectorViewModel>();
         builder.Services.AddTransient<LeagueSelectorViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
+        builder.Services.AddTransient<StatisticsViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

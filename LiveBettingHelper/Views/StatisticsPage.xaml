@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:viewModel="clr-namespace:LiveBettingHelper.ViewModels"
+             x:DataType="viewModel:StatisticsViewModel"
              x:Class="LiveBettingHelper.Views.StatisticsPage"
-             Title="StatisticsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="StatisticsPage"
+             BackgroundColor="{StaticResource Tertiary}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="50" Padding="20">
+            <Grid HeightRequest="200" RowDefinitions="Auto,*" RowSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Grid.GestureRecognizers>
+                <Label Grid.Row="0" Text="Placed Bets:" TextColor="{StaticResource GrayText}" FontSize="23" FontAttributes="Bold"/>
+                <micro:ChartView Grid.Row="1" Chart="{Binding BetWinDonutChart}"/>
+            </Grid>
+
+            <Grid HeightRequest="200" RowDefinitions="Auto,*" RowSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped2"/>
+                </Grid.GestureRecognizers>
+                <Label Grid.Row="0" Text="Preselected matches:" TextColor="{StaticResource GrayText}" FontSize="23" FontAttributes="Bold"/>
+                <micro:ChartView Grid.Row="1" Chart="{Binding MatchPredictSuccessDonutChart}"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>
