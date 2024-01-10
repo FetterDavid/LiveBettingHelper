@@ -32,12 +32,22 @@ namespace LiveBettingHelper.Model
             else if (await MatchResultService.IsMatchFinished(FixtureId))
             {
                 Finished = true;
-                Winned = await MatchResultService.GetOutcome(FixtureId,BettingType);
-                if (Winned) App.BankManager.Deposit(PossibleWinning);
+                Winned = await MatchResultService.GetOutcome(FixtureId, BettingType);
+                AddWinnedMoneyToBank();
                 App.MM.BetRepo.UpdateItem(this);
                 return true;
             }
             else return false;
+        }
+
+        private void AddWinnedMoneyToBank()
+        {
+            if (Winned)
+            {
+                App.BankManager.Deposit(PossibleWinning);
+                App.BankManager.AddBankTransactionRecord(Math.Round(BetValue * Odds, 0));
+            }
+            else App.BankManager.AddBankTransactionRecord(BetValue * -1);
         }
     }
 }

@@ -32,6 +32,9 @@ public static class MauiProgram
         builder.Services.AddTransient<LeagueSelectorPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<StatisticsPage>();
+        builder.Services.AddTransient<BetStatisticsPage>();
+        builder.Services.AddTransient<MatchPredictStatisticsPage>();
+        builder.Services.AddTransient<BankStatisticsPage>();
         // ViewModel injections
         builder.Services.AddSingleton<NextMachesViewModel>();
         builder.Services.AddSingleton<BetViewModel>();
@@ -40,6 +43,9 @@ public static class MauiProgram
         builder.Services.AddTransient<LeagueSelectorViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
+        builder.Services.AddTransient<BetStatisticsViewModel>();
+        builder.Services.AddTransient<MatchPredictStatisticsViewModel>();
+        builder.Services.AddTransient<BankStatisticsViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

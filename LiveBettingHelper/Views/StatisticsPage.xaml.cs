@@ -1,5 +1,4 @@
 using LiveBettingHelper.ViewModels;
-using LiveBettingHelper.Views.Popups;
 
 namespace LiveBettingHelper.Views;
 
@@ -11,12 +10,18 @@ public partial class StatisticsPage : ContentPage
         BindingContext = statisticsViewModel;
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void BetChart_Tapped(object sender, TappedEventArgs e)
     {
-        App.PopupManager.ShowPopup(new InfoPopup("Ez egy teszt"));
+        await Shell.Current.GoToAsync(nameof(BetStatisticsPage));
     }
-    private void TapGestureRecognizer_Tapped2(object sender, TappedEventArgs e)
+
+    private async void MatchPredictChart_Tapped(object sender, TappedEventArgs e)
     {
-        App.PopupManager.ShowPopup(new InfoPopup("Ez egy másik teszt"));
+        await Shell.Current.GoToAsync(nameof(MatchPredictStatisticsPage));
+    }
+
+    private async void BankChart_TappedAsync(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(BankStatisticsPage));
     }
 }

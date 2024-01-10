@@ -13,6 +13,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(LeagueSelectorPage), typeof(LeagueSelectorPage));
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(StatisticsPage), typeof(StatisticsPage));
+        Routing.RegisterRoute(nameof(BetStatisticsPage), typeof(BetStatisticsPage));
+        Routing.RegisterRoute(nameof(MatchPredictStatisticsPage), typeof(MatchPredictStatisticsPage));
+        Routing.RegisterRoute(nameof(BankStatisticsPage), typeof(BankStatisticsPage));
         BindingContext = appShellViewModel;
     }
 }

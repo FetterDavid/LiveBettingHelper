@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:viewModel="clr-namespace:LiveBettingHelper.ViewModels"
+             x:DataType="viewModel:BankStatisticsViewModel"
+             x:Class="LiveBettingHelper.Views.BankStatisticsPage"
+             Title="BankStatisticsPage"
+              BackgroundColor="{StaticResource Tertiary}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="30" Padding="10">
+            <Grid HeightRequest="250" RowDefinitions="Auto,*" RowSpacing="10">
+                <Label Grid.Row="0" Text="Bank Balance (last 20 bet)" TextColor="{StaticResource GrayText}" FontSize="23" FontAttributes="Bold"/>
+                <micro:ChartView Grid.Row="1" Chart="{Binding BankLineChart}"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
