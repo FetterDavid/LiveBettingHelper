@@ -65,6 +65,7 @@ public partial class LiveMatchesPage : ContentPage
             AwayTeamName = match.AwayTeamName,
             Date = match.Date,
             Odds = odds,
+            BetMinute = match.ElapsedTime,
             BetValue = App.BankManager.MyBank.DefaultBetStake,
             BettingType = betTypes[0]
         };

@@ -107,7 +107,8 @@ namespace LiveBettingHelper.ViewModels
                         await match.Archive();
                     else if (match.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezöfött de már bekellett volna (kezdés után 3 óra) akkor töröljük
                     {
-                        App.MM.CheckedMatchRepo.DeleteItem(App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == match.FixtureId));//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor úja feltudjuk venni
+                        CheckedMatch checkedMatch = App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == match.FixtureId);
+                        if (checkedMatch != null) App.MM.CheckedMatchRepo.DeleteItem(checkedMatch);//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor úja feltudjuk venni
                         App.MM.PreBetRepo.DeleteItem(match);
                     }
                 }

@@ -27,7 +27,7 @@
 
         <Grid Grid.Row="1" IsVisible="{Binding IsBusy, Converter={converter:InverseBoolConverter}}">
 
-            <CollectionView ItemsSource="{Binding UnsettledBets}" IsVisible="{Binding IsUnsettledBetsTabActive}" Margin="0,5,0,0">
+            <CollectionView ItemsSource="{Binding UnsettledBets}" IsVisible="{Binding IsUnsettledBetsTabActive}" Margin="0,5,0,0" EmptyView="No unsettled bet">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Bet">
                         <Frame Padding="0,5" Margin="3,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Secondary}">
@@ -60,7 +60,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <CollectionView ItemsSource="{Binding SettledBets}" IsVisible="{Binding IsSettledBetsTabActive}" Margin="0,5,0,0">
+            <CollectionView ItemsSource="{Binding SettledBets}" IsVisible="{Binding IsSettledBetsTabActive}" Margin="0,5,0,0" EmptyView="No settled bet">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Bet">
                         <Frame Padding="0,5" Margin="3,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Secondary}">

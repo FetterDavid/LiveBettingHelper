@@ -12,7 +12,7 @@
         
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" Color="White"/>
 
-        <CollectionView ItemsSource="{Binding LiveMatches}" Margin="0,5,0,0" IsVisible="{Binding IsBusy, Converter={converter:InverseBoolConverter}}">
+        <CollectionView ItemsSource="{Binding LiveMatches}" Margin="0,5,0,0" IsVisible="{Binding IsBusy, Converter={converter:InverseBoolConverter}}" EmptyView="No live match">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:LiveMatch">
                     <Frame Padding="0,5" Margin="5,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">

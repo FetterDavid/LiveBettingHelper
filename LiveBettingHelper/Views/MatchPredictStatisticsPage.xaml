@@ -14,6 +14,14 @@
                 <Label Grid.Row="0" Text="Preselected matches" TextColor="{StaticResource GrayText}" FontSize="23" FontAttributes="Bold"/>
                 <micro:ChartView Grid.Row="1" Chart="{Binding MatchPredictSuccessDonutChart}"/>
             </Grid>
+
+            <Grid HeightRequest="200" RowDefinitions="Auto,*"  ColumnDefinitions="*,*" RowSpacing="10" ColumnSpacing="10">
+                <Label Grid.Row="0" Text="First Half Over" TextColor="{StaticResource GrayText}" FontSize="18" FontAttributes="Bold"/>
+                <micro:ChartView Grid.Row="1" Chart="{Binding FirstHalfOverWinDonutChart}"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="Second Half Over" TextColor="{StaticResource GrayText}" FontSize="18" FontAttributes="Bold"/>
+                <micro:ChartView Grid.Row="1" Grid.Column="1" Chart="{Binding SecondHalfOverWinDonutChart}"/>
+            </Grid>
+
         </VerticalStackLayout>
     </ScrollView>
 

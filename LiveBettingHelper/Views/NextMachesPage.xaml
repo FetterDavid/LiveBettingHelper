@@ -12,7 +12,7 @@
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" Color="White"/>
 
-        <CollectionView ItemsSource="{Binding PreBets}" IsVisible="{Binding IsBusy,Converter={converter:InverseBoolConverter}}" BackgroundColor="{StaticResource Tertiary}" Margin="0,5,0,0">
+        <CollectionView ItemsSource="{Binding PreBets}" IsVisible="{Binding IsBusy,Converter={converter:InverseBoolConverter}}" BackgroundColor="{StaticResource Tertiary}" Margin="0,5,0,0"  EmptyView="No upcoming match">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:PreBet">
                     <Frame Padding="0,5" Margin="3,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Secondary}">
@@ -40,6 +40,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
+
     </Grid>
 </ContentPage>
