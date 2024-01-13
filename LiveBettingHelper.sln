@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveBettingHelper", "LiveBettingHelper\LiveBettingHelper.csproj", "{3E8CF27C-D285-4D0F-9C2A-578427F722B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelDataCollector", "ModelDataCollector\ModelDataCollector.csproj", "{76C038DE-32A1-4770-9064-4116A556CA2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredictModel", "PredictModel\PredictModel.csproj", "{B07AE3BF-17CD-40BB-8355-9429AA8FA201}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{3E8CF27C-D285-4D0F-9C2A-578427F722B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E8CF27C-D285-4D0F-9C2A-578427F722B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E8CF27C-D285-4D0F-9C2A-578427F722B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{76C038DE-32A1-4770-9064-4116A556CA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C038DE-32A1-4770-9064-4116A556CA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C038DE-32A1-4770-9064-4116A556CA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C038DE-32A1-4770-9064-4116A556CA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07AE3BF-17CD-40BB-8355-9429AA8FA201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07AE3BF-17CD-40BB-8355-9429AA8FA201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07AE3BF-17CD-40BB-8355-9429AA8FA201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07AE3BF-17CD-40BB-8355-9429AA8FA201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
