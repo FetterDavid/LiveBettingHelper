@@ -9,14 +9,22 @@ namespace LiveBettingHelper.ViewModels
         public DonutChart FirstHalfOverWinDonutChart { get; set; }
         public DonutChart SecondHalfOverWinDonutChart { get; set; }
         public double AvgOdds { get; set; }
+        public double AvgWinnedBetProb { get; set; }
+        public double AvgLosedBetProb { get; set; }
+        // First half
         public double AvgOddsFHO { get; set; }
-        public double AvgOddsSHO { get; set; }
         public double AvgBetMinuteFHO { get; set; }
-        public double AvgBetMinuteSHO { get; set; }
         public double AvgWinBetMinuteFHO { get; set; }
-        public double AvgWinBetMinuteSHO { get; set; }
         public double AvgLoseBetMinuteFHO { get; set; }
+        public double AvgWinnedBetProbFH { get; set; }
+        public double AvgLosedBetProbFH { get; set; }
+        // Second Half
+        public double AvgOddsSHO { get; set; }
+        public double AvgBetMinuteSHO { get; set; }
+        public double AvgWinBetMinuteSHO { get; set; }
         public double AvgLoseBetMinuteSHO { get; set; }
+        public double AvgWinnedBetProbSH { get; set; }
+        public double AvgLosedBetProbSH { get; set; }
 
         public BetStatisticsViewModel()
         {
@@ -27,17 +35,51 @@ namespace LiveBettingHelper.ViewModels
 
         private void LoadStatistics(List<Bet> bets)
         {
-            List<Bet> fhBets = bets.Where(x => x.BettingType == Utilities.BetType.FirstHalfOver).ToList();
-            List<Bet> shBets = bets.Where(x => x.BettingType == Utilities.BetType.SecondHalfOver).ToList();
-            AvgOdds = Math.Round(bets.Select(x => x.Odds).Average(), 2);
-            AvgOddsFHO = Math.Round(fhBets.Select(x => x.Odds).Average(), 2);
-            AvgOddsSHO = Math.Round(shBets.Select(x => x.Odds).Average(), 2);
-            AvgBetMinuteFHO = Math.Round(shBets.Select(x => x.BetMinute).Average(), 0);
-            AvgBetMinuteSHO = Math.Round(shBets.Select(x => x.BetMinute).Average(), 0);
-            AvgWinBetMinuteFHO = Math.Round(shBets.Where(x => x.Winned).Select(x => x.BetMinute).Average(), 0);
-            AvgWinBetMinuteSHO = Math.Round(shBets.Where(x => x.Winned).Select(x => x.BetMinute).Average(), 0);
-            AvgLoseBetMinuteFHO = Math.Round(shBets.Where(x => !x.Winned).Select(x => x.BetMinute).Average(), 0);
-            AvgLoseBetMinuteSHO = Math.Round(shBets.Where(x => !x.Winned).Select(x => x.BetMinute).Average(), 0);
+            try
+            {
+                if (bets.Count == 0) return;
+                AvgOdds = Math.Round(bets.Select(x => x.Odds).Average(), 2);
+                if (bets.Where(x => x.Winned).Count()>0) 
+                    AvgWinnedBetProb = Math.Round(bets.Where(x => x.Winned).Select(x => x.Probability).Average(), 0);
+                if (bets.Where(x => !x.Winned).Count() > 0)
+                    AvgLosedBetProb = Math.Round(bets.Where(x => !x.Winned).Select(x => x.Probability).Average(), 0);
+                List<Bet> fhBets = bets.Where(x => x.BettingType == Utilities.BetType.FirstHalfOver).ToList();
+                if (fhBets.Count > 0)
+                {
+                    AvgOddsFHO = Math.Round(fhBets.Select(x => x.Odds).Average(), 2);
+                    AvgBetMinuteFHO = Math.Round(fhBets.Select(x => x.BetMinute).Average(), 0);
+                    if (fhBets.Where(x => x.Winned).Count() > 0)
+                    {
+                        AvgWinBetMinuteFHO = Math.Round(fhBets.Where(x => x.Winned).Select(x => x.BetMinute).Average(), 0);
+                        AvgWinnedBetProbFH = Math.Round(fhBets.Where(x => x.Winned).Select(x => x.Probability).Average(), 0);
+                    }
+                    if (fhBets.Where(x => !x.Winned).Count() > 0)
+                    {
+                        AvgLoseBetMinuteFHO = Math.Round(fhBets.Where(x => !x.Winned).Select(x => x.BetMinute).Average(), 0);
+                        AvgLosedBetProbFH = Math.Round(fhBets.Where(x => !x.Winned).Select(x => x.Probability).Average(), 0);
+                    }
+                }
+                List<Bet> shBets = bets.Where(x => x.BettingType == Utilities.BetType.SecondHalfOver).ToList();
+                if (shBets.Count > 0)
+                {
+                    AvgOddsSHO = Math.Round(shBets.Select(x => x.Odds).Average(), 2);
+                    AvgBetMinuteSHO = Math.Round(shBets.Select(x => x.BetMinute).Average(), 0);
+                    if (shBets.Where(x => x.Winned).Count() > 0)
+                    {
+                        AvgWinBetMinuteSHO = Math.Round(shBets.Where(x => x.Winned).Select(x => x.BetMinute).Average(), 0);
+                        AvgWinnedBetProbSH = Math.Round(shBets.Where(x => x.Winned).Select(x => x.Probability).Average(), 0);
+                    }
+                    if (shBets.Where(x => !x.Winned).Count() > 0)
+                    {
+                        AvgLoseBetMinuteSHO = Math.Round(shBets.Where(x => !x.Winned).Select(x => x.BetMinute).Average(), 0);
+                        AvgLosedBetProbSH = Math.Round(shBets.Where(x => !x.Winned).Select(x => x.Probability).Average(), 0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, "An error occurred while trying to load the bet statistics");
+            }
         }
 
         private void LoadCharts(List<Bet> bets)

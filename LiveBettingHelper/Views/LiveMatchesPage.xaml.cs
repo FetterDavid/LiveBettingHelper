@@ -51,6 +51,13 @@ public partial class LiveMatchesPage : ContentPage
             App.PopupManager.ShowPopup(new InfoPopup("There is no available odds for tha match."));
             return;
         }
+        BetType bt = betTypes[0];
+        PreBet preBet = App.MM.PreBetRepo.GetItem(x => x.FixtureId == match.Id && x.BettingType == bt);
+        if (preBet == null)
+        {
+            App.Logger.Error("There is no available prebet for tha match.");
+            return;
+        }
         // fogadás létrehozzása
         Bet bet = new Bet
         {
@@ -66,8 +73,9 @@ public partial class LiveMatchesPage : ContentPage
             Date = match.Date,
             Odds = odds,
             BetMinute = match.ElapsedTime,
-            BetValue = App.BankManager.MyBank.DefaultBetStake,
-            BettingType = betTypes[0]
+            Probability = preBet.Probability,
+            BetValue = App.SettingsManager.MySettings.DefaultBetStake,
+            BettingType = preBet.BettingType
         };
         App.PopupManager.ShowPopup(new BetPopup(bet));
 

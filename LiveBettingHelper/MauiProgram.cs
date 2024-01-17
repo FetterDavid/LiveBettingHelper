@@ -24,6 +24,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<Logger>();
         builder.Services.AddSingleton<PopupManager>();
         builder.Services.AddSingleton<BankManager>();
+        builder.Services.AddSingleton<SettingsManager>();
         // Page injections
         builder.Services.AddSingleton<NextMachesPage>();
         builder.Services.AddSingleton<BetsPage>();

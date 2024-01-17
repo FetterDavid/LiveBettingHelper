@@ -10,7 +10,7 @@ public partial class SettingsPage : ContentPage
         BindingContext = settingsViewModel;
     }
 
-    private void DefaultBetStakeEntry_TextChanged(object sender, TextChangedEventArgs e)
+    private void SettingsEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
         App.BankManager.Update();
     }

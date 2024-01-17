@@ -44,7 +44,8 @@ namespace LiveBettingHelper.Utilities
         {
             try
             {
-                double lastBalance = _bankTransactionRecordRepo.GetItems().OrderBy(x => x.Date).Last().BalanceAfterTransaction;
+                List<BankTransactionRecord> bankTransactionRecords = _bankTransactionRecordRepo.GetItems();
+                double lastBalance = bankTransactionRecords.Count == 0 ? MyBank.Balance : bankTransactionRecords.OrderBy(x => x.Date).Last().BalanceAfterTransaction;
                 _bankTransactionRecordRepo.AddItem(new BankTransactionRecord { BalanceAfterTransaction = lastBalance + changeAmount, ChangeAmount = changeAmount, Date = DateTime.Now });
             }
             catch (Exception ex)
@@ -73,6 +74,7 @@ namespace LiveBettingHelper.Utilities
             else
             {
                 MyBank = new Bank();
+                MyBank.Balance = 10000;
                 _bankRepo.AddItem(MyBank);
             }
         }

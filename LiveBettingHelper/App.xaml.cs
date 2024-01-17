@@ -21,11 +21,15 @@ public partial class App : Application
     /// </summary>
     public static PopupManager PopupManager { get; set; }
     /// <summary>
-    /// A bank-ot kezelő osztály
+    /// A bankot kezelő osztály
     /// </summary>
     public static BankManager BankManager { get; set; }
+    /// <summary>
+    /// A beállításokat kezelő osztály
+    /// </summary>
+    public static SettingsManager SettingsManager { get; set; }
 
-    public App(ModelManager mm, Logger logger, PopupManager popupManager, BankManager bankManager)
+    public App(ModelManager mm, Logger logger, PopupManager popupManager, BankManager bankManager, SettingsManager settingsManager)
     {
         InitializeComponent();
         ApiManager.SetupRequestLimitTimer();
@@ -33,6 +37,7 @@ public partial class App : Application
         Logger = logger;
         PopupManager = popupManager;
         BankManager = bankManager;
+        SettingsManager = settingsManager;
         MainPage = new SplashScreenPage();
         _ = LoadDataAsync(); // fire and forget
     }

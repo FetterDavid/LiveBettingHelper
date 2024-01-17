@@ -4,11 +4,11 @@ namespace LiveBettingHelper.ViewModels
 {
     public class SettingsViewModel
     {
-        public BankManager BankManager { get; set; }
+        public SettingsManager SettingsManager { get; set; }
 
-        public SettingsViewModel(BankManager bankManager)
+        public SettingsViewModel(SettingsManager settingsManager)
         {
-            this.BankManager = bankManager;
+            this.SettingsManager = settingsManager;
         }
     }
 }

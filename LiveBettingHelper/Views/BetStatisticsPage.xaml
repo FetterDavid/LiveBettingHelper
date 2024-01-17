@@ -12,12 +12,14 @@
     <ScrollView>
         <VerticalStackLayout Spacing="30" Padding="10">
 
-            <Grid RowDefinitions="Auto,150" ColumnDefinitions="0.65*,0.35*" RowSpacing="10" ColumnSpacing="10">
+            <Grid RowDefinitions="Auto,150" ColumnDefinitions="0.60*,0.4*" RowSpacing="10" ColumnSpacing="10">
                 <Label Grid.Row="0" Text="Placed Bets" TextColor="{StaticResource GrayText}" FontSize="23" FontAttributes="Bold"/>
                 <micro:ChartView Grid.Row="1" Chart="{Binding BetWinDonutChart}"/>
                 <Border Grid.Row="1" Grid.Column="1" Padding="10" StrokeShape="RoundRectangle 5,5,5,5" Stroke="{StaticResource GrayText}">
                     <VerticalStackLayout>
                         <Label Text="{Binding AvgOdds, StringFormat='Avg odds: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgWinnedBetProb, StringFormat='Win bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgLosedBetProb, StringFormat='Lose bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
@@ -31,6 +33,8 @@
                         <Label Text="{Binding AvgBetMinuteFHO, StringFormat='Avg bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                         <Label Text="{Binding AvgWinBetMinuteFHO, StringFormat='Winned bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                         <Label Text="{Binding AvgLoseBetMinuteFHO, StringFormat='Losed bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgWinnedBetProbFH, StringFormat='Win bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgLosedBetProbFH, StringFormat='Losed bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                     </VerticalStackLayout>
                 </Border>
                 <Label Grid.Row="0" Grid.Column="1" Text="Second Half Over" TextColor="{StaticResource GrayText}" FontSize="18" FontAttributes="Bold"/>
@@ -41,6 +45,8 @@
                         <Label Text="{Binding AvgBetMinuteSHO, StringFormat='Avg bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                         <Label Text="{Binding AvgWinBetMinuteSHO, StringFormat='Winned bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                         <Label Text="{Binding AvgLoseBetMinuteSHO, StringFormat='Losed bet minute: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgWinnedBetProbSH, StringFormat='Winned bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
+                        <Label Text="{Binding AvgLosedBetProbSH, StringFormat='Losed bet prob: {0}'}" TextColor="{StaticResource GrayText}" FontSize="15"/>
                     </VerticalStackLayout>
                 </Border>
             </Grid>

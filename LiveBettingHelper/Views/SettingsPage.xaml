@@ -9,8 +9,18 @@
     <VerticalStackLayout Padding="15">
         <HorizontalStackLayout Spacing="10">
             <Label Text="Default bet stake" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
-            <Entry Text="{Binding BankManager.MyBank.DefaultBetStake, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
-                   VerticalOptions="Center" TextChanged="DefaultBetStakeEntry_TextChanged"/>
+            <Entry Text="{Binding SettingsManager.MySettings.DefaultBetStake, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+                   VerticalOptions="Center" TextChanged="SettingsEntry_TextChanged"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Accuracy of selection system" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
+            <Entry Text="{Binding SettingsManager.MySettings.SelectionSystemMinProbability, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+           VerticalOptions="Center" TextChanged="SettingsEntry_TextChanged"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Minimum odds" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
+            <Entry Text="{Binding SettingsManager.MySettings.MinOdds, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+           VerticalOptions="Center" TextChanged="SettingsEntry_TextChanged"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

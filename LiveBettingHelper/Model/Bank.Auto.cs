@@ -7,6 +7,5 @@ namespace LiveBettingHelper.Model
     {
         [ObservableProperty]
         private double _balance;
-        public double DefaultBetStake { get; set; }
     }
 }

@@ -13,7 +13,7 @@
             <Label Grid.Row="1" Text="Live Betting Helper" TextColor="{StaticResource GrayText}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
             <Grid Grid.Column="2" RowDefinitions="*,Auto" HorizontalOptions="End">
                 <ImageButton Grid.Row="0" Source="user.png" HorizontalOptions="Center"/>
-                <Label Grid.Row="1" Text="{Binding BankManager.MyBank.Balance}" TextColor="{StaticResource GrayText}" HorizontalOptions="Center" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Text="{Binding BankManager.MyBank.Balance,StringFormat='{0} Ft'}" TextColor="{StaticResource GrayText}" HorizontalOptions="Center" FontAttributes="Bold"/>
             </Grid>
         </Grid>
     </Shell.TitleView>
