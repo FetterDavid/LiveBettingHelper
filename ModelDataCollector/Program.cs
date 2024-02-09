@@ -6,13 +6,14 @@ using System.Text.RegularExpressions;
 
 namespace ModelDataCollector
 {
+    /// <summary>
+    /// Hasznlaaton kivüli projekt tesztelés céljából jött létre, ne használd
+    /// </summary>
     class Program
     {
         static async Task Main(string[] args)
         {
             ApiManager.SetupRequestLimitTimer();
-            //await SaveStats();
-            //await NormalizeStatics(await LoadMatchStatisticsFromFileAsync("tesztStats30.txt"));
         }
         static async Task SaveMatches()
         {
@@ -92,7 +93,6 @@ namespace ModelDataCollector
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading file: {ex.Message}");
-                // Handle exceptions or errors here
             }
 
             return matches;
@@ -156,7 +156,6 @@ namespace ModelDataCollector
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading file: {ex.Message}");
-                // Handle exceptions or errors here
             }
 
             return matches;
@@ -251,22 +250,6 @@ namespace ModelDataCollector
                     $"{stat.AwayDominanceIndex.ToString("0.000", CultureInfo.InvariantCulture)}," +
                     $"{stat.AwayDominanceAverageOver25.ToString("0.000", CultureInfo.InvariantCulture)}");
                 }
-
-                //foreach (var stat in normStatistics)
-                //{
-                //    await writer.WriteLineAsync($"{stat.IsOver},{stat.HomePossession.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeAttacksNormal.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //    $"{stat.HomeAttacksDangerous.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeShootsTotal.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeShootsOnTarget.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //    $"{stat.HomeShootsOffTarget.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomePenalties.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeCorners.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //    $"{stat.HomeFoulsTotal.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeFoulsYellowCards.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeFoulsRedCards.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //    $"{stat.HomeSubstitutions.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeOffSides.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeThrowIns.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //    $"{stat.HomeInjuries.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeDominanceIndex.ToString("0.000", CultureInfo.InvariantCulture)},{stat.HomeDominanceAverageOver25.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayPossession.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayAttacksNormal.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayAttacksDangerous.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayShootsTotal.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayShootsOnTarget.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayShootsOffTarget.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayPenalties.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayCorners.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayFoulsTotal.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayFoulsYellowCards.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayFoulsRedCards.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwaySubstitutions.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayOffSides.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayThrowIns.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayInjuries.ToString("0.000", CultureInfo.InvariantCulture)},{stat.AwayDominanceIndex.ToString("0.000", CultureInfo.InvariantCulture)}," +
-                //$"{stat.AwayDominanceAverageOver25.ToString("0.000", CultureInfo.InvariantCulture)}");
-                //}
             }
         }
     }

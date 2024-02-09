@@ -10,15 +10,17 @@ namespace LiveBettingHelper.ViewModels
     {
         public ObservableCollection<LiveMatch> LiveMatches { get; set; } = new();
         private List<LiveMatch> _selectedMatches { get; set; } = new();
-
-        public async Task ReloadDesiredLiveMatches()
+        /// <summary>
+        /// Újra tölti a figyelt élő mecsek listáját
+        /// </summary>
+        public async Task ReloadDesiredLiveMatchesAsync()
         {
             List<LiveMatch> matches = await LiveMatchService.GetAllLiveFixturesAsync();
             _selectedMatches.Clear();
             List<Task> tasks = new List<Task>();
             foreach (LiveMatch match in matches)
             {
-                tasks.Add(GetLiveMatchCheckingTask(match));
+                tasks.Add(GetLiveMatchCheckingTaskAsync(match));
             }
             await Task.WhenAll(tasks);
             _selectedMatches = _selectedMatches.OrderBy(match => match.Date).ToList();
@@ -32,8 +34,10 @@ namespace LiveBettingHelper.ViewModels
             });
             IsBusy = false;
         }
-
-        private async Task GetLiveMatchCheckingTask(LiveMatch match)
+        /// <summary>
+        /// Egy mecs vizsgálatát adja vissza Task-ként, hogy aszinkron modon tudjunk vizsgáli egyszerre több mecset
+        /// </summary>
+        private async Task GetLiveMatchCheckingTaskAsync(LiveMatch match)
         {
             List<BetType> betTypes = match.GetPossibleBetTypes();
             match.RecommendedBetType = BetType.NoBet;

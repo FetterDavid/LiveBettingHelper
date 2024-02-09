@@ -6,6 +6,9 @@ namespace LiveBettingHelper.Utilities
 {
     public partial class BankManager : ObservableObject
     {
+        /// <summary>
+        /// A user bankja
+        /// </summary>
         public Bank MyBank { get; set; }
         private BaseRepository<Bank> _bankRepo { get; set; } = new();
         private BaseRepository<BankTransactionRecord> _bankTransactionRecordRepo { get; set; } = new();
@@ -15,7 +18,9 @@ namespace LiveBettingHelper.Utilities
         {
             LoadMyBank();
         }
-
+        /// <summary>
+        /// Pénz levétel a bankból
+        /// </summary>
         public bool Withdraw(double amount)
         {
             if (amount > 0 && MyBank.Balance >= amount)
@@ -30,7 +35,9 @@ namespace LiveBettingHelper.Utilities
                 return false; // Sikertelen tranzakció, nem elegendő fedezet
             }
         }
-
+        /// <summary>
+        /// Pénz feltöltés a bankba
+        /// </summary>
         public void Deposit(double amount)
         {
             if (amount > 0)
@@ -39,7 +46,9 @@ namespace LiveBettingHelper.Utilities
                 Update();
             }
         }
-
+        /// <summary>
+        /// Banki tranzakció lementése az adatbázisba
+        /// </summary>
         public void AddBankTransactionRecord(double changeAmount)
         {
             try
@@ -53,17 +62,23 @@ namespace LiveBettingHelper.Utilities
                 App.Logger.Exception(ex, "An error occurred while trying to add banktransaction record.");
             }
         }
-
+        /// <summary>
+        /// Vissza adja az összes eddigi banki tranzakciót
+        /// </summary>
         public List<BankTransactionRecord> GetRecords()
         {
             return _bankTransactionRecordRepo.GetItems().OrderBy(x => x.Date).ToList();
         }
-
+        /// <summary>
+        /// Közvetlenül frissíti a bank aktuális állását az adatbázisba
+        /// </summary>
         public void Update()
         {
             _bankRepo.UpdateItem(MyBank);
         }
-
+        /// <summary>
+        /// Az alapértelmezett fogadási egység az egyenlegünkhöz visszonyítva
+        /// </summary>
         public double CalculatedDefaultBetStake => Math.Round((MyBank.Balance / 20) / 10, 0) * 10; // a bank 5%-a kerek 10-esre kerekítve
 
         private void LoadMyBank()

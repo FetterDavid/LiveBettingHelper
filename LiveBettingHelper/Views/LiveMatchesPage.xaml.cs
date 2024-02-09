@@ -25,7 +25,7 @@ public partial class LiveMatchesPage : ContentPage
 
     private void ReloadLiveMatches(object state)
     {
-        _ = _model.ReloadDesiredLiveMatches();
+        _ = _model.ReloadDesiredLiveMatchesAsync();
     }
 
     private async void LiveMatch_Tapped(object sender, TappedEventArgs e)

@@ -18,22 +18,26 @@ namespace LiveBettingHelper.ViewModels
         {
             PreBets = new();
         }
-
-        public async Task Recheck()
+        /// <summary>
+        /// Újra vizsgálja a mecseket
+        /// </summary>
+        public async Task RecheckAsync()
         {
             IsBusy = true;
             LastCheck lastCheck = App.MM.LastCheckRepo.GetLastCheck(CheckType.NextMatchesCheck);
-            await ArchiveFinishedPreBets();
+            await ArchiveFinishedPreBetsAsync();
             if (lastCheck == null || lastCheck.CheckDate.AddHours(1) < DateTime.Now)
             {
-                await CheckTodayMatches();
+                await CheckTodayMatchesAsync();
                 App.MM.LastCheckRepo.SetLastCheck(CheckType.NextMatchesCheck);
             }
             LoadNextMatches();
             IsBusy = false;
         }
-
-        private async Task CheckTodayMatches()
+        /// <summary>
+        /// Megvizsgálja a kövekező 24 óra mecseit
+        /// </summary>
+        private async Task CheckTodayMatchesAsync()
         {
             try
             {
@@ -42,7 +46,7 @@ namespace LiveBettingHelper.ViewModels
                 App.PopupManager.ShowPopup(new LoadingPopup());
                 HashSet<int> checkedMatchIds = App.MM.CheckedMatchRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
                 IEnumerable<PreMatch> matches = await PreMatchService.GetNext24HourMatchesAsync();
-                await SaveDesiredPreMatches(matches.Where(x => !checkedMatchIds.Contains(x.Id)));
+                await SaveDesiredPreMatchesAsync(matches.Where(x => !checkedMatchIds.Contains(x.Id)));
             }
             catch (Exception ex)
             {
@@ -55,8 +59,10 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetSubCaption("");
             }
         }
-
-        private async Task SaveDesiredPreMatches(IEnumerable<PreMatch> matches)
+        /// <summary>
+        /// Lemetni a lehetséges új fogadásokat
+        /// </summary>
+        private async Task SaveDesiredPreMatchesAsync(IEnumerable<PreMatch> matches)
         {
             _checkedMatches = 0;
             App.Logger.SetSubCaption($"({_checkedMatches}/{matches.Count()})");
@@ -67,7 +73,9 @@ namespace LiveBettingHelper.ViewModels
             }
             await Task.WhenAll(tasks);
         }
-
+        /// <summary>
+        /// Egy mecs vizsgálatát adja vissza Task-ként, hogy aszinkron modon tudjunk vizsgáli egyszerre több mecset
+        /// </summary>
         private Task GetMatchCheckingTask(PreMatch match, int matchesCount)
         {
             return Task.Run(async () =>
@@ -96,8 +104,10 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetSubCaption($"({_checkedMatches}/{matchesCount})");
             });
         }
-
-        private async Task ArchiveFinishedPreBets()
+        /// <summary>
+        /// A már befejezett fogadásokkat archiválja
+        /// </summary>
+        private async Task ArchiveFinishedPreBetsAsync()
         {
             try
             {
@@ -119,7 +129,9 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.Exception(ex, "Exception in ArchiveFinishedPreBets");
             }
         }
-
+        /// <summary>
+        /// Újra töllt a PreBets listát
+        /// </summary>
         private void LoadNextMatches()
         {
             try

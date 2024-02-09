@@ -63,7 +63,9 @@ namespace LiveBettingHelper.Utilities
                 await Email.Default.ComposeAsync(message);
             }
         }
-
+        /// <summary>
+        /// Dob egy notification-t
+        /// </summary>
         public static void CreateNotificationRequest(int id, string title, string description)
         {
             var request = new NotificationRequest
