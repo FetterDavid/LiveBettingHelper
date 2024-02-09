@@ -63,6 +63,48 @@ namespace LiveBettingHelper.Services
             }
         }
         /// <summary>
+        /// Vissza adja a egy élő mecs státuszát id alapján
+        /// </summary>
+        public static async Task<LiveMatchStatus> GetLiveFixtureStatusByIdAsync(int fixtureId)
+        {
+            string json = await GetLiveMatchesJsonAsync();
+            if (string.IsNullOrEmpty(json))
+            {
+                App.Logger.Error("No data received from the API.");
+                return LiveMatchStatus.NotFound;
+            }
+            try
+            {
+                dynamic data = JsonConvert.DeserializeObject(json);
+                foreach (var response in data.response)
+                {
+                    int id = response["fixture"]["id"];
+                    if (id != fixtureId) continue;
+                    string status = response["fixture"]["status"]["short"];
+                    switch (status)
+                    {
+                        case "H1":
+                            return LiveMatchStatus.FirstHalf;
+                        case "H2":
+                            return LiveMatchStatus.SecondHalf;
+                        default:
+                            return LiveMatchStatus.NotFound;
+                    }
+                }
+                return LiveMatchStatus.NotFound;
+            }
+            catch (JsonException ex)
+            {
+                App.Logger.Exception(ex, "JSON deserialization error: ");
+                return LiveMatchStatus.NotFound;
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex);
+                return LiveMatchStatus.NotFound;
+            }
+        }
+        /// <summary>
         /// Vissza adja az élő mecsek lekérdezés json-jét
         /// </summary>
         private static async Task<string> GetLiveMatchesJsonAsync()

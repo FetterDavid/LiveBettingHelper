@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using LiveBettingHelper.Model;
+using System.Collections.ObjectModel;
 
 
 namespace LiveBettingHelper.ViewModels
@@ -9,13 +11,11 @@ namespace LiveBettingHelper.ViewModels
         /// <summary>
         /// Folyamatban lévő fogadások
         /// </summary>
-        [ObservableProperty]
-        private List<Bet> _unsettledBets;
+        public ObservableCollection<Bet> UnsettledBets;
         /// <summary>
         /// Végetért fogadások
         /// </summary>
-        [ObservableProperty]
-        private List<Bet> _settledBets;
+        public ObservableCollection<Bet> SettledBets;
         /// <summary>
         /// Aktiv-e a folyamatban lévő fogadások tab
         /// </summary>
@@ -53,13 +53,17 @@ namespace LiveBettingHelper.ViewModels
             LoadBets();
             IsBusy = false;
         }
-
+        /// <summary>
+        /// A még nem lezárt fogadásokat ellenörzi és lezárja ha lehet
+        /// </summary>
         public async Task CheckBetsStatus()
         {
             List<Bet> bets = App.MM.BetRepo.GetItems(x => x.Finished == false);
             foreach (var bet in bets) await bet.TryDetermineOutcome();
         }
-
+        /// <summary>
+        /// Újra tölti a fogadásokat és státusza alapján 2 listába osztja szét (SettledBets/UnsettledBets)
+        /// </summary>
         public void LoadBets()
         {
             List<Bet> bets = App.MM.BetRepo.GetItems();
@@ -70,7 +74,7 @@ namespace LiveBettingHelper.ViewModels
                 if (bet.Finished) SettledBets.Add(bet);
                 else UnsettledBets.Add(bet);
             }
-            UnsettledBets = UnsettledBets.OrderBy(x => x.Date).ToList();
+            UnsettledBets = UnsettledBets.OrderBy(x => x.Date).ToObservableCollection();
         }
 
         private void SelectUnsettledBetsTab()

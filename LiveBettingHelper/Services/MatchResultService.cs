@@ -96,6 +96,22 @@ namespace LiveBettingHelper.Services
             return Static.IsFinishingStatus(status);
         }
         /// <summary>
+        /// Vissza adja hogy féidő van-e az adott mecsen id alapján
+        /// </summary>
+        public static async Task<bool> IsMatchOnHalfTime(int id)
+        {
+            MatchStatus status = await GetMatchStatus(id);
+            return status == MatchStatus.HT;
+        }
+        /// <summary>
+        /// Vissza adja hogy vége van-e vagy féidő van-e az adott mecsen id alapján
+        /// </summary>
+        public static async Task<bool> IsMatchFinishedOrOnHalfTime(int id)
+        {
+            MatchStatus status = await GetMatchStatus(id);
+            return (status == MatchStatus.HT || Static.IsFinishingStatus(status));
+        }
+        /// <summary>
         /// Vissza adja a fogadás eredménylt
         /// </summary>
         public static async Task<bool> GetOutcome(int fixtureId, BetType betType)

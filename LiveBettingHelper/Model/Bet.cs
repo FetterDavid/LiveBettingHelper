@@ -29,18 +29,23 @@ namespace LiveBettingHelper.Model
         public async Task<bool> TryDetermineOutcome()
         {
             if (Finished) return true;
-            else if (await MatchResultService.IsMatchFinished(FixtureId))
+            else if (await MatchResultService.IsMatchFinishedOrOnHalfTime(FixtureId))
             {
-                Finished = true;
-                Winned = await MatchResultService.GetOutcome(FixtureId, BettingType);
-                AddWinnedMoneyToBank();
-                App.MM.BetRepo.UpdateItem(this);
+                await DetermineOutcome();
                 return true;
             }
-            else return false;
+            return false;
         }
 
-        private void AddWinnedMoneyToBank()
+        private async Task DetermineOutcome()
+        {
+            Finished = true;
+            Winned = await MatchResultService.GetOutcome(FixtureId, BettingType);
+            AddPossibleWinningsToTheBank();
+            App.MM.BetRepo.UpdateItem(this);
+        }
+
+        private void AddPossibleWinningsToTheBank()
         {
             if (Winned)
             {

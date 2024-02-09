@@ -109,4 +109,11 @@
         /// </summary>
         Error = 20
     }
+
+    public enum LiveMatchStatus
+    {
+        FirstHalf = 'F',
+        SecondHalf = 'S',
+        NotFound = 'F',
+    }
 }
