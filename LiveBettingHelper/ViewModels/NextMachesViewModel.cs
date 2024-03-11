@@ -4,6 +4,7 @@ using LiveBettingHelper.Services;
 using LiveBettingHelper.Utilities;
 using LiveBettingHelper.Views.Popups;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace LiveBettingHelper.ViewModels
 {
@@ -57,6 +58,7 @@ namespace LiveBettingHelper.ViewModels
                 App.Logger.SetProgress(1, 1);
                 App.Logger.SetCaption("");
                 App.Logger.SetSubCaption("");
+                _checkedMatches = 0;
             }
         }
         /// <summary>
@@ -111,23 +113,57 @@ namespace LiveBettingHelper.ViewModels
         {
             try
             {
-                List<PreBet> matches = App.MM.PreBetRepo.GetItems(x => x.Date < DateTime.Now).OrderBy(x => x.Date).ToList();
-                foreach (PreBet match in matches)
+                App.Logger.SetProgress(0);
+                App.Logger.SetCaption("Archive finished PreBets...");
+                App.PopupManager.ShowPopup(new LoadingPopup());
+                DateTime checkDate = DateTime.Now.AddMinutes(-110);
+                List<PreBet> preBets = App.MM.PreBetRepo.GetItems(x => x.Date < checkDate).OrderBy(x => x.Date).ToList();
+                App.Logger.SetSubCaption($"({_checkedMatches}/{preBets.Count()})");
+                List<Task> tasks = new List<Task>();
+                foreach (PreBet prebet in preBets)
                 {
-                    if (await MatchResultService.IsMatchFinished(match.FixtureId))
-                        await match.Archive();
-                    else if (match.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezöfött de már bekellett volna (kezdés után 3 óra) akkor töröljük
-                    {
-                        CheckedMatch checkedMatch = App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == match.FixtureId);
-                        if (checkedMatch != null) App.MM.CheckedMatchRepo.DeleteItem(checkedMatch);//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor úja feltudjuk venni
-                        App.MM.PreBetRepo.DeleteItem(match);
-                    }
+                    tasks.Add(GetPreBetArchiveAttemptTask(prebet, preBets.Count()));
                 }
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
                 App.Logger.Exception(ex, "Exception in ArchiveFinishedPreBets");
             }
+            finally
+            {
+                App.Logger.SetProgress(1, 1);
+                App.Logger.SetCaption("");
+                App.Logger.SetSubCaption("");
+                _checkedMatches = 0;
+            }
+        }
+        /// <summary>
+        /// Egy fogadás archiválás probálást add vissza Task-ként, hogy aszinkron modon tudjunk vizsgáli egyszerre több fogadást
+        /// </summary>
+        private Task GetPreBetArchiveAttemptTask(PreBet prebet, int prebetCount)
+        {
+            return Task.Run(async () =>
+            {
+                try
+                {
+                    //if (await MatchResultService.IsMatchFinished(prebet.FixtureId))
+                    //    await prebet.Archive();
+                   /* else*/ if (prebet.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezödött de már bekellett volna (kezdés után 3 óra) akkor töröljük
+                    {
+                        CheckedMatch checkedMatch = App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == prebet.FixtureId);
+                        if (checkedMatch != null) App.MM.CheckedMatchRepo.DeleteItem(checkedMatch);//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor újra feltudjuk venni
+                        App.MM.PreBetRepo.DeleteItem(prebet);
+                    }
+                    _checkedMatches++;
+                    App.Logger.SetProgress(_checkedMatches, prebetCount);
+                    App.Logger.SetSubCaption($"({_checkedMatches}/{prebetCount})");
+                }
+                catch (Exception ex)
+                {
+                    App.Logger.Exception(ex, $"Exception in GetPreBetArchiveAttemptTask on: {prebet.Id} ids prebet" );
+                }
+            });
         }
         /// <summary>
         /// Újra töllt a PreBets listát

@@ -1,5 +1,7 @@
 ﻿using LiveBettingHelper.Model;
+using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
+using Plugin.LocalNotification.EventArgs;
 using SQLite;
 
 namespace LiveBettingHelper.Utilities
@@ -74,7 +76,6 @@ namespace LiveBettingHelper.Utilities
                 Title = title,
                 Description = description,
             };
-
             LocalNotificationCenter.Current.Show(request);
         }
 

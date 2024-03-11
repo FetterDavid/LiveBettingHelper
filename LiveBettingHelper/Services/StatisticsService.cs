@@ -1,4 +1,5 @@
 ﻿using LiveBettingHelper.Model;
+using LiveBettingHelper.Model.ApiSchemas;
 using LiveBettingHelper.Utilities;
 using Newtonsoft.Json;
 
@@ -61,22 +62,23 @@ namespace LiveBettingHelper.Services
             }
             try
             {
-                dynamic data = JsonConvert.DeserializeObject(json);
-                int firstHalfGoalCount = 0;
-                int secondHalfGoalCount = 0;
+                FixturesRootObject fixturesRoorObject = JsonConvert.DeserializeObject<FixturesRootObject>(json);
+                int? firstHalfGoalCount = 0;
+                int? secondHalfGoalCount = 0;
                 int matchCount = 0;
-                foreach (var response in data.response)
+                foreach (var response in fixturesRoorObject.response)
                 {
-                    MatchStatus status = Enum.TryParse((string)response["fixture"]["status"]["short"], out MatchStatus stat) ? stat : MatchStatus.Error;
+                    MatchStatus status = Enum.TryParse((string)response.fixture.status._short, out MatchStatus stat) ? stat : MatchStatus.Error;
                     if (Static.IsFinishingStatus(status) == false) continue;
-                    if (response["teams"][side]["id"] == teamId)
+                    if ((side.Equals("home") && response.teams.home.id == teamId) ||
+                        (side.Equals("away") && response.teams.away.id == teamId))
                     {
-                        int homeFHG = response["score"]["halftime"]["home"] == null ? 0 : response["score"]["halftime"]["home"];
-                        int awayFHG = response["score"]["halftime"]["away"] == null ? 0 : response["score"]["halftime"]["away"];
-                        int homeFTG = response["score"]["fulltime"]["home"] == null ? 0 : response["score"]["fulltime"]["home"];
-                        int awayFTG = response["score"]["fulltime"]["away"] == null ? 0 : response["score"]["fulltime"]["away"];
-                        int homeSTG = homeFTG - homeFHG;
-                        int awaySTG = awayFTG - awayFHG;
+                        int? homeFHG = response.score.halftime.home == null ? 0 : response.score.halftime.home;
+                        int? awayFHG = response.score.halftime.away == null ? 0 : response.score.halftime.away;
+                        int? homeFTG = response.score.fulltime.home == null ? 0 : response.score.fulltime.home;
+                        int? awayFTG = response.score.fulltime.away == null ? 0 : response.score.fulltime.away;
+                        int? homeSTG = homeFTG - homeFHG;
+                        int? awaySTG = awayFTG - awayFHG;
                         firstHalfGoalCount += homeFHG + awayFHG;
                         secondHalfGoalCount += homeSTG + awaySTG;
                         matchCount++;

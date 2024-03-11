@@ -12,5 +12,16 @@ namespace LiveBettingHelper.Utilities
         public BaseRepository<League> LeagueRepo { get; set; } = new();
         public BaseRepository<Bet> BetRepo { get; set; } = new();
         public LastCheckRepository LastCheckRepo { get; set; } = new();
+
+        public void DropAllTable()
+        {
+            PreBetRepo.DropTable();
+            ArchivedPreBetRepo.DropTable();
+            CheckedMatchRepo.DropTable();
+            CountryRepo.DropTable();
+            LeagueRepo.DropTable();
+            BetRepo.DropTable();
+            LastCheckRepo.DropTable();
+        }
     }
 }

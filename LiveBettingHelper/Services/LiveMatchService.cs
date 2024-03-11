@@ -1,4 +1,5 @@
 ﻿using LiveBettingHelper.Model;
+using LiveBettingHelper.Model.ApiSchemas;
 using LiveBettingHelper.Utilities;
 using Newtonsoft.Json;
 
@@ -20,33 +21,33 @@ namespace LiveBettingHelper.Services
             try
             {
                 HashSet<int> betIds = App.MM.PreBetRepo.GetItems().Select(x => x.FixtureId).ToHashSet();
-                dynamic data = JsonConvert.DeserializeObject(json);
+                LiveFixturesRootObject liveFixturesRootObject = JsonConvert.DeserializeObject<LiveFixturesRootObject>(json);
                 List<LiveMatch> liveMatches = new List<LiveMatch>();
-                foreach (var response in data.response)
+                foreach (var response in liveFixturesRootObject.response)
                 {
-                    int id = response["fixture"]["id"];
+                    int id = response.fixture.id;
                     if (!betIds.Contains(id)) continue;
-                    string status = response["fixture"]["status"]["short"];
+                    string status = response.fixture.status._short;
                     BetType[] betTypes = App.MM.PreBetRepo.GetItems(x => x.FixtureId == id).Select(x => x.BettingType).ToArray();
                     if ((status == "H1" && !betTypes.Contains(BetType.FirstHalfOver)) || (status == "H2" && !betTypes.Contains(BetType.SecondHalfOver))) continue;
                     var match = new LiveMatch
                     {
                         Id = id,
-                        LeagueId = response["league"]["id"],
-                        LeagueName = response["league"]["name"],
-                        LeagueCountry = response["league"]["country"],
-                        LeagueSeason = response["league"]["season"],
-                        HomeTeamId = response["teams"]["home"]["id"],
-                        HomeTeamName = response["teams"]["home"]["name"],
-                        AwayTeamId = response["teams"]["away"]["id"],
-                        AwayTeamName = response["teams"]["away"]["name"],
-                        HomeTeamGoals = response["goals"]["home"],
-                        AwayTeamGoals = response["goals"]["away"],
-                        Date = response["fixture"]["date"],
-                        ElapsedTime = response["fixture"]["status"]["elapsed"],
+                        LeagueId = response.league.id,
+                        LeagueName = response.league.name,
+                        LeagueCountry = response.league.country,
+                        LeagueSeason = response.league.season,
+                        HomeTeamId = response.teams.home.id,
+                        HomeTeamName = response.teams.home.name,
+                        AwayTeamId = response.teams.away.id,
+                        AwayTeamName = response.teams.away.name,
+                        HomeTeamGoals = response.goals.home,
+                        AwayTeamGoals = response.goals.away,
+                        Date = response.fixture.date,
+                        ElapsedTime = (int)response.fixture.status.elapsed,
                     };
-                    if (response["score"]["halftime"]["home"] != null)
-                        match.FirstHalfResult = (response["score"]["halftime"]["home"], response["score"]["halftime"]["away"]);
+                    if (response.score.halftime.home != null)
+                        match.FirstHalfResult = (response.score.halftime.home, response.score.halftime.away);
                     liveMatches.Add(match);
                 }
                 return liveMatches;

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiveBettingHelper.Utilities;
-using SQLite;
 
 namespace LiveBettingHelper.Model
 {

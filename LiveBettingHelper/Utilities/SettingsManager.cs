@@ -1,10 +1,5 @@
 ﻿using LiveBettingHelper.Model;
 using LiveBettingHelper.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiveBettingHelper.Utilities
 {
@@ -30,7 +25,7 @@ namespace LiveBettingHelper.Utilities
             else if (settings.Count == 1) MySettings = settings[0];
             else
             {
-                MySettings = new Settings { DefaultBetStake = 300, MinOdds = 1.5, SelectionSystemMinProbability = 70 };
+                MySettings = new Settings { DefaultBetStake = 300, MinOdds = 1.5, SelectionSystemMinProbability = 80 };
                 _settingsRepo.AddItem(MySettings);
             }
         }

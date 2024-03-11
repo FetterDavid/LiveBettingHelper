@@ -39,9 +39,9 @@ namespace LiveBettingHelper.Services
                     if (data["response"][0]["score"]["fulltime"]["home"] == null) return null;
                     res = new MatchResult
                     {
-                        Id = data["response"][0]["fixture"]["id"],
-                        FirstHalfResult = (data["response"][0]["score"]["halftime"]["home"], data["response"][0]["score"]["halftime"]["away"]),
-                        FullTimeResult = (data["response"][0]["score"]["fulltime"]["home"], data["response"][0]["score"]["fulltime"]["away"])
+                        Id = (int)data["response"][0]["fixture"]["id"],
+                        FirstHalfResult = ((int)data["response"][0]["score"]["halftime"]["home"], (int)data["response"][0]["score"]["halftime"]["away"]),
+                        FullTimeResult = ((int)data["response"][0]["score"]["fulltime"]["home"], (int)data["response"][0]["score"]["fulltime"]["away"])
                     };
                 }
                 return res;
@@ -72,7 +72,7 @@ namespace LiveBettingHelper.Services
             {
                 dynamic data = JsonConvert.DeserializeObject(json);
                 if (data["response"] == null) return MatchStatus.Error;
-                string statusCode = data["response"][0]["fixture"]["status"]["short"];
+                string statusCode = (string)data["response"][0]["fixture"]["status"]["short"];
                 if (Enum.TryParse(statusCode, out MatchStatus status)) return status;
                 else return MatchStatus.Error;
             }

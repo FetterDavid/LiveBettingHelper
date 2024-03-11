@@ -6,10 +6,11 @@
              xmlns:converter="clr-namespace:LiveBettingHelper.Converters"
              x:DataType="viewModels:LiveMatchesPageModel"
              x:Class="LiveBettingHelper.Views.LiveMatchesPage"
+             x:Name="MyPage"
              BackgroundColor="{StaticResource Tertiary}">
 
     <Grid>
-        
+
         <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center" Color="White"/>
 
         <CollectionView ItemsSource="{Binding LiveMatches}" Margin="0,5,0,0" IsVisible="{Binding IsBusy, Converter={converter:InverseBoolConverter}}" EmptyView="No live match">
@@ -17,7 +18,7 @@
                 <DataTemplate x:DataType="models:LiveMatch">
                     <Frame Padding="0,5" Margin="5,2" BackgroundColor="{StaticResource Gray600}" BorderColor="{StaticResource Tertiary}">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="LiveMatch_Tapped"/>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference MyPage}, Path=BindingContext.OnSelectLiveMatch}" CommandParameter="{Binding .}"/>
                         </Frame.GestureRecognizers>
                         <Grid RowDefinitions="Auto,1,Auto,Auto,1,Auto" ColumnDefinitions="50,1,*,Auto" ColumnSpacing="5" Padding="0,0">
                             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" Margin="8,0,8,3">
@@ -43,7 +44,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    
+
     </Grid>
 
 </ContentPage>

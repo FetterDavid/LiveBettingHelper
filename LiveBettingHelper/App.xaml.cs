@@ -34,6 +34,7 @@ public partial class App : Application
         InitializeComponent();
         ApiManager.SetupRequestLimitTimer();
         MM = mm;
+        //MM.DropAllTable();
         Logger = logger;
         PopupManager = popupManager;
         BankManager = bankManager;

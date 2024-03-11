@@ -1,7 +1,5 @@
-﻿using CommunityToolkit.Maui.Core.Extensions;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiveBettingHelper.Model;
-using System.Collections.ObjectModel;
 
 namespace LiveBettingHelper.ViewModels
 {

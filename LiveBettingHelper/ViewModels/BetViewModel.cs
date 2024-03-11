@@ -11,11 +11,11 @@ namespace LiveBettingHelper.ViewModels
         /// <summary>
         /// Folyamatban lévő fogadások
         /// </summary>
-        public ObservableCollection<Bet> UnsettledBets;
+        public ObservableCollection<Bet> UnsettledBets { get; set; }
         /// <summary>
         /// Végetért fogadások
         /// </summary>
-        public ObservableCollection<Bet> SettledBets;
+        public ObservableCollection<Bet> SettledBets { get; set; }
         /// <summary>
         /// Aktiv-e a folyamatban lévő fogadások tab
         /// </summary>

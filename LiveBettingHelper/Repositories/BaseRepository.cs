@@ -192,5 +192,19 @@ namespace LiveBettingHelper.Repositories
                 App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
             }
         }
+        /// <summary>
+        /// Frissíti a megadott objektumokat
+        /// </summary>
+        public void DropTable()
+        {
+            try
+            {
+                _conn.DropTable<T>();
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Exception(ex, $"Exception in {typeof(T)}  - {MethodBase.GetCurrentMethod()}: ");
+            }
+        }
     }
 }
