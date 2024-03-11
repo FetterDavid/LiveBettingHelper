@@ -29,5 +29,5 @@ This project aims to develop an Android application designed to support live spo
 The project focuses on gaining practical experience with .NET MAUI, selecting appropriate APIs for statistical data retrieval, designing the betting selection system, and developing the application's UI and backend logic.
 
 ## About
-Developed by [Your Name], this app is part of a diploma project aimed at enhancing the live sports betting experience by providing users with data-driven insights and comprehensive bankroll management.
+Developed by Fetter Dávid, this app is part of a diploma project aimed at enhancing the live sports betting experience by providing users with data-driven insights and comprehensive bankroll management.
 
