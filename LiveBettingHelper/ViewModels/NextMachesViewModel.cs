@@ -147,9 +147,8 @@ namespace LiveBettingHelper.ViewModels
             {
                 try
                 {
-                    //if (await MatchResultService.IsMatchFinished(prebet.FixtureId))
-                    //    await prebet.Archive();
-                   /* else*/ if (prebet.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezödött de már bekellett volna (kezdés után 3 óra) akkor töröljük
+                    if (await MatchResultService.IsMatchFinished(prebet.FixtureId)) await prebet.Archive();
+                    else if (prebet.Date.AddHours(3) < DateTime.Now) // ha azt kapjuk hogy még nem fejezödött de már bekellett volna (kezdés után 3 óra) akkor töröljük
                     {
                         CheckedMatch checkedMatch = App.MM.CheckedMatchRepo.GetItem(x => x.FixtureId == prebet.FixtureId);
                         if (checkedMatch != null) App.MM.CheckedMatchRepo.DeleteItem(checkedMatch);//A CheckedMatch-et is töröljük ha estleg ellet halasztva akkor újra feltudjuk venni
@@ -161,7 +160,7 @@ namespace LiveBettingHelper.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    App.Logger.Exception(ex, $"Exception in GetPreBetArchiveAttemptTask on: {prebet.Id} ids prebet" );
+                    App.Logger.Exception(ex, $"Exception in GetPreBetArchiveAttemptTask on: {prebet.Id} ids prebet");
                 }
             });
         }
