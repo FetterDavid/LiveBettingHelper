@@ -12,6 +12,6 @@ public partial class SettingsPage : ContentPage
 
     private void SettingsEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        App.BankManager.Update();
+        App.SettingsManager.Update();
     }
 }
