@@ -9,12 +9,13 @@
     <VerticalStackLayout Padding="15">
         <HorizontalStackLayout Spacing="10">
             <Label Text="Default bet stake" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
-            <Entry Text="{Binding SettingsManager.MySettings.DefaultBetStake, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+            <Entry Text="{Binding SettingsManager.MySettings.DefaultBetStake, Mode=TwoWay, StringFormat='{0} Ft'}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
                    VerticalOptions="Center" TextChanged="SettingsEntry_TextChanged"/>
+            <Image Source="ic_unlock" HeightRequest="30" WidthRequest="30"/>
         </HorizontalStackLayout>
         <HorizontalStackLayout Spacing="10">
             <Label Text="Accuracy of selection system" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" VerticalOptions="Center"/>
-            <Entry Text="{Binding SettingsManager.MySettings.SelectionSystemMinProbability, Mode=TwoWay}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
+            <Entry Text="{Binding SettingsManager.MySettings.SelectionSystemMinProbability, Mode=TwoWay, StringFormat='{0}%'}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource GrayText}" BackgroundColor="{StaticResource Gray500}"
            VerticalOptions="Center" TextChanged="SettingsEntry_TextChanged"/>
         </HorizontalStackLayout>
         <HorizontalStackLayout Spacing="10">

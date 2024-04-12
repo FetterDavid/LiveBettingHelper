@@ -54,6 +54,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\email.png" />
+	  <None Remove="Resources\Images\ic_unlock.png" />
 	  <None Remove="Resources\Images\in_progress.png" />
 	  <None Remove="Resources\Images\live_matches.png" />
 	  <None Remove="Resources\Images\lose.png" />

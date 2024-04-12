@@ -24,22 +24,9 @@ namespace LiveBettingHelper.Services
             {
                 FixturesRootObject rootobject = JsonConvert.DeserializeObject<FixturesRootObject>(json);
                 List<PreMatch> matches = new List<PreMatch>();
-                foreach (var response in rootobject.response)
+                foreach (FixtureObject fixture in rootobject.response)
                 {
-                    var match = new PreMatch
-                    {
-                        Id = response.fixture.id,
-                        LeagueId = response.league.id,
-                        LeagueName = response.league.name,
-                        LeagueCountry = response.league.country,
-                        LeagueSeason = response.league.season,
-                        HomeTeamId = response.teams.home.id,
-                        HomeTeamName = response.teams.home.name,
-                        AwayTeamId = response.teams.away.id,
-                        AwayTeamName = response.teams.away.name,
-                        Date = response.fixture.date
-                    };
-                    matches.Add(match);
+                    matches.Add(new PreMatch(fixture));
                 }
                 return matches;
             }

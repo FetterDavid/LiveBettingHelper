@@ -132,6 +132,7 @@ namespace LiveBettingHelper.Utilities
             using (StreamWriter sw = new StreamWriter(_logFilePath))
             {
                 sw.WriteLine($"{logType}|{DateTime.Now.ToString("yyyy.MM.dd-HH:mm:ss")}|{message}");
+                sw.Close();
             }
         }
         /// <summary>
